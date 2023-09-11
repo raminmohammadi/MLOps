@@ -3,7 +3,7 @@ name: Python Unittests
 on:
   push:
     branches:
-      - main
+      - lab1
 
 jobs:
   build:
