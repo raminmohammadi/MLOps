@@ -2,6 +2,12 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyo
+.pytest_cache/
+.vscode/
+.idea/
+
 
 # C extensions
 *.so
@@ -15,6 +21,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+bin/
+include/
 lib64/
 parts/
 sdist/
@@ -31,6 +39,8 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+__pycache__
+
 
 # Installer logs
 pip-log.txt
