@@ -1,5 +1,5 @@
 import pytest
-import src.lab1.calculator_lab1 as calculator
+import src.lab1.calculator as calculator
 
 def test_fun1():
     assert calculator.fun1(2, 3) == 5
