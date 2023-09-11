@@ -13,6 +13,7 @@ class TestCalculator(unittest.TestCase):
     def test_fun1(self):
         self.assertEqual(calculator.fun1(2, 3), 5)
         self.assertEqual(calculator.fun1(5, 0), 5)
+        
         self.assertEqual(calculator.fun1(-1, 1), 0)
         self.assertEqual(calculator.fun1(-1, -1), -2)
 
