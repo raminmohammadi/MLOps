@@ -2,7 +2,7 @@ name: Testing with Pytest
 on:
   push:
     branches:
-      - lab1
+      - main
 
 jobs:
   build:
