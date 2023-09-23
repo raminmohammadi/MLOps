@@ -1,0 +1,42 @@
+name: Documentation Generation Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate_and_publish_docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Sphinx and Dependencies
+        run: |
+          pip install -r docs/requirements.txt
+          pip install sphinx
+          pip install sphinx-rtd-theme  # (or another theme of your choice)
+
+      - name: Generate Documentation
+        working-directory: docs
+        run: |
+          make clean
+          make html
+
+      - name: Publish Documentation
+        run: |
+          git config --global user.email "raminmohammadi@github.com"
+          git config --global user.name "raminmohammadi"
+          git checkout gh-pages
+          mv docs/_build/html/* ./
+          touch .nojekyll
+          git add ./*
+          git commit -m "Update documentation"
+          git push origin gh-pages
