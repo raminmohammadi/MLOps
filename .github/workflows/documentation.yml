@@ -27,7 +27,6 @@ jobs:
       - name: Generate Documentation
         working-directory: docs
         run: |
-          make clean
           make html
 
       - name: Publish Documentation
