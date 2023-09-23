@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Sphinx and Dependencies
         run: |
-          pip install -r docs/requirements.txt
+          pip install -r requirements.txt
           pip install sphinx
           pip install sphinx-rtd-theme  # (or another theme of your choice)
 
