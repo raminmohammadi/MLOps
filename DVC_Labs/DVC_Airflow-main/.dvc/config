@@ -1,0 +1,5 @@
+[core]
+    remote = dvc_lab1
+['remote "dvc_lab1"']
+    url = gs://dvclab1
+    credentialpath = ../dvc-lab-3-51df036946e9.json
