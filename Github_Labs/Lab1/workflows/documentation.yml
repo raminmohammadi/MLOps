@@ -31,8 +31,8 @@ jobs:
 
       - name: Publish Documentation
         run: |
-          git config --global user.email "raminmohammadi@github.com"
-          git config --global user.name "raminmohammadi"
+          git config --global user.email "your email"
+          git config --global user.name "your user name"
           git checkout gh-pages
           mv docs/_build/html/* ./
           touch .nojekyll
