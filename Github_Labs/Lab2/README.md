@@ -71,6 +71,54 @@ The workflow consists of the following steps:
 - Store and Version the New Model: The trained model is moved to the `models/` directory with a timestamp-based version.
 - Commit and Push Changes: The metrics and updated model are committed to the repository, allowing you to track changes.
 
+
+# Model Calibration Workflow
+
+## Overview
+
+The `model_calibration_on_push.yml` workflow is a part of the automation process for machine learning model calibration within this repository. It is essential for ensuring that the model's predictions are accurate and well-calibrated, a critical step in machine learning applications.
+
+## Workflow Purpose
+
+This workflow's primary purpose is to calibrate a trained machine learning model after each push to the main branch of the repository. Calibration is a crucial step to align model predictions with reality, particularly when dealing with classification tasks. In simple terms, calibration ensures that a model's predicted probabilities match the actual likelihood of an event happening.
+
+## Workflow Execution
+
+Let's break down how this workflow operates step by step:
+
+### Step 1: Trigger on Push to Main Branch
+
+- This workflow is automatically initiated when changes are pushed to the main branch of the repository. It ensures that the model remains calibrated and up-to-date with the latest data and adjustments.
+
+### Step 2: Prepare Environment
+
+- The workflow begins by setting up a Python environment and installing the necessary Python libraries and dependencies. This is crucial to ensure that the model calibration process can be executed without any issues.
+
+### Step 3: Load Trained Model
+
+- The trained machine learning model, which has been previously saved in the `models/` directory, is loaded into memory. This model should be the most recent version, as trained by the `train_model.py` script.
+
+### Step 4: Calibrate Model Probabilities
+
+- In this step, the model's predicted probabilities are calibrated. Calibration methods, such as Platt scaling or isotonic regression, are applied. These methods adjust the model's predicted probabilities to match the actual likelihood of an event occurring. This calibration step is critical for reliable decision-making based on the model's predictions.
+
+### Step 5: Save Calibrated Model
+
+- The calibrated model is saved back to the `models/` directory. It is given a distinct identifier to differentiate it from the original, uncalibrated models. This ensures that both the original model and the calibrated model are available for comparison and use.
+
+### Step 6: Commit and Push Changes
+
+- This final step involves committing the calibrated model and any other relevant files to the repository. It is essential to keep track of the changes made during the calibration process and to store the calibrated model in the repository for future applications and reference.
+
+## Customization
+
+The `model_calibration_on_push.yml` workflow can be customized to align with your specific project requirements. You can modify calibration methods, the directory where the calibrated model is saved, or any other aspects of the calibration process to meet your project's unique needs.
+
+## Integration with Model Training
+
+This workflow is designed to work seamlessly with the main model training workflow, `model_retraining_on_push.yml`. In the initial workflow, the model is trained, and in this workflow, the calibrated model is generated. The calibrated model can then be used in applications where precise, well-calibrated probabilities are essential.
+
+
 # License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
