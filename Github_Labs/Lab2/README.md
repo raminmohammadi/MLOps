@@ -1,4 +1,4 @@
- Using GitHub Actions for Model Training and Versioning
+# Using GitHub Actions for Model Training and Versioning
 
 This repository demonstrates how to use GitHub Actions to automate the process of training a machine learning model, storing the model, and versioning it. This allows you to easily update and improve your model in a collaborative environment.
 
