@@ -104,7 +104,7 @@ Whenever you want to push files to your repository follow this step
 - Pytest automatically discovers test functions based on naming conventions. It searches for functions starting with test_ or ending with _test, and it can discover tests in subdirectories as well. This makes it easy to organize your tests.
 - Pytest supports parametrized tests, which allow you to run the same test function with multiple sets of inputs and expected outputs. This is particularly useful for testing functions with different input scenarios. Please refer the commented out code in the test_pytest.py file for your reference.
 - Let's create a test file named test_pytest.py within the test folder. This file will contain a series of test functions, each aimed at verifying the behavior of specific functions within calculator.py.
-- We've prepared four test functions (test_fun1, test_fun2, test_fun3, and test_fun4) to test the functions within calculator.py. Each test function uses the assert statement to validate the expected outcomes. Refer the file under test folder for your [reference](https://github.com/raminmohammadi/MLOps/blob/main/test/test_pytest.py).
+- We've prepared four test functions (test_fun1, test_fun2, test_fun3, and test_fun4) to test the functions within calculator.py. Each test function uses the assert statement to validate the expected outcomes. Refer the file under test folder for your [reference](https://github.com/raminmohammadi/MLOps/blob/main/Github_Labs/Lab1/test/test_pytest.py).
 - By running these pytest tests, you can verify that your calculator functions are working correctly.
 
 ### Writing Tests with UnitTest
@@ -116,7 +116,7 @@ Whenever you want to push files to your repository follow this step
 - Unittest relies on test discovery, which means it will find test methods based on naming conventions, similar to Pytest. Test methods must start with "test_" to be recognized as test cases.
 - Unittest provides a variety of assertion methods, such as assertEqual, assertTrue, assertFalse, and others, to check conditions in your tests. You can choose the assertion method that best suits your testing needs.
 - Let's create a test file named test_unittest.py within the test folder. This file will contain a series of test functions, each aimed at verifying the behavior of specific functions within calculator.py.
-- We've prepared four test functions (test_fun1, test_fun2, test_fun3, and test_fun4) to test the functions within calculator.py. Each test function uses the self.assertEqual statement to validate the expected outcomes. Refer the file under test folder for your [reference](https://github.com/raminmohammadi/MLOps/blob/main/test/test_unittest.py).
+- We've prepared four test functions (test_fun1, test_fun2, test_fun3, and test_fun4) to test the functions within calculator.py. Each test function uses the self.assertEqual statement to validate the expected outcomes. Refer the file under test folder for your [reference](https://github.com/raminmohammadi/MLOps/blob/main/Github_Labs/Lab1/test/test_unittest.py).
 - By running these unittest tests, you can verify that your calculator functions are working correctly.
 
 ## Step 5. Implementing GitHub Actions
@@ -146,7 +146,7 @@ Whenever you want to push files to your repository follow this step
 - To implement Pytest and Unittest with GitHub Actions, you'll create two workflow files under the .github/workflows directory in your repository: pytest_action.yml and unittest_action.yml. These workflow files define the specific actions and triggers for running your tests.
 
 **pytest_action.yml** <br>
-Please refer [this](https://github.com/raminmohammadi/MLOps/blob/main/.github/workflows/pytest_action.yml) file for your reference
+Please refer [this](https://github.com/raminmohammadi/MLOps/blob/main/Github_Labs/Lab1/workflows/pytest_action.yml) file for your reference
 1. Workflow Name: The workflow is named "Testing with Pytest."
 2. Event Trigger: It specifies the event that triggers the workflow. In this case, it triggers when code is pushed to the main branch.
 3. Jobs: The workflow contains a single job named "build," which runs on the ubuntu-latest virtual machine environment.
@@ -161,7 +161,7 @@ Please refer [this](https://github.com/raminmohammadi/MLOps/blob/main/.github/wo
 - if: failure() checks if the tests failed and runs the "Tests failed" message.
 
 **unittest_action.yml** <br>
- Please refer [this](https://github.com/raminmohammadi/MLOps/blob/main/.github/workflows/unittest_action.yml) file for your reference
+ Please refer [this](https://github.com/raminmohammadi/MLOps/blob/main/Github_Labs/Lab1/workflows/unittest_action.yml) file for your reference
 1. Workflow Name: This GitHub Actions workflow is named "Python Unittests."
 2. Event Trigger: The workflow is triggered by the "push" event, specifically when changes are pushed to the main branch.
 3. Jobs: The workflow defines a single job named "build" that runs on the ubuntu-latest virtual machine environment.
