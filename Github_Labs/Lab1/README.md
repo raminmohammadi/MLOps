@@ -25,6 +25,9 @@ After activation, you will see the virtual environment's name in your command pr
 ## Step 2: Creating a GitHub Repository, Cloning and Folder Structure
 Now that we have set up our virtual environment, the next step is to create a GitHub repository for our project and establish a structured folder layout. This organization helps maintain your project's code, data, and tests in an organized manner.
 
+### Fork the Repository: 
+Click the "Fork" button at the top right of this [repository](https://github.com/raminmohammadi/MLOps/) to create your own copy.
+
 ### Creating a GitHub Repository
 - Open a web browser and go to GitHub.
 - In the upper right corner, click the "+" button and select "New repository."
