@@ -10,17 +10,16 @@ This repository demonstrates how to use GitHub Actions to automate the process o
 
 ## Getting Started
 
-1. **Fork this Repository**: Click the "Fork" button at the top right of this repository to create your own copy.
-
-2. **Clone Your Repository**:
+1. **Fork this Repository**: Click the "Fork" button at the top right of this [repository](https://github.com/raminmohammadi/MLOps/) to create your own copy.
+3. **Clone Your Repository**:
    ```bash
    git clone https://github.com/your-username/your-forked-repo.git
    cd your-forked-repo
 
    ```
-3. GitHub account
-4. Basic knowledge of Python and machine learning
-5. Git command-line tool (optional)
+4. GitHub account
+5. Basic knowledge of Python and machine learning
+6. Git command-line tool (optional)
 
 # Running the Workflow
 ## Customize Model Training
