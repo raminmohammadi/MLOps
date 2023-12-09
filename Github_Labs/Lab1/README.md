@@ -1,6 +1,3 @@
-[![Python Unittests](https://github.com/raminmohammadi/MLOps/actions/workflows/unittest_action.yml/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/unittest_action.yml)
-[![Testing with Pytest](https://github.com/raminmohammadi/MLOps/actions/workflows/pytest_action.yml/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/pytest_action.yml) <br>
-
 # LAB1 - MLOps (IE-7374) 
 
 This lab focuses on 5 modules, which includes creating a virtual environment, creating a GitHub repository, creating Python files, creating test files using pytest and unittest, and implementing GitHub Actions.
