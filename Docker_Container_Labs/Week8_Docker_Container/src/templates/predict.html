@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iris Classifier</title>
+</head>
+<body>
+    <h1>Welcome to the Iris Classifier API!</h1>
+    <form method="POST">
+        <label for="sepal_length">Sepal Length:</label>
+        <input type="number" name="sepal_length" step="0.01" required><br>
+
+        <label for="sepal_width">Sepal Width:</label>
+        <input type="number" name="sepal_width" step="0.01" required><br>
+
+        <label for="petal_length">Petal Length:</label>
+        <input type="number" name="petal_length" step="0.01" required><br>
+
+        <label for="petal_width">Petal Width:</label>
+        <input type="number" name="petal_width" step="0.01" required><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if predicted_class %}
+    <h2>Predicted Class: {{ predicted_class }}</h2>
+    {% endif %}
+</body>
+</html>
