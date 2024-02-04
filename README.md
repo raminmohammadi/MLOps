@@ -39,6 +39,7 @@ The labs in this repository are organized according to the topics covered in the
 - Model deployment using containerization (e.g., Docker) and orchestration (e.g., Kubernetes)
 - Monitoring and logging of deployed models
 - CI/CD for ML pipelines
+- Data labeling with Snorkel
 - Handling data drift and retraining models
 
 ## Getting Started
