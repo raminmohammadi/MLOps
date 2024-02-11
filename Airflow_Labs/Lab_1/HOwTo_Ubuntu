@@ -1,0 +1,14 @@
+Find airflow.cfg file
+
+sudo find / -name airflow.cfg
+
+
+then set:
+
+load_examples = False
+dags_folder = /path/to/your/dag/folder
+
+and save
+
+To run:
+airflow standalone
