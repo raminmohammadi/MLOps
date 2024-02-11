@@ -1,0 +1,6 @@
+apache-airflow
+dvc[gs]
+scikit-learn
+scipy
+pandas
+numpy
