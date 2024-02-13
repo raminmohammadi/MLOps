@@ -1,13 +1,12 @@
 # Airflow labAirflow lab
 
-## ML ModelML Model
+## ML Model
 
 This script is designed for data clustering using K-Means clustering and determining the optimal number of clusters using the elbow method. It provides functionality
 to load data from a CSV file, perform data preprocessing, build and save a K-Means clustering model, and determine the number of clusters based on the elbow
 method.
 
-### PrerequisitesPrerequisites
-
+### Prerequisites
 Before using this script, make sure you have the following libraries installed:
 
 ```
@@ -16,7 +15,7 @@ scikit-learn (sklearn)
 kneed
 pickle
 ```
-### UsageUsage
+### Usage
 
 You can use this script to perform K-Means clustering on your dataset as follows:
 
@@ -37,7 +36,7 @@ sse_values = build_save_model(preprocessed_data, 'clustering_model.pkl')
 result = load_model_elbow('clustering_model.pkl', sse_values)
 print(result)
 ```
-### FunctionsFunctions
+### Functions
 
 ```
 1. load_data():load_data():
@@ -79,7 +78,7 @@ sse_values = build_save_model(preprocessed_data, 'clustering_model.pkl')
 ```
 result = load_model_elbow('clustering_model.pkl', sse_values)
 ```
-## Airflow SetupAirflow Setup
+## Airflow Setup
 
 Use Airflow to author workflows as directed acyclic graphs (DAGs) of tasks. The Airflow scheduler executes your tasks on an array of workers while following the
 specified dependencies.
@@ -94,7 +93,7 @@ Product - https://airflow.apache.org/
 Documentation - https://airflow.apache.org/docs/
 Github - https://github.com/apache/airflow
 ```
-### InstallationInstallation
+### Installation
 
 Prerequisites: You should allocate at least 4GB memory for the Docker Engine (ideally 8GB).
 
@@ -110,7 +109,7 @@ Linux VM
 SSH Connection
 Installed Docker Engine - Install using the convenience script
 ```
-### TutorialTutorial
+### Tutorial
 
 ```
 1. Create a new directory
@@ -193,18 +192,18 @@ You can have n number of scripts inside dags dir
 ```
 docker compose down
 ```
-## Airflow DAG ScriptAirflow DAG Script
+## Airflow DAG Script
 
 This Markdown file provides a detailed explanation of the Python script that defines an Airflow Directed Acyclic Graph (DAG) for a data processing and modeling
 workflow.
 
-### Script OverviewScript Overview
+### Script Overview
 
 The script defines an Airflow DAG named your_python_dag that consists of several tasks. Each task represents a specific operation in a data processing and
 modeling workflow. The script imports necessary libraries, sets default arguments for the DAG, creates PythonOperators for each task, defines task dependencies,
 and provides command-line interaction with the DAG.
 
-### Importing LibrariesImporting Libraries
+### Importing Libraries
 
 ```
 # Import necessary libraries and modules
@@ -217,8 +216,7 @@ from airflow import configuration as conf
 The script starts by importing the required libraries and modules. Notable imports include the DAG and PythonOperator classes from the airflow package,
 datetime manipulation functions, and custom functions from the src.lab2 module.
 
-### Enable pickle support for XCom, allowing data to be passed between tasksEnable pickle support for XCom, allowing data to be passed between tasks
-
+### Enable pickle support for XCom, allowing data to be passed between tasks
 ```
 conf.set('core', 'enable_xcom_pickling', 'True')
 ```
@@ -235,7 +233,7 @@ default_args = {
 Default arguments for the DAG are specified in a dictionary named default_args. These arguments include the DAG owner's name, the start date, the number of retries,
 and the retry delay in case of task failure.
 
-### Create a DAG instance named 'your_python_dag' with the defined default argumentsCreate a DAG instance named 'your_python_dag' with the defined default arguments
+### Create a DAG instance named 'your_python_dag' with the defined default arguments
 
 ```
 dag = DAG(
@@ -250,7 +248,7 @@ Here, the DAG object dag is created with the name 'your_python_dag' and the spec
 and schedule_interval defines the execution schedule (in this case, it's set to None for manual triggering). catchup is set to False to prevent backfilling of missed
 runs.
 
-### Task to load data, calls the 'load_data' Python functionTask to load data, calls the 'load_data' Python function
+### Task to load data, calls the 'load_data' Python function
 
 
 ```
@@ -272,7 +270,7 @@ dag=dag,
 ```
 The 'data_preprocessing_task' depends on the 'load_data_task' and calls the data_preprocessing function, which is provided with the output of the 'load_data_task'.
 
-### Task to build and save a model, depends on 'data_preprocessing_task'Task to build and save a model, depends on 'data_preprocessing_task'
+### Task to build and save a model, depends on 'data_preprocessing_task'
 
 ```
 build_save_model_task = PythonOperator(
@@ -286,8 +284,7 @@ dag=dag,
 The 'build_save_model_task' depends on the 'data_preprocessing_task' and calls the build_save_model function. It also provides additional context information and
 arguments.
 
-### Task to load a model using the 'load_model_elbow' function, depends on 'build_save_model_task'Task to load a model using the 'load_model_elbow' function, depends on 'build_save_model_task'
-
+### Task to load a model using the 'load_model_elbow' function, depends on 'build_save_model_task'
 ```
 load_model_task = PythonOperator(
 task_id='load_model_task',
@@ -298,7 +295,7 @@ dag=dag,
 ```
 The 'load_model_task' depends on the 'build_save_model_task' and calls the load_model_elbow function with specific arguments.
 
-### Set task dependenciesSet task dependencies
+### Set task dependencies
 
 ```
 load_data_task >> data_preprocessing_task >> build_save_model_task >> load_model_task
@@ -306,7 +303,7 @@ load_data_task >> data_preprocessing_task >> build_save_model_task >> load_model
 Task dependencies are defined using the >> operator. In this case, the tasks are executed in sequence: 'load_data_task' -> 'data_preprocessing_task' ->
 'build_save_model_task' -> 'load_model_task'.
 
-### If this script is run directly, allow command-line interaction with the DAGIf this script is run directly, allow command-line interaction with the DAG
+### If this script is run directly, allow command-line interaction with the DAG
 
 ```
 if __name__ == "__main__":
@@ -317,12 +314,12 @@ Lastly, the script allows for command-line interaction with the DAG. When the sc
 and manage the DAG from the command line.
 This script defines a comprehensive Airflow DAG for a data processing and modeling workflow, with clear task dependencies and default arguments.
 ```
-## Running an Apache Airflow DAG Pipeline in DockerRunning an Apache Airflow DAG Pipeline in Docker
+## Running an Apache Airflow DAG Pipeline in Docker
 
 This guide provides detailed steps to set up and run an Apache Airflow Directed Acyclic Graph (DAG) pipeline within a Docker container using Docker Compose. The
 pipeline is named "your_python_dag."
 
-### PrerequisitesPrerequisites
+### Prerequisites
 
 
 ```
@@ -341,11 +338,11 @@ your_airflow_project/
 ├── data/ # Directory for data (if needed)
 ├── docker-compose.yaml # Docker Compose configuration
 ```
-### Step 2: Docker Compose ConfigurationStep 2: Docker Compose Configuration
+### Step 2: Docker Compose Configuration
 
 Create a docker-compose.yaml file in the project root directory. This file defines the services and configurations for running Airflow in a Docker container.
 
-### Step 3: Start the Docker containers by running the following commandStep 3: Start the Docker containers by running the following command
+### Step 3: Start the Docker containers by running the following command
 
 ```
 docker compose up
@@ -355,14 +352,14 @@ Wait until you see the log message indicating that the Airflow webserver is runn
 ```
 app-airflow-webserver-1 | 127.0.0.1 - - [17/Feb/2023:09:34:29 +0000] "GET /health HTTP/1.1" 200 141 "-" "curl/7.74.0"
 ```
-### Step 4: Access Airflow Web InterfaceStep 4: Access Airflow Web Interface
+### Step 4: Access Airflow Web Interface
 
 ```
 Open a web browser and navigate to http://localhost:8080.
 Log in with the credentials set in the .env file or use the default credentials (username: admin, password: admin).
 Once logged in, you'll be on the Airflow web interface.
 ```
-### Step 5: Trigger the DAGStep 5: Trigger the DAG
+### Step 5: Trigger the DAG
 
 ```
 In the Airflow web interface, navigate to the "DAGs" page.
@@ -370,7 +367,7 @@ You should see the "your_python_dag" listed.
 To manually trigger the DAG, click on the "Trigger DAG" button or enable the DAG by toggling the switch to the "On" position.
 Monitor the progress of the DAG in the Airflow web interface. You can view logs, task status, and task execution details.
 ```
-### Step 6: Pipeline OutputsStep 6: Pipeline Outputs
+### Step 6: Pipeline Outputs
 
 ```
 Once the DAG completes its execution, check any output or artifacts produced by your functions and tasks.
