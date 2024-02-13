@@ -1,8 +1,0 @@
-# .gitignore for Python projects
-__pycache__
-*.pyc
-*.pyo
-.pytest_cache/
-.vscode/
-.idea/
-lab01_env
