@@ -14,13 +14,18 @@ from snorkel.classification.data import DictDataset, DictDataLoader
 
 
 def load_spam_dataset(load_train_labels: bool = False, split_dev_valid: bool = False):
-    if os.path.basename(os.getcwd()) == "snorkel-tutorials":
-        os.chdir("spam")
-    try:
-        subprocess.run(["bash", "download_data.sh"], check=True, stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError as e:
-        print(e.stderr.decode())
-        raise e
+    # if os.path.basename(os.getcwd()) == "snorkel-tutorials":
+    #     os.chdir("spam")
+    # try:
+    #     subprocess.run(["bash", "download_data.sh"], check=True, stderr=subprocess.PIPE)
+    # except subprocess.CalledProcessError as e:
+    #     print(e.stderr.decode())
+
+    #     print("Command:", e.cmd)
+    #     print("Return code:", e.returncode)
+    #     print("Error output:", e.stderr.decode())
+
+    #     raise e
     filenames = sorted(glob.glob("data/Youtube*.csv"))
 
     dfs = []
