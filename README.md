@@ -1,8 +1,8 @@
-# MLOps Labs Repository
+# MLOps Repository
 
 ## Overview
 
-Welcome to the MLOps Labs Repository! This repository is dedicated to sharing the labs and exercises for the MLOps (Machine Learning Operations) course at Northeastern University. The primary goal of this repository is to provide a centralized platform for students, instructors, and anyone interested in MLOps to access and collaborate on course-related materials.
+Welcome to the MLOps Repository! This repository is dedicated to sharing reading contents, labs and exercises for the MLOps (Machine Learning Operations) course at Northeastern University. The primary goal of this repository is to provide a centralized platform for students, instructors, and anyone interested in MLOps to access and collaborate on course-related materials.
 
 ## Table of Contents
 
