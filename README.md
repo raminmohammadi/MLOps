@@ -24,7 +24,7 @@ The MLOps course at Northeastern University is designed to provide students with
 - Build end-to-end machine learning pipelines
 - Deploy machine learning models to production
 - Monitor and maintain ML systems
-- Implement CI/CD (Continuous Integration/Continuous Deployment) for ML
+- Implement CI/CD/CM/CT (Continuous Integration/Continuous Deployment/Continuous Monitoring/Continuous Training) for ML
 - Containerize and orchestrate ML workloads
 - Handle data drift and model retraining
 
