@@ -1,4 +1,4 @@
-# Airflow labAirflow lab
+# Airflow lab
 
 ## ML Model
 
