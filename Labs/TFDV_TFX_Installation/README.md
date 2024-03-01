@@ -2,29 +2,31 @@
 
 
 **TFXInstallation:**
-● pip3install--upgradevirtualenv
-● python3-mvenvmy_tfx
-● sourcemy_tfx_env/bin/activate
-● pipinstall--upgradepipsetuptoolswheel
-● pipinstallml-metadata==1.11.
-● pipinstalltfx==1.14.0--no-dependencies
-● python-c"importtfx;print(tfx.__version__)"
+
+- pip3install--upgradevirtualenv
+
+- python3-mvenvmy_tfx
+- sourcemy_tfx_env/bin/activate
+- pipinstall--upgradepipsetuptoolswheel
+- pipinstallml-metadata==1.11.
+- pipinstalltfx==1.14.0--no-dependencies
+- python-c"importtfx;print(tfx.__version__)"
 
 --------------------------------------------------------------
 
 **TFDVInstallation:
 Miniforge3File:** Link
-● chmod+x~/Downloads/Miniforge3-MacOSX-arm64.sh
-● sh~/Downloads/Miniforge3-MacOSX-arm64.sh
-● source~/miniforge3/bin/activate
-● condacreate-ntfpython=3.
-● condaactivatetf
-● condainstall-cappletensorflow-deps
-● python-mpipinstalltensorflow-macos==2.
-● python-mpipinstalltensorflow-metal
-● pipinstall--upgradetensorflow-macostensorflow-metal
-● importtensorflowastf
-● print(tf.config.list_physical_devices('GPU'))
+- chmod+x~/Downloads/Miniforge3-MacOSX-arm64.sh
+- sh~/Downloads/Miniforge3-MacOSX-arm64.sh
+- source~/miniforge3/bin/activate
+- condacreate-ntfpython=3.
+- condaactivatetf
+- condainstall-cappletensorflow-deps
+- python-mpipinstalltensorflow-macos==2.
+- python-mpipinstalltensorflow-metal
+- pipinstall--upgradetensorflow-macostensorflow-metal
+- importtensorflowastf
+- print(tf.config.list_physical_devices('GPU'))
 
 --------------------------------------------------------------
 
