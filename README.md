@@ -1,5 +1,4 @@
-# MLOps Repository
-## [Website](https://www.mlwithramin.com/)
+# MLOps Repository - Visit us at [Website](https://www.mlwithramin.com/)
 
 ## Overview
 
