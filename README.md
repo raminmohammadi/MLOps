@@ -66,6 +66,9 @@ Contributions to this repository are welcome! If you are a student or instructor
 
 Your contributions will help improve the overall quality of the labs and benefit the entire MLOps community.
 
+## Reference:
+The reading materials of this repo was collected from Coursera under the Creative Commons License.
+
 ## License
 
 This repository is open-source and is distributed under the [MIT License](LICENSE). Please review the license for more details on how you can use and share the content within this repository.
