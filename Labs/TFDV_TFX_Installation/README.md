@@ -5,29 +5,28 @@
 
 **TFXInstallation:**
 
-- pip3install--upgradevirtualenv
-
-- python3-mvenvmy_tfx
-- sourcemy_tfx_env/bin/activate
-- pipinstall--upgradepipsetuptoolswheel
-- pipinstallml-metadata==1.11.
-- pipinstalltfx==1.14.0--no-dependencies
-- python-c"importtfx;print(tfx.__version__)"
+- pip3 install --upgrade virtualenv
+- python3 -m venv my_tfx
+- source my_tfx/bin/activate
+- pip install --upgrade pip setuptools wheel
+- pip install ml-metadata==1.11.0
+- pip install tfx==1.14.0 --no-dependencies
+- python -c "import tfx;print(tfx.__version__)"
 
 --------------------------------------------------------------
 
 **TFDVInstallation:
 Miniforge3File:** Link
-- chmod+x~/Downloads/Miniforge3-MacOSX-arm64.sh
-- sh~/Downloads/Miniforge3-MacOSX-arm64.sh
-- source~/miniforge3/bin/activate
-- condacreate-ntfpython=3.
-- condaactivatetf
-- condainstall-cappletensorflow-deps
-- python-mpipinstalltensorflow-macos==2.
-- python-mpipinstalltensorflow-metal
-- pipinstall--upgradetensorflow-macostensorflow-metal
-- importtensorflowastf
+- chmod +x ~/Downloads/Miniforge3-MacOSX-arm64.sh
+- sh ~/Downloads/Miniforge3-MacOSX-arm64.sh
+- source ~/miniforge3/bin/activate
+- conda create -n tf python=3.9
+- conda activate tf
+- conda install -c apple tensorflow-deps
+- python -m pip install tensorflow-macos==2.9
+- python -m pip install tensorflow-metal
+- pip install --upgrade tensorflow-macos tensorflow-metal
+- import tensorflow as tf
 - print(tf.config.list_physical_devices('GPU'))
 
 --------------------------------------------------------------
