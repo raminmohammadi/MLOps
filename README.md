@@ -71,4 +71,4 @@ The reading materials of this repo was collected from Coursera under the Creativ
 
 ## License
 
-This repository is open-source and is distributed under the [MIT License](LICENSE). Please review the license for more details on how you can use and share the content within this repository.
+This repository is open-source and is distributed under the [Creative Commons License](LICENSE). Please review the license for more details on how you can use and share the content within this repository.
