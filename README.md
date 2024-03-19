@@ -1,8 +1,8 @@
-# MLOps Repository - Visit us at [Website](https://www.mlwithramin.com/)
+# MLOps Repository
 
 ## Overview
 
-Welcome to the MLOps Repository! This repository is dedicated to sharing reading contents, labs and exercises for the MLOps (Machine Learning Operations) course at Northeastern University. The primary goal of this repository is to provide a centralized platform for students, instructors, and anyone interested in MLOps to access and collaborate on course-related materials.
+Welcome to the MLOps Repository! This repository is dedicated to sharing reading contents, labs and exercises for the MLOps (Machine Learning Operations) course at Northeastern University. The primary goal of this repository is to provide a centralized platform for students, instructors, and anyone interested in MLOps to access and collaborate on course-related materials. You can learn more on Machine learning topics by watching my videos at [Youtube](https://www.youtube.com/channel/UCCGbsdfmgmhMLs-tjOtOp0Q) or visit my [Website](https://www.mlwithramin.com/).
 
 ## Table of Contents
 
