@@ -53,10 +53,18 @@ def run():
             LOGGER.error("Backend offline 😱")
             st.error("Backend offline 😱")
         st.info("Configure parameters")
-        sepal_length = st.slider("Sepal Length",4.3, 7.9, 4.3, 0.1, help="Sepal length in centimeter (cm)", format="%f")
-        sepal_width = st.slider("Sepal Width",2.0, 4.4, 2.0, 0.1, help="Sepal width in centimeter (cm)", format="%f")
-        petal_length = st.slider("Petal Length",1.0, 6.9, 1.0, 0.1, help="Petal length in centimeter (cm)", format="%f")
-        petal_width = st.slider("Petal Width",0.1, 2.5, 0.1, 0.1, help="Petal width in centimeter (cm)", format="%f")
+        # sepal_length = st.slider("Sepal Length",4.3, 7.9, 4.3, 0.1, help="Sepal length in centimeter (cm)", format="%f")
+        # sepal_width = st.slider("Sepal Width",2.0, 4.4, 2.0, 0.1, help="Sepal width in centimeter (cm)", format="%f")
+        # petal_length = st.slider("Petal Length",1.0, 6.9, 1.0, 0.1, help="Petal length in centimeter (cm)", format="%f")
+        # petal_width = st.slider("Petal Width",0.1, 2.5, 0.1, 0.1, help="Petal width in centimeter (cm)", format="%f")
+        test_input_file = st.file_uploader('Upload test prediction file',type=['json'])
+        if test_input_file:
+            st.write('Preview file')
+            test_input_data = json.load(test_input_file)
+            st.json(test_input_data)
+            st.session_state["IS_JSON_FILE_AVAILABLE"] = True
+        else:
+            st.session_state["IS_JSON_FILE_AVAILABLE"] = False
         predict_button = st.button('Predict')
 if __name__ == "__main__":
     run()
@@ -141,6 +149,43 @@ Here the parameters are explained below:
 
 `🔥Note:` The value of the slider is directly stored into the variable. So, `sepal_length` in `sepal_length = st.slider()` will store the current value for the slider.
 
+When working with machine learning models in practical applications, practitioners often need to handle various file formats such as CSV, JSON, Excel, and others. Instead of using sliders or other input methods, we will leverage the `st.file_uploader` widget to allow users to upload a JSON file. This JSON file can then be previewed using st.json before sending the data for prediction by the model. 
+
+```Python
+test_input_file = st.file_uploader('Upload test prediction file',type=['json'])
+```
+
+The above function accepts two arguments: a message to display to the user, and a list of permitted file types. In our case, we will specify JSON as the only accepted file type.
+
+Check the documentation for additional arguments [`st.file_uploader`](https://docs.streamlit.io/library/api-reference/widgets/st.file_uploader). 
+
+![](./assets/st_file_uploader.png)
+
+It is important to note that since the permitted file type is set to json, if the user attempts to upload a file of any other format, such as CSV, Streamlit will display a warning message. In this scenario, the application will not proceed with sending a prediction request.
+
+![](./assets/st_file_uploader_not_permitted.png)
+
+The [`st.json`](https://docs.streamlit.io/library/api-reference/data/st.json) widget provides a convenient way to preview the contents of the uploaded JSON file. This preview functionality allows the user to validate and ensure the information is correct before proceeding with the prediction process.
+
+An example `test.json` file
+```JSON
+{
+    "input_test" : {
+        "sepal_length": 2.5,
+        "sepal_width": 3.5,
+        "petal_length": 1.5,
+        "petal_width": 2.5
+    }
+}
+```
+
+The next key information is [`st.session_state`](https://docs.streamlit.io/library/api-reference/session-state). In Streamlit applications, `st.session_state` is a way to store and persist data across multiple user interactions with the app. It acts like a client-side cache, storing variables and data in the user's browser session. 
+
+```Python
+st.session_state["IS_JSON_FILE_AVAILABLE"] = True
+```
+
+
 Finally, to finish the sidebar panel, let's add the most important element, i.e., the predict button.
 
 ```Python
@@ -224,7 +269,7 @@ At this point, we have understood and built the server code. To run the streamli
 streamlit run .\Dashboard.py
 ```
 
-![](./assets/dashboard.png)
+![](./assets/dashboard_1.png)
 
 ## Additional information
 
