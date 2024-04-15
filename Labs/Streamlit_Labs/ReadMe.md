@@ -5,11 +5,44 @@ Data Science models often need to be shared and presented in an interactive mann
 ## Lab objective
 Before we move forward, we highly recommend completing the [FastAPI_Labs](../FastAPI_Labs/src/) if you haven't already. The FastAPI Labs will teach you how to train and host your own machine learning classification model. In this new lab, we'll build upon what you learned and add a clean, user-friendly interface to interact with your model.
 
-## Install Streamlit
+## Installing required packages
 
-You will need to install streamlit for the next sections
+There are two ways to install the required packages for this lab.
 
-1. `pip install streamlit`
+### Installing from requirements.txt file
+
+The Lab folder comes with a requirements.txt file. We will first setup a virtual environment, and install all the required packages into the environment. Finally, we will activate the environment. This is a recommended setup for any Python project since a virtual environment in Python isolates your project's dependencies from your system's installed libraries and other virtual environments. This prevents conflicts and ensures you have the exact versions of packages.
+
+
+1. Create virual environment with the name `streamlitenv`.
+```
+python3 -m venv streamlitenv 
+```
+
+2. Activate virtual environment    
+
+For Mac & Linux:    
+```
+source ./streamlitenv/bin/activate
+```
+For Windows:   
+```
+.streamlitenv\Scripts\activate
+```
+
+3. Installing packages from requirements.txt
+```
+pip install -r requirements.txt
+```
+
+### Alternative method to installing packages for lab
+Alternative method is to install these 3 packages:
+
+```
+pip install streamlit fastapi uvicorn
+```   
+
+You could do this in a virtual environment as directed above section.
 
 ## Hello World in Streamlit
 
@@ -283,3 +316,7 @@ To start the fastAPI server use the command
 ```
 uvicorn main:app --reload
 ```
+
+### Running Lab on Google Colab
+
+This lab has additional support to run on free instance of Google Colab. This enables sharing the lab while the Google Colab instance is running. Here is the [link](https://colab.research.google.com/drive/1ESehcAeGGiFvIM6zZaceCxzz6Nb_3Rbp?usp=sharing) to the demo lab.
