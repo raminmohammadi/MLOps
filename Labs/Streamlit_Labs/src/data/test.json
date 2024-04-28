@@ -1,0 +1,8 @@
+{
+    "input_test" : {
+        "sepal_length": 2.5,
+        "sepal_width": 3.5,
+        "petal_length": 1.5,
+        "petal_width": 2.5
+    }
+}
