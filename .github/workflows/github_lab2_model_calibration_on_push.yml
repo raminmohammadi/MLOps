@@ -53,13 +53,13 @@ jobs:
       run: |
         timestamp=$(cat timestamp.txt)
         model_filename="model_${timestamp}_dt_model.joblib"
-        mv $model_filename $GITHUB_WORKSPACE/models/$model_filename
+        mv $model_filename Labs/Github_Labs/Lab2/models/$model_filename
 
     - name: Commit and Push Changes
       run: |
         git config --global user.email "26876927+raminmohammadi@users.noreply.github.com"
         git config --global user.name "raminmohammadi"
-        git add $GITHUB_WORKSPACE/metrics/$metrics_filename $GITHUB_WORKSPACE/models/$model_filename
+        git add Labs/Github_Labs/Lab2/metrics/$metrics_filename Labs/Github_Labs/Lab2/models/$model_filename
         git commit -m "Add metrics and updated model"
         git push
       env:
