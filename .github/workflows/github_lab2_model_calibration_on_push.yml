@@ -1,7 +1,7 @@
 name: Model Retraining on Push to Main - Ghithub Lab 2
 
 on:
-  pull:
+  push:
     branches:
       - main  # Trigger the workflow on pushes to the main branch
 
