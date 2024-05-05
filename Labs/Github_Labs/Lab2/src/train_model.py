@@ -1,6 +1,6 @@
-from sklearn.datasets import fetch_rcv1
+# from sklearn.datasets import fetch_rcv1
 import mlflow, datetime, os, pickle, random
-import sklearn
+# import sklearn
 from joblib import dump
 from sklearn.datasets import make_classification
 from sklearn.metrics import accuracy_score, f1_score
