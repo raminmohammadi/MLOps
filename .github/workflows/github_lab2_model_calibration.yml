@@ -1,4 +1,4 @@
-name: Periodic Model Calibration
+name: Periodic Model Calibration - Ghithub Lab 2
 
 on: 
   schedule:
@@ -18,7 +18,7 @@ jobs:
         python-version: 3.9
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r Labs/Github_Labs/Lab2/requirements.txt
 
     - name: Generate and Store Timestamp
       run: |
@@ -28,21 +28,21 @@ jobs:
 
     - name: Check File Permissions
       run: |
-        ls -l ./src/train_model.py
+        ls -l Labs/Github_Labs/Lab2/src/train_model.py
 
     - name: Set File Permissions
       run: |
-        chmod +x ./src/train_model.py
+        chmod +x Labs/Github_Labs/Lab2/src/train_model.py
 
     - name: Retrain Model
       run: |
         timestamp=$(cat timestamp.txt) # Use the timestamp in your training script
-        python ./src/train_model.py --timestamp "$timestamp"
+        python Labs/Github_Labs/Lab2/src/train_model.py --timestamp "$timestamp"
 
     - name: Evaluate Model and Log Metrics
       run: |
         timestamp=$(cat timestamp.txt) # Use the timestamp in your training script
-        python ./src/evaluate_model.py  --timestamp "$timestamp" # Assuming you have a script for model evaluation
+        python Labs/Github_Labs/Lab2/src/evaluate_model.py  --timestamp "$timestamp" # Assuming you have a script for model evaluation
         metrics_filename="${timestamp}_metrics.json"
         mv $metrics_filename $GITHUB_WORKSPACE/metrics/$metrics_filename
       continue-on-error: false  # Continue even if evaluation fails
