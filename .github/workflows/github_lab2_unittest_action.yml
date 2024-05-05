@@ -19,7 +19,7 @@ jobs:
         python-version: 3.8
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r Labs/Github_Labs/Lab1/requirements.txt
 
     - name: Run unittests
       run: python -m unittest Labs/Github_Labs/Lab1/test/test_unittest.py
