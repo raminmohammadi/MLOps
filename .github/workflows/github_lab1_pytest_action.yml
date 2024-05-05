@@ -1,4 +1,4 @@
-name: Testing with Pytest
+name: Testing Github Lab1 with Pytest
 on:
   push:
     branches:
