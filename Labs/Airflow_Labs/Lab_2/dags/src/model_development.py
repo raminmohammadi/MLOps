@@ -15,7 +15,7 @@ def load_data():
     Returns:
         bytes: Serialized data.
     """
-    data = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/advertising.csv"))
+    data = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(__file__)), "data/advertising.csv"))
     return data
 
 # Preprocess the data
@@ -62,8 +62,8 @@ def build_model(data, filename):
     # Create and train a logistic regression model with the best parameters
     lr_clf = LogisticRegression()
     lr_clf.fit(X_train, y_train)
-    output_path = os.path.join(os.path.dirname(__file__), "../model", filename)
-
+    #output_path = os.path.join(os.path.dirname(__file__), "../model", filename)
+    output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model", filename)
     # Save the trained model to a file
     pickle.dump(lr_clf, open(output_path, 'wb'))
 
