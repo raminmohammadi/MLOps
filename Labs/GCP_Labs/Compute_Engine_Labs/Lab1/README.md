@@ -46,7 +46,7 @@ This lab aims to teach participants the fundamentals of working with virtual mac
 
 ### **Step 4: Add SSH Keys to the VM:**
 
-Generate SSH keys if you haven't already: \
+Generate SSH keys if you haven't already: 
 
 
 
@@ -57,46 +57,42 @@ ssh-keygen -t rsa -b 2048 -C "your_email@example.com"
 
 Add the public key to the VM instance:
 
-
-
-    * Go to Compute Engine > VM instances.
-    * Click on the instance name.
-    * Click "Edit".
-    * Scroll down to the "SSH keys" section and add your public key.
-    * Click "Save".
+1. Go to Compute Engine > VM instances.
+2. Click on the instance name.
+3. Click "Edit".
+4. Scroll down to the "SSH keys" section and add your public key.
+5. Click "Save".
 
 
 ### **Step 5: SSH into the Instance, Make Filesystem, and Mount the Disk:**
 
 
-
 1. SSH into the instance using the SSH key you added in Step 4 , copy the username and instance_external_ip from compute engine console:
 
     ```
-ssh -i path/to/private/key username@instance_external_ip
-```
+   ssh -i path/to/private/key username@instance_external_ip
+   ```
 
 
-1. Once logged in, make the filesystem for the attached disk (/dev/sdb):
+2. Once logged in, make the filesystem for the attached disk (/dev/sdb):
 
-    ```
-sudo mkfs.ext4 -F /dev/sdb
-```
-
-
-1. Create a directory to mount the disk:
-
-    ```
-sudo mkdir /mlops-disk
-```
+      ```
+   sudo mkfs.ext4 -F /dev/sdb
+   ```
 
 
-1. Mount the disk at /mlops-disk:
+3. Create a directory to mount the disk:
 
-    ```
-sudo mount /dev/sdb /mlops-disk
-```
+      ```
+   sudo mkdir /mlops-disk
+   ```
 
+
+4. Mount the disk at /mlops-disk:
+
+      ```
+   sudo mount /dev/sdb /mlops-disk
+   ```
 
 
 
