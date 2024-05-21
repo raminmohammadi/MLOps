@@ -48,3 +48,11 @@ Refer to [this page](https://airflow.apache.org/docs/apache-airflow/stable/core-
 
 ## Conclusion
 This tutorial provided a basic introduction to creating and deploying a DAG in Google Cloud Composer using Apache Airflow. With these foundations, you can start building more complex workflows to automate various tasks in your cloud and on-premises environments.
+
+
+## Important Links
+
+- Quickstart Guide to Google Cloud Composer - [Getting Started With Composer](https://cloud.google.com/composer/docs/run-apache-airflow-dag)
+- Installing Google Cloud CLI -  [Installing gcloud](https://cloud.google.com/sdk/docs/install-sdk)
+- Identity Management of Cloud Composer - [Control Access](https://cloud.google.com/composer/docs/how-to/access-control#composer-sa)
+- Airflow Operators - [Operators](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/operators.html)
