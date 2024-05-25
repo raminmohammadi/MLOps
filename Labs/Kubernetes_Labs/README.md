@@ -2,6 +2,27 @@
 
 Understanding key Kubernetes terms can help you better manage and troubleshoot your deployments. Here are some important terms related to deploying applications in Kubernetes:
 
+### Containers
+
+In software engineering, a container is an executable unit of software that packages and runs an entire application, or portions of it, within itself.
+
+Containers comprise not only the application’s binary files, but also libraries, runtimes, configuration files, and any other dependencies that the application requires to run optimally. Talk about self-sufficiency.
+
+[Pods](assets/containers-vs-virtual-machine-architectures.png)
+
+This design enables a container to be an entire application runtime environment unto itself.
+
+As a result, a container isolates the application it hosts from the external environment it runs on. This enables applications running in containers to be built in one environment and deployed in different environments without compatibility problems.
+
+Also, because containers share resources and do not host their own operating system, they are leaner than virtual machines (VMs). This makes deploying containerized applications much quicker and more efficient than on contemporary virtual machines.
+
+### What Is A Containerized Application?
+In cloud computing, a containerized application refers to an app that has been specially built using cloud-native architecture for running within containers. A container can either host an entire application or small, distributed portions of it (which are known as microservices).
+
+Developing, packaging, and deploying applications in containers is referred to as containerization. Apps that are containerized can run in a variety of environments and devices without causing compatibility problems.
+
+One more thing. Developers can isolate faulty containers and fix them independently before they affect the rest of the application or cause downtime. This is something that is extremely tricky to do with traditional monolithic applications.
+
 ### Pod
 A **Pod** is the smallest deployable unit created and managed by Kubernetes. A pod is a group of one or more containers, with shared storage/network, and a specification for how to run the containers. Pods are ephemeral by nature.
 
