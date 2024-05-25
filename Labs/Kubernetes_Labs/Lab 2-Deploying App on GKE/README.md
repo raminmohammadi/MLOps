@@ -2,7 +2,7 @@
 
 This guide explains how to deploy a simple FastAPI application to Google Kubernetes Engine (GKE) using Kubernetes manifests and `kubectl`. The deployment includes basic configurations like setting replicas, applying labels, and establishing services to expose the application.
 
-You can watch the toturial video at [Kubernetes-lab1](https://www.youtube.com/watch?v=3NOCchsRlog)
+You can watch the toturial video at [Kubernetes-lab2](https://www.youtube.com/watch?v=3NOCchsRlog)
 
 
 ## Prerequisites
