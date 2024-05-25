@@ -8,7 +8,7 @@ In software engineering, a container is an executable unit of software that pack
 
 Containers comprise not only the application’s binary files, but also libraries, runtimes, configuration files, and any other dependencies that the application requires to run optimally. Talk about self-sufficiency.
 
-[Pods](assets/containers-vs-virtual-machine-architectures.png)
+[Containers](assets/containers-vs-virtual-machine-architectures.png)
 
 This design enables a container to be an entire application runtime environment unto itself.
 
