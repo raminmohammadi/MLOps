@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Copy the model training script into the container
-COPY src/main.py .
+COPY src/ .
 
 # Install Scikit-Learn and joblib
 RUN pip install -r requirements.txt
