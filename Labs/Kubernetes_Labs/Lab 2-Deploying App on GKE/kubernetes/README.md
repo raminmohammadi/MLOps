@@ -114,7 +114,7 @@ spec:
       containers:
           - name: fastapi-app-container
             image: heyitsrj/mlops-fastapi-app:v3
-            imagePullPolicy: Always
+            imagePullPolicy: Always # to use latest version of the image always
             ports:
               - containerPort: 8080
 ```
