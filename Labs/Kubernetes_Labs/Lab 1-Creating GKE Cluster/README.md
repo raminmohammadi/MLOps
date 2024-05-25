@@ -2,6 +2,8 @@
 
 This guide provides instructions on how to create a Google Kubernetes Engine (GKE) cluster using both the Google Cloud Console and the command-line interface (CLI). Learn to set up a basic cluster with configurations such as cluster name, zone/region, and node pool settings.
 
+You can watch the toturial video at [Kubernetes-lab1](https://www.youtube.com/watch?v=_z9ZdGnIVSE)
+
 ## Prerequisites
 
 Before you begin, ensure you have the following:
