@@ -53,6 +53,12 @@ Nodes usually work together in groups. A **Kubernetes cluster** contains a set o
 - Each pod contains one or more containers. A container hosts the application code and all the dependencies the app requires to run properly.
 
 
+### Kubectl
+**Kubectl** is a command line tool for Kubernetes. It allows you to run commands against Kubernetes clusters to deploy applications, inspect and manage cluster resources, and view logs.
+
+To read more on how to install kubectl, please refer to [kubectl installation guide](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+
+
 ### Deployment
 A **Deployment** provides declarative updates for Pods and ReplicaSets. You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. This structure allows you to easily scale and update your application.
 
@@ -65,8 +71,6 @@ A **Service** in Kubernetes is an abstraction which defines a logical set of Pod
 ### Namespace
 A **Namespace** provides a mechanism for isolating groups of resources within a single cluster. Namespaces are how you divide cluster resources between multiple users and applications.
 
-### Kubectl
-**Kubectl** is a command line tool for Kubernetes. It allows you to run commands against Kubernetes clusters to deploy applications, inspect and manage cluster resources, and view logs.
 
 ### ConfigMap and Secrets
 **ConfigMaps** and **Secrets** are Kubernetes objects used to store non-confidential and confidential data, respectively. This data can be used by Pods or other system components. ConfigMaps are ideal for storing configuration settings and parameters, while Secrets are used for sensitive information.
