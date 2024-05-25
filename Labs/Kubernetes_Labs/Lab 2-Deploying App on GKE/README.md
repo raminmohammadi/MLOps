@@ -48,36 +48,6 @@ The external IP listed under **`EXTERNAL-IP`** is where your FastAPI application
 
 Understanding key Kubernetes terms can help you better manage and troubleshoot your deployments. Here are some important terms related to deploying applications in Kubernetes:
 
-### Pod
-A **Pod** is the smallest deployable unit created and managed by Kubernetes. A pod is a group of one or more containers, with shared storage/network, and a specification for how to run the containers. Pods are ephemeral by nature.
-
-- The pod is an additional level of abstraction that provides shared storage (volumes), IP address, communication between containers, and hosts other information about how to run application containers. 
-![Pods](assets/pods.png)
-- Containers that must communicate directly to function are housed in the same pod. These containers are also co-scheduled because they work within a similar context. Also, the shared storage volumes enable pods to last through container restarts because they provide persistent data.
-- Kubernetes also scales or replicates the number of pods up and down to meet changing load/traffic/demand/performance requirements. Similar pods scale together.
-- Another unique feature of Kubernetes is that rather than creating containers directly, it generates pods that already have containers.
-- Also, whenever you create a K8s pod, the platform automatically schedules it to run on a Node. This pod will remain active until the specific process completes, resources to support the pod run out, the pod object is removed, or the host node terminates or fails.
-- Each pod runs inside a Kubernetes node, and each pod can fail over to another, logically similar pod running on a different node in case of failure. And speaking of Kubernetes nodes.
-
-### Node
-A **Node** is a worker machine in Kubernetes, which may be a VM or a physical machine, depending on the cluster. Each node has the services necessary to run Pods and is managed by the master components.
-![Nods](assets/node.png)
-
-Each node also comprises three crucial components:
-
-**Kubelet** – This is an agent that runs inside each node to ensure pods are running properly, including communications between the Master and nodes.
-**Container runtime** – This is the software that runs containers. It manages individual containers, including retrieving container images from repositories or registries, unpacking them, and running the application.
-**Kube-proxy** – This is a network proxy that runs inside each node, managing the networking rules within the node (between its pods) and across the entire Kubernetes cluster.
-
-### Kubernetes Cluster
-Nodes usually work together in groups. A **Kubernetes cluster** contains a set of work machines (nodes). The cluster automatically distributes workload among its nodes, enabling seamless scaling.
-
-**Here’s that symbiotic relationship:**
-
-- A cluster consists of several nodes. The node provides the compute power to run the setup. It can be a virtual machine or a physical machine. A single node can run one or more pods.
-- Each pod contains one or more containers. A container hosts the application code and all the dependencies the app requires to run properly.
-
-
 ### Deployment
 A **Deployment** provides declarative updates for Pods and ReplicaSets. You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. This structure allows you to easily scale and update your application.
 
