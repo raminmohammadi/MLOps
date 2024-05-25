@@ -15,7 +15,7 @@ A **Pod** is the smallest deployable unit created and managed by Kubernetes. A p
 
 ### Node
 A **Node** is a worker machine in Kubernetes, which may be a VM or a physical machine, depending on the cluster. Each node has the services necessary to run Pods and is managed by the master components.
-![Nods](assets/nods.png)
+![Nods](assets/node.png)
 
 Each node also comprises three crucial components:
 
