@@ -4,7 +4,7 @@ metadata:
   namespace: mlops
   name: fastapi-app
 spec:
-  replicas: 2
+  replicas: 2 # To ensuer there are always to replicas 
   selector:
     matchLabels:
       app: fastapi-app
