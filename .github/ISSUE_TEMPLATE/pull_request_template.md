@@ -1,6 +1,6 @@
 ---
 name: PULL_REQUEST_TEMPLATE
-about: This is the template for pull request
+about: This is the template for pull request.
 title: ''
 labels: pull request
 assignees: raminmohammadi
