@@ -1,0 +1,1 @@
+# Watch the tutorial video for this lab at [ELK tutorial video](https://youtu.be/sBqWEH5VKJY)
