@@ -1,4 +1,8 @@
+## Watch the tutorial video at [Toturial Video](https://www.youtube.com/watch?v=O0X6NoQyEf0)
+
 Install the [google cloud CLI](https://cloud.google.com/sdk/docs/install) based on your operating system and make sure the gcloud command works 
+
+
 
 ```
 gcloud init
