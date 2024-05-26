@@ -1,0 +1,962 @@
+feature {
+  name: "race"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  domain: "race"
+  presence {
+    min_count: 1
+  }
+}
+feature {
+  name: "gender"
+  type: BYTES
+  domain: "gender"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "age"
+  type: BYTES
+  domain: "age"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "weight"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  domain: "weight"
+  presence {
+    min_count: 1
+  }
+}
+feature {
+  name: "admission_type_id"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "discharge_disposition_id"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "admission_source_id"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "time_in_hospital"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "payer_code"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  domain: "payer_code"
+  presence {
+    min_count: 1
+  }
+  distribution_constraints {
+    min_domain_mass: 0.9
+  }
+  drift_comparator {
+    infinity_norm {
+      threshold: 0.03
+    }
+  }
+}
+feature {
+  name: "medical_specialty"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  domain: "medical_specialty"
+  presence {
+    min_count: 1
+  }
+  distribution_constraints {
+    min_domain_mass: 0.9
+  }
+}
+feature {
+  name: "num_lab_procedures"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "num_procedures"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "num_medications"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "number_outpatient"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "number_emergency"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "number_inpatient"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "diag_1"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  presence {
+    min_count: 1
+  }
+}
+feature {
+  name: "diag_2"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  presence {
+    min_count: 1
+  }
+}
+feature {
+  name: "diag_3"
+  value_count {
+    min: 1
+    max: 1
+  }
+  type: BYTES
+  presence {
+    min_count: 1
+  }
+}
+feature {
+  name: "number_diagnoses"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "max_glu_serum"
+  type: BYTES
+  domain: "max_glu_serum"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "A1Cresult"
+  type: BYTES
+  domain: "A1Cresult"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "metformin"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "repaglinide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "nateglinide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "chlorpropamide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glimepiride"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "acetohexamide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glipizide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glyburide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "tolbutamide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "pioglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "rosiglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "acarbose"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "miglitol"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "troglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "tolazamide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "examide"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "citoglipton"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "insulin"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glyburide-metformin"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glipizide-metformin"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "glimepiride-pioglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "metformin-rosiglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "metformin-pioglitazone"
+  type: BYTES
+  domain: "metformin"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "change"
+  type: BYTES
+  domain: "change"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "diabetesMed"
+  type: BYTES
+  domain: "diabetesMed"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  skew_comparator {
+    infinity_norm {
+      threshold: 0.03
+    }
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "readmitted"
+  type: BYTES
+  domain: "readmitted"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  not_in_environment: "SERVING"
+  not_in_environment: "SERVING"
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+string_domain {
+  name: "race"
+  value: "AfricanAmerican"
+  value: "Asian"
+  value: "Caucasian"
+  value: "Hispanic"
+  value: "Other"
+}
+string_domain {
+  name: "gender"
+  value: "Female"
+  value: "Male"
+  value: "Unknown/Invalid"
+}
+string_domain {
+  name: "age"
+  value: "[0-10)"
+  value: "[10-20)"
+  value: "[20-30)"
+  value: "[30-40)"
+  value: "[40-50)"
+  value: "[50-60)"
+  value: "[60-70)"
+  value: "[70-80)"
+  value: "[80-90)"
+  value: "[90-100)"
+}
+string_domain {
+  name: "weight"
+  value: ">200"
+  value: "[0-25)"
+  value: "[100-125)"
+  value: "[125-150)"
+  value: "[150-175)"
+  value: "[175-200)"
+  value: "[25-50)"
+  value: "[50-75)"
+  value: "[75-100)"
+}
+string_domain {
+  name: "payer_code"
+  value: "BC"
+  value: "CH"
+  value: "CM"
+  value: "CP"
+  value: "DM"
+  value: "HM"
+  value: "MC"
+  value: "MD"
+  value: "MP"
+  value: "OG"
+  value: "OT"
+  value: "PO"
+  value: "SI"
+  value: "SP"
+  value: "UN"
+  value: "WC"
+}
+string_domain {
+  name: "medical_specialty"
+  value: "AllergyandImmunology"
+  value: "Anesthesiology"
+  value: "Anesthesiology-Pediatric"
+  value: "Cardiology"
+  value: "Cardiology-Pediatric"
+  value: "Dentistry"
+  value: "Dermatology"
+  value: "Emergency/Trauma"
+  value: "Endocrinology"
+  value: "Family/GeneralPractice"
+  value: "Gastroenterology"
+  value: "Gynecology"
+  value: "Hematology"
+  value: "Hematology/Oncology"
+  value: "Hospitalist"
+  value: "InfectiousDiseases"
+  value: "InternalMedicine"
+  value: "Nephrology"
+  value: "Neurology"
+  value: "Obsterics&Gynecology-GynecologicOnco"
+  value: "Obstetrics"
+  value: "ObstetricsandGynecology"
+  value: "Oncology"
+  value: "Ophthalmology"
+  value: "Orthopedics"
+  value: "Orthopedics-Reconstructive"
+  value: "Osteopath"
+  value: "Otolaryngology"
+  value: "OutreachServices"
+  value: "Pathology"
+  value: "Pediatrics"
+  value: "Pediatrics-AllergyandImmunology"
+  value: "Pediatrics-CriticalCare"
+  value: "Pediatrics-EmergencyMedicine"
+  value: "Pediatrics-Endocrinology"
+  value: "Pediatrics-Hematology-Oncology"
+  value: "Pediatrics-InfectiousDiseases"
+  value: "Pediatrics-Neurology"
+  value: "Pediatrics-Pulmonology"
+  value: "Perinatology"
+  value: "PhysicalMedicineandRehabilitation"
+  value: "PhysicianNotFound"
+  value: "Podiatry"
+  value: "Proctology"
+  value: "Psychiatry"
+  value: "Psychiatry-Addictive"
+  value: "Psychiatry-Child/Adolescent"
+  value: "Psychology"
+  value: "Pulmonology"
+  value: "Radiologist"
+  value: "Radiology"
+  value: "Rheumatology"
+  value: "Speech"
+  value: "SportsMedicine"
+  value: "Surgeon"
+  value: "Surgery-Cardiovascular"
+  value: "Surgery-Cardiovascular/Thoracic"
+  value: "Surgery-Colon&Rectal"
+  value: "Surgery-General"
+  value: "Surgery-Maxillofacial"
+  value: "Surgery-Neuro"
+  value: "Surgery-Pediatric"
+  value: "Surgery-Plastic"
+  value: "Surgery-PlasticwithinHeadandNeck"
+  value: "Surgery-Thoracic"
+  value: "Surgery-Vascular"
+  value: "SurgicalSpecialty"
+  value: "Urology"
+  value: "Neurophysiology"
+}
+string_domain {
+  name: "max_glu_serum"
+  value: ">200"
+  value: ">300"
+  value: "None"
+  value: "Norm"
+}
+string_domain {
+  name: "A1Cresult"
+  value: ">7"
+  value: ">8"
+  value: "None"
+  value: "Norm"
+}
+string_domain {
+  name: "metformin"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "repaglinide"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "nateglinide"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "chlorpropamide"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "glimepiride"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "acetohexamide"
+  value: "No"
+  value: "Steady"
+}
+string_domain {
+  name: "glipizide"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "glyburide"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "tolbutamide"
+  value: "No"
+  value: "Steady"
+}
+string_domain {
+  name: "pioglitazone"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "rosiglitazone"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "acarbose"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "miglitol"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "troglitazone"
+  value: "No"
+  value: "Steady"
+}
+string_domain {
+  name: "tolazamide"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "examide"
+  value: "No"
+}
+string_domain {
+  name: "citoglipton"
+  value: "No"
+}
+string_domain {
+  name: "insulin"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "glyburide-metformin"
+  value: "Down"
+  value: "No"
+  value: "Steady"
+  value: "Up"
+}
+string_domain {
+  name: "glipizide-metformin"
+  value: "No"
+  value: "Steady"
+}
+string_domain {
+  name: "glimepiride-pioglitazone"
+  value: "No"
+  value: "Steady"
+}
+string_domain {
+  name: "metformin-rosiglitazone"
+  value: "No"
+}
+string_domain {
+  name: "metformin-pioglitazone"
+  value: "No"
+}
+string_domain {
+  name: "change"
+  value: "Ch"
+  value: "No"
+}
+string_domain {
+  name: "diabetesMed"
+  value: "No"
+  value: "Yes"
+}
+string_domain {
+  name: "readmitted"
+  value: "<30"
+  value: ">30"
+  value: "NO"
+}
+default_environment: "TRAINING"
+default_environment: "SERVING"
