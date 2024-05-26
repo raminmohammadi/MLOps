@@ -2,6 +2,8 @@
 
 Welcome to the Google Cloud Composer Airflow tutorial! This guide will help you understand the basics of using Apache Airflow with Google Cloud Composer, set up a simple Directed Acyclic Graph (DAG), and deploy it on Google Cloud Composer.
 
+Watch the tutorial video for this lab at [Cloud Composer Lab1](https://youtu.be/JB_I416LQ7A)
+
 ## What is Google Cloud Composer?
 
 Google Cloud Composer is a fully managed workflow orchestration service built on Apache Airflow. It allows you to author, schedule, and monitor workflows as directed acyclic graphs (DAGs) of tasks. Cloud Composer helps you automate and orchestrate tasks across cloud and on-premises environments.
