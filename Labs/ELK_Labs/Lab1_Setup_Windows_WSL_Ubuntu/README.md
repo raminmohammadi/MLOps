@@ -1,5 +1,7 @@
 # ELK-Stack-Setup-in-Linux
 
+Watch the toturial on how to Setup ELK on Windows WSL Ubuntu at [ELK installation](https://www.youtube.com/watch?v=UMjDYQO2lo0)
+
 =========================
 ## Downloading:
 
@@ -176,7 +178,3 @@ Then run this:
 ```bash
 bin/logstash -e 'input{stdin{}} output{stdout{}}'
 ```
-
-
-
-
