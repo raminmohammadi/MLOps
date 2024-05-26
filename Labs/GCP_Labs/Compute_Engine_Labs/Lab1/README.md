@@ -8,6 +8,8 @@
 This lab aims to teach participants the fundamentals of working with virtual machines (VMs) on Google Cloud Platform (GCP) Compute Engine. Through hands-on exercises, participants will learn how to create VM instances, choose appropriate machine types, launch VMs with various operating systems, manage instances, connect via SSH, monitor performance metrics, and work with persistent disks, including attaching, detaching, resizing, and taking snapshots.
 
 
+[Google cloud compute engine](https://youtu.be/YPWv-Ln9IPw)
+
 ## **Lab Steps:**
 
 
