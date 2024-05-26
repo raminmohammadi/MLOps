@@ -42,7 +42,7 @@ disk) and MySQL out of the box.
 This graphic shows a high-level overview of the various components that are part
 of MLMD.
 
-![ML Metadata Overview](images/mlmd_overview.png)
+![ML Metadata Overview](assets/mlmd_overview.png)
 
 ### Metadata storage backends and store connection configuration
 
@@ -201,7 +201,7 @@ use the example workflow below to use the low-level MLMD APIs to track the
 execution of a training task. You can also use higher-level Python APIs in
 notebook environments to record experiment metadata.
 
-![ML Metadata Example Flow](images/mlmd_flow.png)
+![ML Metadata Example Flow](assets/mlmd_flow.png)
 
 1) Register artifact types
 
