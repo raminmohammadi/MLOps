@@ -23,11 +23,15 @@ To do that follow this step:
 
 Change the directory to Downloads first and then run this:
 
-=> cd /mnt/c/Users/(username)/Downloads
+```bash
+cd /mnt/c/Users/(username)/Downloads
+```
 
 Move the tar files to Ubuntu:
 
-=> sudo mv (name-of-the-files) /home
+```bash
+sudo mv (name-of-the-files) /home
+```
 
 =======================
 
@@ -35,35 +39,47 @@ Move the tar files to Ubuntu:
 
 Change directory to Ubuntu:
 
-=> cd /home
+```bash
+cd /home
+```
 
 Then extract them:
 
-=> sudo tar -xzvf (name-of-the-files)
+```bash
+sudo tar -xzvf (name-of-the-files)
+```
 
 ==============================
 
 ## Configure Environment Variables:
 
-=> nano ~/.bashrc
+```bash
+nano ~/.bashrc
+```
 
 Add this below and save them (Ctrl + S) and exit (Ctrl + X).
 
+```bash
 export JAVA_HOME=/home/jdk-21.0.2
 
 export PATH=$JAVA_HOME/bin:$PATH
+```
 
 ================================
 
 Now to run them in Ubuntu we need to grant permissions:
 
-=> sudo chown -R ayush:ayush /home/(kibana-8.12.0) OR (elasticsearch-8.12.0) OR (logstash-8.12.0)
+```bash
+sudo chown -R ayush:ayush /home/(kibana-8.12.0) OR (elasticsearch-8.12.0) OR (logstash-8.12.0)
+```
 
 Here, ayush is the username.
 
 To add a new user, run this:
 
+```bash
 sudo adduser (username) 
+```
 
 Then run the above line.
 
@@ -75,11 +91,15 @@ Then run the above line.
 
 In a new terminal, navigate to the Elasticsearch bin directory:
 
-=> cd path/to/elasticsearch/bin
+```bash
+cd path/to/elasticsearch/bin
+```
 
 Run the command:
 
-=> ./elasticsearch-create-enrollment-token --scope kibana
+```bash
+./elasticsearch-create-enrollment-token --scope kibana
+```
 
 Copy and save the generated token.
 
@@ -97,7 +117,9 @@ In a new terminal, navigate to the Elasticsearch bin directory.
 
 Run the password reset command:
 
-=> ./elasticsearch-reset-password -u elastic
+```bash
+./elasticsearch-reset-password -u elastic
+```
 
 Note down the newly generated password.
 
@@ -107,27 +129,37 @@ Note down the newly generated password.
 
 For elasticsearch go to this directory:
 
-=> cd /home/elasticsearch-8.12.0/bin
+```bash
+cd /home/elasticsearch-8.12.0/bin
+```
 
 Then run this:
 
-=> ./elasticsearch
+```bash
+./elasticsearch
+```
 
 =======================
 
 For kibana go to this directory:
 
-=> cd /home/kibana-8.12.0/bin
+```bash
+cd /home/kibana-8.12.0/bin
+```
 
 Then run this:
 
-=> ./kibana
+```bash
+./kibana
+```
 
 ========================
 
 You might encounter an error when running Kibana, try this:
 
-=> sudo ./kibana --allow-root
+```bash
+sudo ./kibana --allow-root
+```
 
 (P.S. This error only came once for me)
 
@@ -135,12 +167,15 @@ You might encounter an error when running Kibana, try this:
 
 For logstash go to this directory:
 
-=> cd /home/logstash-8.12.0
+```bash
+cd /home/logstash-8.12.0
+```
 
 Then run this:
 
-=> bin/logstash -e 'input{stdin{}} output{stdout{}}'
-
+```bash
+bin/logstash -e 'input{stdin{}} output{stdout{}}'
+```
 
 
 
