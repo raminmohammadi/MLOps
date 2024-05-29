@@ -18,3 +18,5 @@ if __name__ == '__main__':
 
     # Save the model to a file
     joblib.dump(model, 'iris_model.pkl')
+    
+    print("The model training was successful")
