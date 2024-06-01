@@ -11,9 +11,10 @@ This lab aims to teach participants the fundamentals of working with virtual mac
 
 ## **Lab Steps:**
 
+
 ### You can watch the tutorial video for this lab at 
 
-[Tutorial Video](https://www.youtube.com/watch?v=q3EU1Q4vp1g)
+   [Tutorial Video](https://www.youtube.com/watch?v=q3EU1Q4vp1g)
 
 
 ### **Step 1: Create a Standard VM :**

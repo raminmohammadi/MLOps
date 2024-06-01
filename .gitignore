@@ -7,7 +7,7 @@ __pycache__/
 .pytest_cache/
 .vscode/
 .idea/
-
+.virtual_documents/
 
 # C extensions
 *.so

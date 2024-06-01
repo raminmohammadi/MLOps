@@ -34,18 +34,8 @@ ENV NAME World
 COPY requirements.txt /app/
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Run the Flask application for serving predictions
-# CMD ["python", "main.py"]
-
 # Copy the templates directory
 COPY src/templates /app/templates
 
 # Run the Flask application for serving predictions
 CMD ["python", "main.py"]
-
-# Stage 3: Inference
-# FROM serving
-
-# Copy the user input script
-# COPY src/entrypoint.py /app/
-

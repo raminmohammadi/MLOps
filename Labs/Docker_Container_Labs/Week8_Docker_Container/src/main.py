@@ -31,8 +31,8 @@ def predict():
             petal_width = float(data['petal_width'])
 
             # Perform the prediction
-            input_data = [sepal_length, sepal_width, petal_length, petal_width]
-            prediction = model.predict([input_data])
+            input_data = np.array([sepal_length, sepal_width, petal_length, petal_width])[np.newaxis, ]
+            prediction = model.predict(input_data)
             predicted_class = class_labels[np.argmax(prediction)]
 
             # Return the predicted class in the response

@@ -59,7 +59,7 @@ def build_save_model(data, filename):
         kmeans.fit(df)
         sse.append(kmeans.inertia_)
     
-    output_path = os.path.join(os.path.dirname(__file__), "../model", filename)
+    output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model", filename)
 
     # Save the trained model to a file
     pickle.dump(kmeans, open(output_path, 'wb'))

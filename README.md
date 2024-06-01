@@ -42,6 +42,8 @@ The labs in this repository are organized according to the topics covered in the
 - Data labeling with Snorkel
 - Handling data drift and retraining models
 
+And more...
+
 ## Getting Started
 
 To get started with the labs and exercises in this repository, please follow these steps:

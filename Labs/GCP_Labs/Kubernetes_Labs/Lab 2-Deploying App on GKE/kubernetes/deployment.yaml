@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: fastapi-app
+spec:
+  replicas: 2 # To ensuer there are always to replicas 
+  selector:
+    matchLabels:
+      app: fastapi-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+          - name: fastapi-app-container
+            image: heyitsrj/mlops-fastapi-app:v3
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080

@@ -19,9 +19,9 @@ default_args = {
 
 # Create a DAG instance named 'your_python_dag' with the defined default arguments
 dag = DAG(
-    'your_python_dag',
+    'Airflow_Lab1',
     default_args=default_args,
-    description='Your Python DAG Description',
+    description='Dag example for Lab 1 of Airflow series',
     schedule_interval=None,  # Set the schedule interval or use None for manual triggering
     catchup=False,
 )

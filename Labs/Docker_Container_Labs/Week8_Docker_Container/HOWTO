@@ -1,2 +1,2 @@
-docker build -i -t dockerfile .
-docker run -i -t dockerfile
+docker build -t dockerfile .
+docker run dockerfile
