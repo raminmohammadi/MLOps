@@ -20,7 +20,9 @@ This lab aims to teach participants the fundamentals of working with virtual mac
 3. Click "Create Instance".
 4. Set the machine type to "Custom" and choose 2 vCPUs and 4 GB memory.
 5. Configure other settings as needed (e.g., region, zone, boot disk).
-![Machine Configuration](assets/standard-machine-configuration.png)
+
+   ![Machine Configuration](assets/standard-machine-configuration.png)
+
 6. Click "Create" to create the VM instance.
 
 
@@ -32,7 +34,9 @@ This lab aims to teach participants the fundamentals of working with virtual mac
 2. Navigate to Compute Engine > Disks.
 3. Click "Create Disk".
 4. Set the disk type to "SSD persistent disk" and size to 10GB.
-![Disk Configuration](assets/disk-configuration.png)
+   
+   ![Disk Configuration](assets/disk-configuration.png)
+
 5. Click "Create" to create the disk.
 
 
@@ -43,7 +47,9 @@ This lab aims to teach participants the fundamentals of working with virtual mac
 3. Click "Edit".
 4. Scroll down to the "Additional disks" section and click "Add existing disk".
 5. Select the disk you created from the dropdown menu.
-![Disk Attached](assets/attach-disk.png)
+
+   ![Disk Attached](assets/attach-disk.png)
+
 6. Click "Save".
 
 
@@ -128,6 +134,7 @@ python3 /mlops-disk/compute_engine_lab1/airbnb_random_forest_regressor.py
 
 
 Note the training time, inference time, and mean squared error (MSE).
+
 ![Standard Machine Metrics](assets/standard-machine-metrics.png)
 
 
@@ -137,7 +144,9 @@ Note the training time, inference time, and mean squared error (MSE).
 2. Click on the name of the VM instance you created.
 3. Click "Edit".
 4. Scroll down to the "Additional disks" section and click "Remove" next to the disk you want to detach.
+   
    ![Remove Disk](assets/detach-disk.png)
+
 5. Click "Save".
 6. Go to the VM instances page, select the VM instance, and click "Stop" to stop the machine.
 
@@ -152,7 +161,9 @@ Note the training time, inference time, and mean squared error (MSE).
 4. Click "Create Instance".
 5. Choose a CPU-optimised machine type instead of the standard one.
 6. Set the machine type to "Custom" and choose "c2d-highcpu-2" with 2 vCPUs and 4 GB memory.
+   
    ![CPU Optimised Machine Configuration](assets/cpu-optimised-machine-configuration.png)
+
 7. Click "Create" to create the new VM instance.
 
 
@@ -163,7 +174,9 @@ Note the training time, inference time, and mean squared error (MSE).
 3. Click "Edit".
 4. Scroll down to the "Additional disks" section and click "Add existing disk".
 5. Select the disk you previously used from the dropdown menu.
+
    ![Add Existing Disk](assets/attach-disk-cpu-optimised-vm.png)
+
 6. Click "Save".
 
 
@@ -177,6 +190,7 @@ Note the training time, inference time, and mean squared error (MSE).
 3. Once logged in, create a directory at /mlops-disk and mount the disk
 4. Setup the requirements and run the Python code to execute the Airbnb random forest regressor and note the performance metrics.
 5. Note the training time, inference time, and mean squared error (MSE).
+   
    ![CPU Optimised Machine Metrics](assets/cpu-optimised-machine-metrics.png)
 
 
