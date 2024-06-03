@@ -1,6 +1,5 @@
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
-from airflow.operators.email import EmailOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.sensors.filesystem import FileSensor
@@ -8,12 +7,13 @@ from datetime import datetime, timedelta
 from dag_functions import (
     file_operation,
     make_http_request,
-    read_and_serialize,
     process_file,
+    read_and_serialize_return,
 )
 import logging
 
 AIRFLOW_TASK = "airflow.task"
+OUTPUT_PATH = "us-east1-composer-airflow-1c67778d-bucket/data/dag_processed_file.csv"
 logger = logging.getLogger(AIRFLOW_TASK)
 
 default_args = {
@@ -22,7 +22,6 @@ default_args = {
     'retries': 0,  # Number of retries in case of task failure
     'retry_delay': timedelta(minutes=5),  # Delay before retries
 }
-
 
 dag_1 = DAG(
     'dag_1_parameterize',
@@ -34,8 +33,10 @@ dag_1 = DAG(
 
 read_serialize_task = PythonOperator(
     task_id='read_and_serialize',
-    python_callable=read_and_serialize,
-    op_kwargs={'file_path': '/path/to/your/file.json'},
+    python_callable=read_and_serialize_return,
+    op_kwargs={
+        'file_path': 'us-east1-composer-airflow-1c67778d-bucket/data/dag_processing_file.csv'
+    },
     dag=dag_1,
 )
 
@@ -43,23 +44,22 @@ process_task = PythonOperator(
     task_id='process_file',
     python_callable=process_file,
     op_kwargs={
-        'file_path': '/path/to/your/input.csv',
-        'output_path': '/path/to/your/output.csv',
+        'output_path': OUTPUT_PATH,
     },
+    provide_context=True,
     dag=dag_1,
 )
 
 file_sensor_task = FileSensor(
     task_id='file_sensor_task',
     fs_conn_id='fs_default',
-    filepath='/path/to/your/file.csv',
+    filepath=OUTPUT_PATH,
     poke_interval=10,
     timeout=300,
     dag=dag_1,
 )
 
 read_serialize_task >> process_task >> file_sensor_task
-
 
 dag_2 = DAG(
     'dag_file_and_http',
@@ -72,7 +72,7 @@ dag_2 = DAG(
 file_op_task = PythonOperator(
     task_id='file_operation',
     python_callable=file_operation,
-    op_kwargs={'file_path': '/path/to/your/file.txt'},
+    op_kwargs={'file_path': OUTPUT_PATH},
     dag=dag_2,
 )
 
@@ -115,15 +115,6 @@ middle_task = PythonOperator(
     dag=dag_3,
 )
 
-# EmailOperator: Sends an email
-email_task = EmailOperator(
-    task_id='email_task',
-    to='shah.aadit1@northeastern.com',
-    subject='Airflow Task Completed',
-    html_content='<p>The Airflow task has been completed successfully.</p>',
-    dag=dag_3,
-)
-
 # DummyOperator: Used for grouping and branching logic
 branch_task = DummyOperator(
     task_id='branch_task',
@@ -140,7 +131,7 @@ end_task = PythonOperator(
 # Set task dependencies
 start_task >> [bash_task, branch_task]
 bash_task >> middle_task >> end_task
-branch_task >> email_task >> end_task
+branch_task >> end_task
 
 # If this script is run directly, allow command-line interaction with the DAG
 if __name__ == "__main__":
