@@ -2,13 +2,14 @@ from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
-from airflow.sensors.filesystem import FileSensor
+from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 from datetime import datetime, timedelta
 from dag_functions import (
     file_operation,
     make_http_request,
     process_file,
     read_and_serialize_return,
+    log_file_sensor_output,
 )
 import logging
 
@@ -50,13 +51,15 @@ process_task = PythonOperator(
     dag=dag_1,
 )
 
-file_sensor_task = FileSensor(
+file_sensor_task = GCSObjectExistenceSensor(
     task_id='file_sensor_task',
-    fs_conn_id='fs_default',
-    filepath=OUTPUT_PATH,
+    bucket='us-east1-composer-airflow-1c67778d-bucket',
+    object='data/dag_processed_file.csv',
     poke_interval=10,
     timeout=300,
     dag=dag_1,
+    on_success_callback=log_file_sensor_output,
+    on_failure_callback=log_file_sensor_output,
 )
 
 read_serialize_task >> process_task >> file_sensor_task

@@ -71,3 +71,13 @@ def make_http_request(url):
     response = requests.get(url)
     logger.info(f"Response status code: {response.status_code}")
     logger.info(f"Response text: {response.text}")
+
+
+def log_file_sensor_output(context):
+    task_instance = context['task_instance']
+    logger.info(f"Task {task_instance.task_id} has completed.")
+    logger.info(f"Task state: {task_instance.state}")
+    logger.info(f"Task start date: {task_instance.start_date}")
+    logger.info(f"Task end date: {task_instance.end_date}")
+    logger.info(f"Execution date: {task_instance.execution_date}")
+    logger.info(f"Log URL: {task_instance.log_url}")
