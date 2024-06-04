@@ -8,3 +8,7 @@ class UserBehavior(TaskSet):
 class WebsiteUser(HttpUser):
     tasks = [UserBehavior]
     wait_time = between(1, 2)
+
+if __name__ == "__main__":
+         import os
+         os.system("locust -f locustfile.py")
