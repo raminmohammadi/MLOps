@@ -153,7 +153,7 @@ This lab focuses on intermediate-level skills in GCP Compute Engine, including c
     - Navigate to Compute Engine > Instance Templates.
     - Click "Create Instance Template".
     - Configure the template:
-        - Name: `imdb-sentiment-analysis-instance-template`
+        - Name: `imdb-sentiment-analysis-template`
         - Machine type: `e2-micro` (1 vCPU, 1 GB memory)
         - Boot disk: Custom image `imdb-sentiment-analysis-image`
         - Management, security, disks, networking, sole tenancy:
