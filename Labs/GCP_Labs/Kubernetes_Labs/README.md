@@ -41,7 +41,9 @@ A **Node** is a worker machine in Kubernetes, which may be a VM or a physical ma
 Each node also comprises three crucial components:
 
 **Kubelet** – This is an agent that runs inside each node to ensure pods are running properly, including communications between the Master and nodes.
+
 **Container runtime** – This is the software that runs containers. It manages individual containers, including retrieving container images from repositories or registries, unpacking them, and running the application.
+
 **Kube-proxy** – This is a network proxy that runs inside each node, managing the networking rules within the node (between its pods) and across the entire Kubernetes cluster.
 
 ### Kubernetes Cluster
