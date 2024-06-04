@@ -55,7 +55,7 @@ Generate SSH keys if you haven't already:
 
 
 
-```
+```bash
 ssh-keygen -t rsa -b 2048 -C "your_email@example.com"
 ```
 
@@ -74,38 +74,43 @@ Add the public key to the VM instance:
 
 1. SSH into the instance using the SSH key you added in Step 4 , copy the username and instance_external_ip from compute engine console:
 
-    ```
-   ssh -i path/to/private/key username@instance_external_ip
-   ```
+```bash
+ssh -i path/to/private/key username@instance_external_ip
+```
 
 
 2. Once logged in, make the filesystem for the attached disk (/dev/sdb):
 
-      ```
-   sudo mkfs.ext4 -F /dev/sdb
-   ```
+```bash
+sudo mkfs.ext4 -F /dev/sdb
+```
 
 
 3. Create a directory to mount the disk:
 
-      ```
-   sudo mkdir /mlops-disk
-   ```
+```bash
+sudo mkdir /mlops-disk
+```
 
 
 4. Mount the disk at /mlops-disk:
 
-      ```
-   sudo mount /dev/sdb /mlops-disk
-   ```
+```bash
+sudo mount /dev/sdb /mlops-disk
+```
 
+5. Add permission to the folder
 
+```bash
+sudo chown your-username-on-gcp /mlops-disk
+```
 
 ### **Step 6: SCP the Folder with Airbnb Random Forest Regressor and Dataset to the Attached Disk:**
 
+**Run from within your machine**
 
-```
-scp -i path/to/private/key local/path/to/compute_engine_lab1 username@instance_external_ip:/mlops-disk
+```bash
+scp -r local/path/to/compute_engine_lab1 username@instance_external_ip:/mlops-disk
 ```
 
 
@@ -113,7 +118,7 @@ scp -i path/to/private/key local/path/to/compute_engine_lab1 username@instance_e
 ### **Step 7: SSH into the Instance:**
 
 
-```
+```bash
 ssh -i path/to/private/key username@instance_external_ip
 ```
 
@@ -124,8 +129,14 @@ ssh -i path/to/private/key username@instance_external_ip
 Install the requirements from requirements.txt file and run airbnb_random_forest_regressor.py
 
 
-```
+```bash
 python3 /mlops-disk/compute_engine_lab1/airbnb_random_forest_regressor.py
+```
+
+** In case of permisssion error for installing pips, run **
+
+```bash
+sudo chown -R $USER:$USER /mlops-disk/Lab1/env
 ```
 
 
