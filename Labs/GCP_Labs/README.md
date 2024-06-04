@@ -1,4 +1,4 @@
-# Compute Engine or Kubernetes Engine? New trainings teach you the basics of architecting on Google Cloud
+# Compute Engine or Kubernetes Engine? 
 
 Google Cloud wants you to be able to use the cloud on your terms, and we provide a range of computing architectures to meet you where you are. In practice, this often means choosing between Compute Engine and Google Kubernetes Engine (GKE). But, which one will best serve your needs?
 
