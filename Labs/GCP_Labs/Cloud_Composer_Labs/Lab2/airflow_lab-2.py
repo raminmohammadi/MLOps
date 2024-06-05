@@ -10,6 +10,7 @@ from dag_functions import (
     process_file,
     read_and_serialize_return,
     log_file_sensor_output,
+    final_task,
 )
 import logging
 
@@ -51,6 +52,7 @@ process_task = PythonOperator(
     dag=dag_1,
 )
 
+# File sensor task to check for the processed file's existence
 file_sensor_task = GCSObjectExistenceSensor(
     task_id='file_sensor_task',
     bucket='us-east1-composer-airflow-1c67778d-bucket',
@@ -62,7 +64,18 @@ file_sensor_task = GCSObjectExistenceSensor(
     on_failure_callback=log_file_sensor_output,
 )
 
-read_serialize_task >> process_task >> file_sensor_task
+# Final task to execute after the file sensor task
+final_processing_task = PythonOperator(
+    task_id='final_processing_task',
+    python_callable=final_task,
+    op_kwargs={
+        'output_path': OUTPUT_PATH,
+    },
+    dag=dag_1,
+)
+
+
+read_serialize_task >> process_task >> file_sensor_task >> final_processing_task
 
 dag_2 = DAG(
     'dag_file_and_http',
@@ -133,6 +146,24 @@ end_task = PythonOperator(
 )
 
 # Set task dependencies
+
+"""
+The task executes with the following dependencies:
+
+- `start_task`: Initiates the workflow and triggers two parallel tasks.
+- `bash_task`: Executes a bash script (or a set of operations) and passes the result to `middle_task`.
+- `branch_task`: Executes an independent task (or a set of operations).
+- `middle_task`: Processes the output of `bash_task`.
+- `end_task`:  Finalizes the workflow by consuming the results of `middle_task` and `branch_task`.
+
+The dependency structure ensures that:
+    - `bash_task` and `branch_task` run concurrently.
+    - `middle_task` depends on the completion of `bash_task`.
+    - `end_task` waits for both `middle_task` and `branch_task` to finish.
+
+This parallel execution can optimize the overall runtime, especially when tasks are I/O bound or computationally independent.
+"""
+
 start_task >> [bash_task, branch_task]
 bash_task >> middle_task >> end_task
 branch_task >> end_task
