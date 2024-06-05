@@ -167,7 +167,7 @@ An instance template allows you to define a configuration for VM instances that 
     - Navigate to Compute Engine > Instance Templates.
     - Click "Create Instance Template".
     - Configure the template:
-        - **Name:** `imdb-sentiment-analysis-instance-template`
+        - **Name:** `imdb-sentiment-analysis-template`
         - **Machine type:** `e2-micro` (1 vCPU, 1 GB memory)
         - **Boot disk:** Custom image `imdb-sentiment-analysis-image`
         - **Management, security, disks, networking, sole tenancy:**
@@ -186,7 +186,7 @@ An instance template allows you to define a configuration for VM instances that 
         - **Name:** `imdb-mig`
         - **Location:** Single zone
         - **Zone:** `us-central1-c` (or the same zone used for the custom VM image)
-        - **Instance template:** `imdb-sentiment-analysis-instance-template`
+        - **Instance template:** `imdb-sentiment-analysis-template`
         - **Autoscaling policy:**
             - Target CPU utilization: 60%
             - Minimum number of instances: 1
