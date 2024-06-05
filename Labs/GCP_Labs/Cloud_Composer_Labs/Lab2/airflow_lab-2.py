@@ -116,6 +116,7 @@ middle_task = PythonOperator(
     task_id='middle_task',
     python_callable=lambda: logger.info("Middle Task"),
     dag=dag_3,
+    trigger_rule='all_done',  # Execute regardless of the upstream task's status
 )
 
 # DummyOperator: Used for grouping and branching logic
