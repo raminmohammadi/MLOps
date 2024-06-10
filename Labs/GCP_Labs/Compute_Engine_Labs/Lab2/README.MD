@@ -148,7 +148,7 @@ An instance template allows you to define a configuration for VM instances that 
     . env/bin/activate
 
     # Start the FastAPI service
-    nohup python3 imdb_sentiment_analysis_service.py > /tmp/startup.log 2>&1 &
+    nohup python3 imdb_sentiment_analysis_service.py &
     ```
 
 2. **Create an instance template:**
