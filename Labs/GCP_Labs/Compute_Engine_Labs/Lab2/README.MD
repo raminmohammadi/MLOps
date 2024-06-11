@@ -112,19 +112,7 @@ Virtual Private Cloud (VPC) and subnets segment your network into smaller, manag
         - Click "Done".
     - Click "Create".
 
-2. **Create a proxy-only subnet:**
-    - Navigate to VPC Network > VPC Networks.
-    - Click on the `imdb-sentiment-analysis-vpc` network you created.
-    - Click "Add subnet".
-    - Configure the subnet:
-        - **Name:** `imdb-sentiment-analysis-proxy-subnet`
-        - **Region:** `us-central1`
-        - **IP address range:** `10.0.1.0/24`
-        - **Purpose:** Regional Managed Proxy
-    - Click "Done".
-    - Click "Save".
-
-3. **Set up firewall rules:**
+2. **Set up firewall rules:**
     - Navigate to VPC Network > Firewall Rules.
     - Click "Create Firewall Rule".
     - Configure the rule:
@@ -160,7 +148,7 @@ An instance template allows you to define a configuration for VM instances that 
     . env/bin/activate
 
     # Start the FastAPI service
-    nohup python3 imdb_sentiment_analysis_service.py > /tmp/startup.log 2>&1 &
+    nohup python3 imdb_sentiment_analysis_service.py &
     ```
 
 2. **Create an instance template:**
@@ -173,6 +161,7 @@ An instance template allows you to define a configuration for VM instances that 
         - **Management, security, disks, networking, sole tenancy:**
             - Click "Networking"
             - In the "Networking" tab, select the VPC network `imdb-sentiment-analysis-vpc` and subnet `imdb-sentiment-analysis-vpc-subnet` you created earlier
+            - Ensure to remove the pre-existing default vpc 
 
     - In the "Management, security, disks, networking, sole tenancy" section, find the "Automation" tab.
     - In the "Startup script" section, paste the contents of `startup-script.sh`.
