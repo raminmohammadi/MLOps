@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: blue-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blue-deploy
+  template:
+    metadata:
+      labels:
+        app: blue-deploy
+    spec:
+      containers:
+          - name: fastapi-app-container
+            image: heyitsrj/mlops-fastapi-app:blue
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+            resources:
+              requests:
+                memory: "70Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "70m"

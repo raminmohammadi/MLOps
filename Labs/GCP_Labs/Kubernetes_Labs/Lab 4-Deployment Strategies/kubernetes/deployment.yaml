@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: fastapi-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: fastapi-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+          - name: fastapi-app-container
+            image: heyitsrj/mlops-fastapi-app:v2
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+            resources:
+              requests:
+                memory: "70Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "70m"

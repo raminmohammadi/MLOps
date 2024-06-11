@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mlops
+  name: blue-service
+spec:
+  selector:
+    app: blue-deploy
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
