@@ -1,5 +1,7 @@
 # **Google Cloud Platform Compute Engine - Lab 2**
 
+Watch the video for this lab at our youtube channel [Toturial Video](https://youtu.be/bvGipcGwtA8)
+
 ## **Objective**
 
 This lab focuses on intermediate-level skills in GCP Compute Engine, including creating custom VM images, using snapshots, working with instance templates and managed instance groups (MIGs), configuring networking settings, auto-scaling, load balancing, and load testing. Participants will set up a scalable sentiment analysis web service using FastAPI to classify IMDb reviews.
