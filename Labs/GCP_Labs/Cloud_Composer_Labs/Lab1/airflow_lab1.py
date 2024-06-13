@@ -4,8 +4,8 @@ from airflow.operators.bash_operator import BashOperator  # Added for flexibilit
 from datetime import datetime, timedelta
 
 default_args = {
-    'owner': 'Aadit Shah', 
-    'start_date': datetime(2023, 1, 1),
+    'owner': 'Ramin Mohammadi', 
+    'start_date': datetime(2024, 6, 13),
 }
 
 dag = DAG(
