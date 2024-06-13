@@ -19,7 +19,7 @@ spec:
           averageUtilization: 70
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 120
+      stabilizationWindowSeconds: 120 # time window to scal down if the cpu utilization was below threshold (70) for more than 120 seconds
       policies:
         - type: Pods
           value: 1

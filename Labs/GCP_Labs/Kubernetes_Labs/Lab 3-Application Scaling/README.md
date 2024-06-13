@@ -93,6 +93,17 @@ The Vertical Pod Autoscaler (VPA) frees you from having to manually set up and t
 - **Downtime**: Vertical scaling can cause temporary downtime as pods may need to be restarted to allocate new resources.
 - **Statefulness**: Horizontal scaling is best for stateless applications, while stateful applications might require more complex strategies like StatefulSets or operator patterns.
 
+
+## Load Testing your cluster for scaling up and down
+
+Run the load_test.py file and set the number of users to a large number ex: 
+
+ - number of users 1000
+ - ramp up: 10000
+
+and then monitor the impact on your cluster, after some time you will notice that the horizontal scaler will create more pods to support the trafic and after you stop the load test it will eliminiate those. 
+
+
 ## Resources and Further Reading
 - Learn more about the basics of scaling applications in Kubernetes from this [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/scale/scale-intro/ "tutorial").
 - For adjusting container resources, [visit this guide](https://kubernetes.io/docs/tasks/configure-pod-container/resize-container-resources/ "visit this guide").

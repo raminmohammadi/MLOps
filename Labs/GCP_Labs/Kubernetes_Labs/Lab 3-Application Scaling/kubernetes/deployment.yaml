@@ -20,9 +20,9 @@ spec:
           ports:
             - containerPort: 8080
           resources:
-            requests:
+            requests: # resources required for the application
               memory: "70Mi"
               cpu: "50m"
-            limits:
+            limits: # If a pod resource utilization surpassed these numbers, gracefully eliminate it. 
               memory: "128Mi"
               cpu: "70m"
