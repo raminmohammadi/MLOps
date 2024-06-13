@@ -1,6 +1,10 @@
 # Application Scaling on Google Kubernetes Engine (GKE)
+
+You can watch the tutorial video for this lab on our Youtube channel [Tutorial Video](https://youtu.be/5KsCxqVWaPg)
+
 This README provides an overview of both horizontal and vertical scaling methods in GKE, guiding you on how to dynamically adjust the number of replicas based on the resource usage like CPU and memory or even custom metrics.
 ##What is Scaling?
+
 Scaling an application in Kubernetes can be performed either horizontally or vertically. This capability allows your application to handle increases in traffic and loads effectively.
 - **Horizontal Scaling (Scaling In/Out)**: This involves increasing or decreasing the number of replicas of your pods to adjust to the workload. Horizontal scaling is suitable for stateless applications where each instance can operate independently.
 

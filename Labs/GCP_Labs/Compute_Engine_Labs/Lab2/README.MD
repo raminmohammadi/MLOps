@@ -1,6 +1,6 @@
 # **Google Cloud Platform Compute Engine - Lab 2**
 
-Watch the video for this lab at our youtube channel [Toturial Video](https://youtu.be/bvGipcGwtA8)
+Watch the video for this lab at our youtube channel [Tutorial Video](https://youtu.be/bvGipcGwtA8)
 
 ## **Objective**
 

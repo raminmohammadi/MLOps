@@ -1,5 +1,8 @@
 # Advance Deployment Strategies
 This Readme provides an overview and implementation steps for three advanced deployment strategies: Rolling Updates, Blue-Green Deployments, and Canary Deployments. These strategies are designed to help you deploy applications with minimal downtime and ensure a smooth transition between application versions.
+
+Watch the tutorial video for this lab on our Youtube channel [Tutorial Video](https://youtu.be/6PhK96XLjXw)
+
 ## Rolling Updates
 Rolling updates allow you to update parts of your application incrementally without downtime, replacing old versions with new ones gradually.
 ![Rolling Updates](../assets/rolling.svg)
