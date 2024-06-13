@@ -15,11 +15,12 @@ from dag_functions import (
 import logging
 
 AIRFLOW_TASK = "airflow.task"
-OUTPUT_PATH = "us-east1-composer-airflow-1c67778d-bucket/data/dag_processed_file.csv"
+BUCKET_NAME = "your_bucket_name/your_data_folder_name/"
+OUTPUT_PATH = "your_bucket_name/your_data_folder_name/dag_processed_file.csv"
 logger = logging.getLogger(AIRFLOW_TASK)
 
 default_args = {
-    'owner': 'Aadit',
+    'owner': 'owner name',
     'start_date': datetime(2023, 9, 17),
     'retries': 0,  # Number of retries in case of task failure
     'retry_delay': timedelta(minutes=5),  # Delay before retries
@@ -37,7 +38,7 @@ read_serialize_task = PythonOperator(
     task_id='read_and_serialize',
     python_callable=read_and_serialize_return,
     op_kwargs={
-        'file_path': 'us-east1-composer-airflow-1c67778d-bucket/data/dag_processing_file.csv'
+        'file_path': OUTPUT_PATH
     },
     dag=dag_1,
 )
@@ -55,7 +56,7 @@ process_task = PythonOperator(
 # File sensor task to check for the processed file's existence
 file_sensor_task = GCSObjectExistenceSensor(
     task_id='file_sensor_task',
-    bucket='us-east1-composer-airflow-1c67778d-bucket',
+    bucket=BUCKET_NAME,
     object='data/dag_processed_file.csv',
     poke_interval=10,
     timeout=300,
