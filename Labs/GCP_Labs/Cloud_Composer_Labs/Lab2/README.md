@@ -2,6 +2,8 @@
 
 This lab contains a Cloud Composer Intermediate tutorial that demonstrates various features of Apache Airflow including task parameterization, file operations, HTTP requests, task dependencies, and the use of sensors in GCP's Cloud Composer. The tutorial is structured into three Directed Acyclic Graphs (DAGs), each showcasing different functionalities.
 
+Watch the toturial video for this lab on our Youtube channel [Toturial Video](https://youtu.be/bvGipcGwtA8)
+
 ## Prerequisites
 
 - Apache Airflow installed
