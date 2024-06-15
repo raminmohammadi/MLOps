@@ -52,9 +52,8 @@ In Lab 2, we set up an auto-scalable IMDb sentiment analysis service with a mana
     def predict_sentiment(review: Review):
         X_new = vectorizer.transform([review.review])
         prediction = model.predict(X_new)
-        confidence = model.predict_proba(X_new).max()
-        sentiment = "positive" if prediction[0] == 1 else "negative"
-        return {"sentiment": sentiment, "confidence": float(confidence)}
+        confidence = round(model.predict_proba(X_new).max() * 100, 2)
+        return {"sentiment": prediction[0], "confidence": float(confidence)}
 
     @app.get("/health")
     def health_check():
@@ -269,11 +268,14 @@ def test_bulk_requests(client):
 
  - Run the tests:
 
-    ``` sh pytest test_canary.py```
+    ```pytest -s test_canary.py```
 
 - The tests verify the `/health` and `/predict` endpoints, checking various scenarios like positive, negative, and neutral reviews.
 - The bulk test sends multiple requests and gathers metrics such as response times and success rates to ensure the application handles real-world load effectively.
 - **Fault Tolerance:** While using preemptible VM instances, implement checkpointing. Save progress to a Google Cloud Storage bucket periodically and resume from checkpoints if interrupted. Use startup scripts to download checkpoints and shutdown scripts to upload them. This ensures computation can continue from the last checkpoint, enhancing reliability.
+
+![Test Results](assets/test-results.png)
+
 
 ### **Step 6: Perform Rolling Update**
 

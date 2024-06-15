@@ -3,8 +3,7 @@ import pytest
 from statistics import median
 import time
 
-CANARY_INSTANCE_IP = "YOUR_CANARY_INSTANCE_IP"
-
+CANARY_INSTANCE_IP = "CANARY_INSTANCE_IP" 
 @pytest.fixture(scope="module")
 def client():
     return httpx.Client(base_url=f"http://{CANARY_INSTANCE_IP}:8000")
@@ -60,9 +59,8 @@ def test_bulk_requests(client):
     """
     positive_reviews = ["This movie was fantastic!", "I loved this movie!", "Best movie ever!"]
     negative_reviews = ["This movie was terrible!", "I hated this movie!", "Worst movie ever!"]
-    neutral_reviews = ["This movie was okay.", "It was an average movie.", "Not bad, not great."]
 
-    reviews = positive_reviews + negative_reviews + neutral_reviews
+    reviews = positive_reviews + negative_reviews 
     request_count = 100
     response_times = []
     passed_requests = 0
@@ -81,17 +79,19 @@ def test_bulk_requests(client):
             assert "sentiment" in data
             assert "confidence" in data
 
-            expected_sentiment = "positive" if review in positive_reviews else "negative" if review in negative_reviews else "neutral"
+            expected_sentiment = (
+                "positive" if review in positive_reviews
+                else "negative" 
+            )
             assert data["sentiment"] == expected_sentiment
 
             passed_requests += 1
         except AssertionError:
             failed_requests += 1
-
     print(f"Total requests: {request_count}")
     print(f"Passed requests: {passed_requests}")
     print(f"Failed requests: {failed_requests}")
     print(f"Median response time: {median(response_times):.4f} seconds")
     print(f"Minimum response time: {min(response_times):.4f} seconds")
     print(f"Maximum response time: {max(response_times):.4f} seconds")
-    print(f"Average response time: {sum(response_times)/len(response_times):.4f} seconds")
+    print(f"Average response time: {sum(response_times) / len(response_times):.4f} seconds")
