@@ -2,13 +2,15 @@
 
 ## **Objective**
 
-This lab focuses on advanced skills in GCP Compute Engine, performing canary deployments, testing with preemptible VM instances, and rolling updates. Participants will update the sentiment analysis service to include prediction confidence and deploy these updates using advanced instance management techniques.
+This lab focuses on advanced concepts in GCP Compute Engine, performing canary deployments, testing with preemptible VM instances, and rolling updates. Participants will update the sentiment analysis service to include prediction confidence and deploy these updates using advanced instance management techniques.
+
+This lab is a continuation of [Lab 2](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Compute_Engine_Labs/Lab2). Please complete Lab 2 before starting this lab.
 
 ## **Lab Steps**
 
 ### **Step 1: Update VM Instance and Create a New Image**
 
-We start by updating the VM instance with the new code that includes prediction confidence. This step ensures our VM is running the latest version of our service. We then create a new custom image from this updated VM, which we will use to create new instances in later steps.
+In Lab 2, we set up an auto-scalable IMDb sentiment analysis service with a managed instance group.We start this lab by updating the VM instance with the new code that includes prediction confidence. We then create a new custom image from this updated VM, which we will use to create new instances in later steps.
 
 1. **Update code on the VM instance:**
     - SSH into the `imdb-sentiment-analysis-vm-restored` instance.
