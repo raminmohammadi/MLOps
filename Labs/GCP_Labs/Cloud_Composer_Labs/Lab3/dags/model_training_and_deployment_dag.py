@@ -27,15 +27,15 @@ dag = DAG(
 # Task 1: Train Model
 train_model = MLModelTrainOperator(
     task_id='train_model',
-    data_path='gs://your-bucket/data/Clean_Energy_Consumption.csv',
-    save_path='gs://your-bucket/models/',
+    data_path='gs://us-central1-composer-env-05cbc839-bucket/data/Clean_Energy_Consumption.csv',
+    save_path='gs://us-central1-composer-env-05cbc839-bucket/',
     dag=dag,
 )
 
 # Task 2: Deploy Model
 deploy_model = ModelDeployOperator(
     task_id='deploy_model',
-    model_path='gs://your-bucket/models/model.pkl',
+    model_path='gs://us-central1-composer-env-05cbc839-bucket/models/model.pkl',
     deployment_target='production',
     dag=dag,
 )

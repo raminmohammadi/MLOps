@@ -3,36 +3,43 @@ from airflow.utils.decorators import apply_defaults
 import pandas as pd
 import pickle
 import os
-
+from google.cloud import storage
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 
 class ModelDeployOperator(BaseOperator):
     """
-    Custom Operator for deploying a machine learning model.
+    Custom Operator for deploying a machine learning model to GCS.
     """
 
     @apply_defaults
-    def __init__(self, model_path, deployment_target, *args, **kwargs):
+    def __init__(self, model_path, bucket_name, *args, **kwargs):
         super(ModelDeployOperator, self).__init__(*args, **kwargs)
         self.model_path = model_path
-        self.deployment_target = deployment_target
+        self.bucket_name = bucket_name
 
     def execute(self, context):
-        # Example deployment logic
         self.log.info(
-            f"Deploying model from {self.model_path} to {self.deployment_target}"
+            f"Deploying model from {self.model_path} to GCS bucket {self.bucket_name}"
         )
 
-        # Deployment logic depends on the target platform
-        if self.deployment_target == 'production':
-            # Mock deployment code
-            self.log.info("Model deployed to production.")
-        else:
-            self.log.info("Unsupported deployment target.")
+        # Initialize the GCS client
+        client = storage.Client()
+        bucket = client.bucket(self.bucket_name)
+        blob = bucket.blob(os.path.basename(self.model_path))
 
-        return f"Model deployed to {self.deployment_target} from {self.model_path}"
+        # Upload the model to GCS
+        try:
+            blob.upload_from_filename(self.model_path)
+            self.log.info(
+                f"Model successfully uploaded to gs://{self.bucket_name}/{os.path.basename(self.model_path)}"
+            )
+        except Exception as e:
+            self.log.error(f"Failed to upload model to GCS: {e}")
+            raise
+
+        return f"Model deployed to gs://{self.bucket_name}/{os.path.basename(self.model_path)}"
 
 
 class MLModelTrainOperator(BaseOperator):

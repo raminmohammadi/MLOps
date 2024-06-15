@@ -8,11 +8,12 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.utils.dates import days_ago
 from datetime import timedelta
-from functions import (
+from .dag_functions import (
     download_and_serialize_data,
     clean_data,
     upload_cleaned_data,
     bigquery_analysis,
+    send_email,
 )
 
 default_args = {
@@ -67,10 +68,17 @@ bigquery_analysis_task = PythonOperator(
     task_id='bigquery_analysis', python_callable=bigquery_analysis, dag=dag
 )
 
+# Send an email above the process task
+send_email_notification = PythonOperator(
+    task_id='send_email_task',
+    python_callable=send_email,
+    dag=dag,
+)
+
 # At the end of the first DAG trigger another dag using TriggerDagRunOperator
 trigger_second_dag = TriggerDagRunOperator(
     task_id='trigger_second_dag',
-    trigger_dag_id='second_dag_id',  # Replace 'second_dag_id' with the actual ID of your second DAG
+    trigger_dag_id='model_training_and_deployment',  # Replace 'second_dag_id' with the actual ID of your second DAG
     dag=dag,
 )
 
@@ -82,5 +90,6 @@ trigger_second_dag = TriggerDagRunOperator(
     >> file_sensor_task
     >> load_to_bigquery_task
     >> bigquery_analysis_task
+    >> send_email_notification
     >> trigger_second_dag
 )

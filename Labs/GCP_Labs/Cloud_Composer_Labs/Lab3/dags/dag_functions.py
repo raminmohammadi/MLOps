@@ -3,6 +3,9 @@ import pandas as pd
 import io
 from google.cloud import bigquery
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
+from airflow.models import Variable
+import smtplib
+from email.mime.text import MIMEText
 
 
 def download_and_serialize_data():
@@ -75,12 +78,40 @@ def bigquery_analysis():
     query = """
     SELECT 
         DATE, 
-        AVG(`Household_1 (kWh)`) AS Avg_Household_1, 
-        AVG(`Household_2 (kWh)`) AS Avg_Household_2, 
-        AVG(`Household_3 (kWh)`) AS Avg_Household_3
-    FROM `your-project.your-dataset.your_table`
+        AVG(`Household_1`) AS Avg_Household_1, 
+        AVG(`Household_2`) AS Avg_Household_2, 
+        AVG(`Household_3`) AS Avg_Household_3
+    FROM `usecentraldataset.my_new_table`
+-- Last 30 days filter
     GROUP BY DATE
     ORDER BY DATE
     """
     result = client.query(query).to_dataframe()
     print(result)
+
+
+def send_email():
+    sender_email = Variable.get('EMAIL_USER')
+    receiver_email = "shah.aadit1@northeastern.edu"
+    password = Variable.get('EMAIL_PASSWORD')
+
+    subject = "Sample email from Airflow"
+    body = "Hello, this is a test email from Python."
+
+    # Create the email headers and content
+    email_message = MIMEText(body)
+    email_message['Subject'] = subject
+    email_message['From'] = sender_email
+    email_message['To'] = receiver_email
+
+    try:
+        # Set up the SMTP server
+        server = smtplib.SMTP('smtp.gmail.com', 587)  # Using Gmail's SMTP server
+        server.starttls()  # Secure the connection
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, email_message.as_string())
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+    finally:
+        server.quit()
