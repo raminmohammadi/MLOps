@@ -2,7 +2,7 @@
 
 ## **Objective**
 
-This lab focuses on advanced concepts in GCP Compute Engine, performing canary deployments, testing with preemptible VM instances, and rolling updates. Participants will update the sentiment analysis service to include prediction confidence and deploy these updates using advanced instance management techniques.
+This lab focuses on advanced concepts in GCP Compute Engine, performing canary deployments, testing with preemptible VM instances, and rolling updates. Participants will update the sentiment analysis service to include prediction confidence percentage, perform a canary deployment of these updates, test with pytest on a preemptible VM instance, and then roll out the updates.
 
 This lab is a continuation of [Lab 2](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Compute_Engine_Labs/Lab2). Please complete Lab 2 before starting this lab.
 
@@ -135,7 +135,7 @@ Performing a canary deployment allows us to test the new version of our applicat
 
 ### **Step 5: Test with Preemptible VM Instance**
 
-Testing with a preemptible VM instance is cost-effective and ideal for fault-tolerant workloads. This step ensures that the new version of our application works correctly under real-world conditions.
+A preemptible VM instance is a cost-effective compute instance that you can use for fault-tolerant and batch workloads. It is offered at a lower price compared to standard instances, but it can be preempted (terminated) by Google Cloud at any time if the resources are needed elsewhere. This step ensures that the new version of our application works correctly under real-world conditions.
 
 1. **Create a preemptible VM instance:**
     - Go to Compute Engine > VM instances.
