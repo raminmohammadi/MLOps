@@ -156,7 +156,9 @@ Testing with a preemptible VM instance is cost-effective and ideal for fault-tol
 
     ```sh
     sudo apt-get update
-    sudo apt-get install -y python3 python3-pip
+    sudo apt-get install -y python3 python3-pip python3.11-venv
+    python3 -m venv env
+    . env/bin/activate
     pip install requests pytest httpx
     ```
 
@@ -286,3 +288,5 @@ Performing a rolling update ensures that all instances in the instance group are
     - Under Update configuration, expand the selection menu and select Automatic as the Update type. Leave default values for the other options.
     - Configure `maximum surge` to control the maximum number of additional instances temporarily created during updates, and `maximum unavailable instances` to specify the maximum number of instances that can be unavailable during the update. This ensures a controlled and gradual rollout, reducing risk.
     - Click "Update VMs" to start the update.
+
+![Maximum surge Configuration](assets/max-surge-configuration.png)
