@@ -4,7 +4,8 @@ import pandas as pd
 import pickle
 import os
 from google.cloud import storage
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
 
@@ -52,7 +53,9 @@ class MLModelTrainOperator(BaseOperator):
     def __init__(
         self,
         data_path,
-        save_path,
+        bucket_name,  # GCS bucket name
+        model_folder,  # Folder path within the bucket to save the model
+        target_column,  # Added target_column parameter
         model_filename='model.pkl',  # Customizable model filename
         n_estimators=100,
         max_depth=None,
@@ -63,7 +66,11 @@ class MLModelTrainOperator(BaseOperator):
     ):
         super(MLModelTrainOperator, self).__init__(*args, **kwargs)
         self.data_path = data_path
-        self.save_path = save_path
+        self.bucket_name = bucket_name  # GCS bucket name
+        self.model_folder = (
+            model_folder  # Folder path within the bucket to save the model
+        )
+        self.target_column = target_column  # Initialize target_column
         self.model_filename = model_filename
         self.n_estimators = n_estimators
         self.max_depth = max_depth
@@ -75,9 +82,24 @@ class MLModelTrainOperator(BaseOperator):
             # Load the dataset
             df = pd.read_csv(self.data_path)
 
+            # Check if target_column exists in the dataframe
+            if self.target_column not in df.columns:
+                raise KeyError(
+                    f"Target column '{self.target_column}' not found in the dataset."
+                )
+
             # Separate features (X) and target variable (y)
-            X = df.drop("target", axis=1)  # Assuming 'target' is the label column
-            y = df["target"]
+            X = df.drop([self.target_column, 'Date'], axis=1)  # Exclude Date column
+            y = df[self.target_column]
+
+            # Ensure all features are numerical
+            if not pd.api.types.is_numeric_dtype(y):
+                raise ValueError(
+                    f"Target column '{self.target_column}' must be numerical."
+                )
+
+            # Handle missing values
+            X.fillna(X.mean(), inplace=True)
 
             # Split data into training and testing sets
             X_train, X_test, y_train, y_test = train_test_split(
@@ -85,22 +107,40 @@ class MLModelTrainOperator(BaseOperator):
             )
 
             # Initialize and train the Random Forest model
-            clf = RandomForestClassifier(
+            model = RandomForestRegressor(
                 n_estimators=self.n_estimators,
                 max_depth=self.max_depth,
                 random_state=self.random_state,
             )
-            clf.fit(X_train, y_train)
+            model.fit(X_train, y_train)
 
-            # Construct the full path for saving the model
-            model_filepath = os.path.join(self.save_path, self.model_filename)
+            # Evaluate the model
+            y_pred = model.predict(X_test)
+            mse = mean_squared_error(y_test, y_pred)
+            self.log.info(f"Model Mean Squared Error: {mse}")
 
-            # Save the model to the specified path
-            with open(model_filepath, 'wb') as file:
-                pickle.dump(clf, file)
+            # Construct the full path for saving the model locally
+            local_model_filepath = os.path.join('/tmp', self.model_filename)
 
-            self.log.info(f"Model successfully trained and saved to {model_filepath}")
-            return model_filepath
+            # Save the model to the specified local path
+            with open(local_model_filepath, 'wb') as file:
+                pickle.dump(model, file)
+
+            self.log.info(
+                f"Model successfully trained and saved locally to {local_model_filepath}"
+            )
+
+            # Upload the model to GCS
+            client = storage.Client()
+            bucket = client.bucket(self.bucket_name)
+            blob = bucket.blob(f'{self.model_folder}/{self.model_filename}')
+            blob.upload_from_filename(local_model_filepath)
+
+            self.log.info(
+                f"Model successfully uploaded to gs://{self.bucket_name}/{self.model_folder}/{self.model_filename}"
+            )
+
+            return f"gs://{self.bucket_name}/{self.model_folder}/{self.model_filename}"
         except Exception as e:
             self.log.error(f"Error during model training: {e}")
             raise
