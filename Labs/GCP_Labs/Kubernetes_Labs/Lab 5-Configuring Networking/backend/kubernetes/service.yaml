@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mlops
+  name: backend-app-service
+spec:
+  selector:
+    app: backend-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

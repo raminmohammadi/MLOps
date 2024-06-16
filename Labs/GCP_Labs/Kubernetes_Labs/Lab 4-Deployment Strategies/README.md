@@ -77,6 +77,9 @@ Once confirmed, switch the traffic from Blue to Green using a router or load bal
 Ensure everything is running smoothly in the Green environment. If everything looks good, then just delete the Blue environment.
 ![Blue-Green](../assets/bg-4.webp)
 
+#### What is DNS Server?
+The Domain Name System (DNS) is the phonebook of the Internet. When users type domain names such as 'google.com' or 'nytimes.com' into web browsers, DNS is responsible for finding the correct IP address for those sites. What we actually do is we map the new service endpoint IP to the DNS name on DNS server.
+
 #### Fallback Strategy:
 If issues arise, switch back to the Blue environment.
 
