@@ -104,7 +104,7 @@ We create a new instance template using the updated custom image. This template 
 
 ### **Step 3: Update Managed Instance Group (MIG)**
 
-Updating the instance group configuration ensures we have enough instances to handle increased traffic and improve availability.
+Updating the instance group configuration ensures we have enough instances to demonstrate canary deployment.
 
 1. **Update the instance group (`imdb-mig`) configuration:**
     - Go to Compute Engine > Instance Groups.
@@ -125,7 +125,7 @@ Performing a canary deployment allows us to test the new version of our applicat
     - Click "Update VMs".
     - Click "Add a second template" and choose the new instance template (`imdb-sentiment-analysis-template-v2`).
     - Under Target size, enter `25%` to canary the new instance template.
-    - If you want, you can configure other update options.
+    - Under Update configuration select `automatic` with actions allowed to vm instances set to `replace only` to roll out our updates instantly.
     - Click "Update VMs" to start the update.
 
     - By adding a second template and setting the target size to 25%, we can update 25% of the instances in the managed instance group to use the new template.
