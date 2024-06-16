@@ -1,10 +1,9 @@
 from airflow import DAG
 from datetime import datetime, timedelta
-from ..plugins.custom_operators.ml_operators import (
+from Lab3.plugins.custom_operators.ml_operators import (
     MLModelTrainOperator,
     ModelDeployOperator,
 )
-
 
 default_args = {
     'owner': 'mlops',
@@ -28,15 +27,17 @@ dag = DAG(
 train_model = MLModelTrainOperator(
     task_id='train_model',
     data_path='gs://us-central1-composer-env-05cbc839-bucket/data/Clean_Energy_Consumption.csv',
-    save_path='gs://us-central1-composer-env-05cbc839-bucket/',
+    bucket_name='us-central1-composer-env-05cbc839-bucket',  # GCS bucket name for saving
+    model_folder='models',  # Folder within the bucket
+    target_column='Household_1',  # Specify the target column
     dag=dag,
 )
 
 # Task 2: Deploy Model
 deploy_model = ModelDeployOperator(
     task_id='deploy_model',
-    model_path='gs://us-central1-composer-env-05cbc839-bucket/models/model.pkl',
-    deployment_target='production',
+    model_path='/tmp/model.pkl',  # Local path where the model is saved
+    bucket_name='us-central1-composer-env-05cbc839-bucket',  # GCS bucket name
     dag=dag,
 )
 

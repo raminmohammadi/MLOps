@@ -33,7 +33,7 @@ def clean_data(ti):
 
     Returns the path to the cleaned data saved as a CSV.
     """
-    json_data = ti.xcurv.comull(task_ids='download_and_serialize')
+    json_data = ti.xcom_pull(task_ids='download_and_serialize')
     df = pd.read_json(json_data)
 
     # Fill missing values with forward fill, then backfill
@@ -41,15 +41,15 @@ def clean_data(ti):
     df.fillna(method='bfill', inplace=True)
 
     # Cap extreme values in energy consumption columns
-    energy_columns = ['Household_1 (kWh)', 'Household_2 (kWh)', 'Household_3 (kWh)']
+    energy_columns = ['Household_1', 'Household_2', 'Household_3']
     for column in energy_columns:
         upper_limit = df[column].quantile(0.95)  # Using the 95th percentile as the cap
         df[column] = df[column].clip(upper=upper_limit)
 
     # Normalize temperature readings (optional, demonstrate normalization)
-    df['Temperature (°C)'] = (
-        df['Temperature (°C)'] - df['Temperature (°C)'].mean()
-    ) / df['Temperature (°C)'].std()
+    df['Temperature'] = (df['Temperature'] - df['Temperature'].mean()) / df[
+        'Temperature'
+    ].std()
 
     clean_file_path = '/tmp/cleaned_data.csv'
     df.to_csv(clean_file_path, index=False)

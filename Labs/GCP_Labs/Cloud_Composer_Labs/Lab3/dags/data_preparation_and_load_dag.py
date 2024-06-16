@@ -8,7 +8,7 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.utils.dates import days_ago
 from datetime import timedelta
-from .dag_functions import (
+from Lab3.dags.dag_functions import (
     download_and_serialize_data,
     clean_data,
     upload_cleaned_data,
@@ -58,7 +58,8 @@ load_to_bigquery_task = GCSToBigQueryOperator(
     task_id='load_to_bigquery',
     bucket='us-central1-composer-env-05cbc839-bucket',
     source_objects=['data/Clean_Energy_Consumption.csv'],
-    destination_project_dataset_table='your-project.your-dataset.your_table',
+    # This should be of the format your-project.your-dataset.your_table
+    destination_project_dataset_table='omega-keep-426222-u2.usecentraldataset.my_new_table',
     write_disposition='WRITE_TRUNCATE',
     skip_leading_rows=1,
     dag=dag,
