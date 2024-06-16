@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="number"] {
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sum Calculator</h1>
+    <div>
+        <input type="number" id="number1" placeholder="Enter first number">
+        <input type="number" id="number2" placeholder="Enter second meaning number">
+        <button onclick="getSum()">Calculate Sum (From Backend Server)</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        async function getSum() {
+            const number1 = document.getElementById('number1').value;
+            const number2 = document.getElementById('number2').value;
+            const response = await fetch(`http://34.139.23.140/add?a=${number1}&b=${number2}`);
+            const data = await response.json();
+            document.getElementById('result').innerText = 'Sum: ' + data.sum;
+        }
+    </script>
+</body>
+</html>
