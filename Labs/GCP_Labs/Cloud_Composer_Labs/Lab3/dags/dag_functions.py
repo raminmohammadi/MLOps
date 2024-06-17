@@ -86,7 +86,7 @@ def bigquery_analysis():
         AVG(`Household_2`) AS Avg_Household_2, 
         AVG(`Household_3`) AS Avg_Household_3
     FROM `usecentraldataset.my_new_table`
--- Last 30 days filter
+    -- Last 30 days filter
     GROUP BY DATE
     ORDER BY DATE
     """
@@ -96,11 +96,7 @@ def bigquery_analysis():
 
 def send_email():
     sender_email = Variable.get('EMAIL_USER')
-<<<<<<< HEAD
-    receiver_email = "r.mohammadi@northeastern.edu"
-=======
     receiver_email = "{your_email}"
->>>>>>> 11252491ea5ca23614efbbaec93f10f8cfe243b8
     password = Variable.get('EMAIL_PASSWORD')
 
     subject = "Sample email from Airflow"
