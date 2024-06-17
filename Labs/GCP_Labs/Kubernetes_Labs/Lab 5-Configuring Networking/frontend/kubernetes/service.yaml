@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mlops
+  name: frontend-app-service
+spec:
+  selector:
+    app: frontend-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
