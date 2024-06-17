@@ -1,5 +1,8 @@
 # Kubernetes Networking Lab
 In this lab, you will gain hands-on experience with crucial networking concepts in Kubernetes, including cluster networking, service discovery, load balancing, and network policies. This guide will provide you with the necessary commands and usage instructions to navigate through these concepts using Google Kubernetes Engine (GKE).
+
+Watch the tutorial video for this lab on our Youtube channel - [Tutorial Video](https://youtu.be/LmcawHBTE-o)  
+
 ## Prerequisites
 Before you start, make sure you have:
 - kubectl installed on your local machine.
