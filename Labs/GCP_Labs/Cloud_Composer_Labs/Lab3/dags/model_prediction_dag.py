@@ -28,8 +28,8 @@ fetch_and_predict_task = PythonOperator(
     task_id='fetch_and_predict',
     python_callable=fetch_and_predict,
     params={
-        'project_id': 'omega-keep-426222-u2',
-        'endpoint_id': 'your-endpoint-id',
+        'project_id': '{your-project-id}',
+        'endpoint_id': '{your-endpoint-id}',
         'instances': [
             # Add your instance data here for predictions
         ],

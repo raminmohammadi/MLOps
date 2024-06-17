@@ -38,7 +38,7 @@ deploy_model = ModelDeployOperator(
     task_id='deploy_model',
     model_directory='models',  # Directory containing the model file
     bucket_name='us-central1-composer-env-05cbc839-bucket',
-    project_id='omega-keep-426222-u2',
+    project_id='{your-project-id}',
     model_display_name='energy_consumption_model',
     dag=dag,
 )
