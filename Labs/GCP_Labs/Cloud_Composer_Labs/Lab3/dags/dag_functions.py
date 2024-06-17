@@ -92,7 +92,7 @@ def bigquery_analysis():
 
 def send_email():
     sender_email = Variable.get('EMAIL_USER')
-    receiver_email = "shah.aadit1@northeastern.edu"
+    receiver_email = "r.mohammadi@northeastern.edu"
     password = Variable.get('EMAIL_PASSWORD')
 
     subject = "Sample email from Airflow"

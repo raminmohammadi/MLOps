@@ -3,7 +3,8 @@ import pytest
 from statistics import median
 import time
 
-CANARY_INSTANCE_IP = "CANARY_INSTANCE_IP" 
+CANARY_INSTANCE_IP = "CANARY_INSTANCE_IP"
+ 
 @pytest.fixture(scope="module")
 def client():
     return httpx.Client(base_url=f"http://{CANARY_INSTANCE_IP}:8000")

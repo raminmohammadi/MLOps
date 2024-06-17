@@ -29,6 +29,7 @@ def predict_sentiment(review: Review):
     prediction = model.predict(X_new)
     confidence = round(model.predict_proba(X_new).max() * 100, 2)
     return {"sentiment": prediction[0], "confidence": float(confidence)}
+
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
