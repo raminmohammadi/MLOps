@@ -27,8 +27,8 @@ dag = DAG(
 train_model = MLModelTrainOperator(
     task_id='train_model',
     data_path='gs://us-central1-composer-env-05cbc839-bucket/data/Clean_Energy_Consumption.csv',
-    bucket_name='us-central1-composer-env-05cbc839-bucket',  # GCS bucket name for saving
-    model_folder='models',  # Folder within the bucket
+    bucket_name='us-central1-composer-env-05cbc839-bucket',
+    model_folder='models',
     target_column='Household_1',  # Specify the target column
     dag=dag,
 )
@@ -36,8 +36,10 @@ train_model = MLModelTrainOperator(
 # Task 2: Deploy Model
 deploy_model = ModelDeployOperator(
     task_id='deploy_model',
-    model_path='/tmp/model.pkl',  # Local path where the model is saved
-    bucket_name='us-central1-composer-env-05cbc839-bucket',  # GCS bucket name
+    model_directory='models',  # Directory containing the model file
+    bucket_name='us-central1-composer-env-05cbc839-bucket',
+    project_id='omega-keep-426222-u2',
+    model_display_name='energy_consumption_model',
     dag=dag,
 )
 

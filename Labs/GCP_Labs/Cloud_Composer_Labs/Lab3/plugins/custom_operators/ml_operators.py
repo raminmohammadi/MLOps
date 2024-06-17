@@ -3,7 +3,7 @@ from airflow.utils.decorators import apply_defaults
 import pandas as pd
 import pickle
 import os
-from google.cloud import storage
+from google.cloud import storage, aiplatform
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -11,36 +11,46 @@ from sklearn.model_selection import train_test_split
 
 class ModelDeployOperator(BaseOperator):
     """
-    Custom Operator for deploying a machine learning model to GCS.
+    Custom Operator for deploying a machine learning model to GCS and Vertex AI.
     """
 
     @apply_defaults
-    def __init__(self, model_path, bucket_name, *args, **kwargs):
+    def __init__(
+        self,
+        model_directory,
+        bucket_name,
+        project_id,
+        model_display_name,
+        *args,
+        **kwargs,
+    ):
         super(ModelDeployOperator, self).__init__(*args, **kwargs)
-        self.model_path = model_path
+        self.model_directory = model_directory
         self.bucket_name = bucket_name
+        self.project_id = project_id
+        self.model_display_name = model_display_name
 
     def execute(self, context):
-        self.log.info(
-            f"Deploying model from {self.model_path} to GCS bucket {self.bucket_name}"
-        )
+        model_gcs_path = f"gs://{self.bucket_name}/{self.model_directory}"
 
-        # Initialize the GCS client
-        client = storage.Client()
-        bucket = client.bucket(self.bucket_name)
-        blob = bucket.blob(os.path.basename(self.model_path))
+        # Deploy the model to Vertex AI
+        self.log.info(f"Deploying model to Vertex AI: {self.model_display_name}")
 
-        # Upload the model to GCS
+        aiplatform.init(project=self.project_id)
+
         try:
-            blob.upload_from_filename(self.model_path)
-            self.log.info(
-                f"Model successfully uploaded to gs://{self.bucket_name}/{os.path.basename(self.model_path)}"
+            model = aiplatform.Model.upload(
+                display_name=self.model_display_name,
+                artifact_uri=model_gcs_path,
+                serving_container_image_uri='us-docker.pkg.dev/vertex-ai/prediction/sklearn-cpu.0-24:latest',
             )
+            self.log.info(
+                f"Model successfully deployed to Vertex AI: {model.display_name}"
+            )
+            return model.resource_name
         except Exception as e:
-            self.log.error(f"Failed to upload model to GCS: {e}")
+            self.log.error(f"Failed to deploy model to Vertex AI: {e}")
             raise
-
-        return f"Model deployed to gs://{self.bucket_name}/{os.path.basename(self.model_path)}"
 
 
 class MLModelTrainOperator(BaseOperator):
