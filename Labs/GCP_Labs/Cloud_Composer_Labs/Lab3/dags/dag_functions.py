@@ -1,11 +1,15 @@
 # functions.py
 import pandas as pd
 import io
-from google.cloud import bigquery
+from google.cloud import bigquery, aiplatform
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.models import Variable
 import smtplib
 from email.mime.text import MIMEText
+import logging
+
+AIRFLOW_TASK = "airflow.task"
+logger = logging.getLogger(AIRFLOW_TASK)
 
 
 def download_and_serialize_data():
@@ -87,12 +91,12 @@ def bigquery_analysis():
     ORDER BY DATE
     """
     result = client.query(query).to_dataframe()
-    print(result)
+    logger.info(f"Output of the bigquery analysis is{result}")
 
 
 def send_email():
     sender_email = Variable.get('EMAIL_USER')
-    receiver_email = "shah.aadit1@northeastern.edu"
+    receiver_email = "{your_email}"
     password = Variable.get('EMAIL_PASSWORD')
 
     subject = "Sample email from Airflow"
@@ -110,8 +114,23 @@ def send_email():
         server.starttls()  # Secure the connection
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, email_message.as_string())
-        print("Email sent successfully!")
+        logger.info("Email sent successfully!")
     except Exception as e:
-        print(f"Error sending email: {e}")
+        logger.error(f"Error sending email: {e}")
     finally:
         server.quit()
+
+
+def fetch_and_predict(**context):
+    project_id = context['params']['project_id']
+    endpoint_id = context['params']['endpoint_id']
+    instances = context['params']['instances']
+
+    aiplatform.init(project=project_id)
+
+    endpoint = aiplatform.Endpoint(endpoint_id)
+
+    response = endpoint.predict(instances=instances)
+    predictions = response.predictions
+
+    print(f'Predictions: {predictions}')
