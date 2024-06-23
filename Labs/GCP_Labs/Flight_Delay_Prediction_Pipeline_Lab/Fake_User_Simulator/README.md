@@ -75,7 +75,7 @@ We are setting up this service to simulate user requests and load on our flight 
      - **ZONE**: `us-central1-a`
      - **INSTANCE_NAME_PREFIX**: `user-simulation-vm`
      - **CUSTOM_IMAGE**: `projects/mlops-final-lab/global/images/user-simulator-image`
-     - **API_URL**: `http://35.188.232.42/flight/prediction`
+     - **API_URL**: `http://external_ip/flight/prediction`
    - Using environment variables ensures that the Cloud Function can easily access configuration details without hardcoding them into the function code.
 
 9. **Update the Cloud Function Code**:
