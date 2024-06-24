@@ -65,11 +65,21 @@ We are setting up this service to simulate user requests and load on our flight 
      - **Service Account User**
    - These roles provide the necessary permissions for the Cloud Function to create VM instances, read from Cloud Storage, and act as the service account.
 
-7. **Navigate to Cloud Functions**:
+7. **Create a Google Cloud Storage Bucket**:
+   - Go to **Storage** > **Browser** > **Create Bucket**.
+   - Configure the bucket with the following settings:
+     - **Name**: `user-simulation-bucket`
+     - **Location type**: `Region`
+     - **Region**: Select the same region as your VM, e.g., `us-central1`
+     - **Storage class**: `Standard`
+   - Click **Create** to create the bucket.
+   - This bucket will be used to store the CSV files that will trigger the Cloud Function.
+
+8. **Navigate to Cloud Functions**:
    - Go to the [Google Cloud Console](https://console.cloud.google.com/), navigate to **Cloud Functions**, and select your function or create a new one.
    - Click **Create function** or **Edit** an existing function.
 
-8. **Set Environment Variables**:
+9. **Set Environment Variables**:
    - Expand the **Environment variables** section and add the following variables:
      - **PROJECT_ID**: `mlops-final-lab`
      - **ZONE**: `us-central1-a`
@@ -78,7 +88,16 @@ We are setting up this service to simulate user requests and load on our flight 
      - **API_URL**: `http://external_ip/flight/prediction`
    - Using environment variables ensures that the Cloud Function can easily access configuration details without hardcoding them into the function code.
 
-9. **Update the Cloud Function Code**:
+10. **Add Requirements for the Cloud Function**:
+    - In `requirements.txt` file for your Cloud Function to specify the necessary dependencies:
+      ```
+      google-api-python-client
+      google-auth
+      google-auth-httplib2
+      google-auth-oauthlib
+      functions-framework
+      ```
+11. **Update the Cloud Function Code**:
    - Use the following code for your Cloud Function:
      ```python
      import functions_framework
@@ -187,7 +206,7 @@ We are setting up this service to simulate user requests and load on our flight 
          print(response)
      ```
 
-10. **Ensure the Python script reads command-line arguments**:
+12. **Ensure the Python script reads command-line arguments**:
     - Update the script to read the CSV file path and API URL from command-line arguments to make it more flexible and adaptable to different inputs.
     ```python
     import pandas as pd
@@ -209,8 +228,6 @@ We are setting up this service to simulate user requests and load on our flight 
         for _, row in batch.iterrows():
             # Convert row to dictionary and replace NaN and infinite values
             payload = row.replace({np.nan: None, np.inf: None, -np.inf: None}).to_dict()
-
-
             try:
                 response = requests.post(api_url, json=payload)
                 if response.status_code == 200:
@@ -248,17 +265,17 @@ We are setting up this service to simulate user requests and load on our flight 
         main(csv_file_path, api_url)
     ```
 
-11. **Upload a File to the Bucket**:
+13. **Upload a File to the Bucket**:
     - Go to **Storage** > **Browser** > your bucket and upload a CSV file. This will trigger the Cloud Function.
 
-12. **Monitor the Cloud Function and VM**:
+14. **Monitor the Cloud Function and VM**:
     - Check the logs in **Cloud Functions** to see if the function was triggered.
     - Go to **Compute Engine** > **VM instances** to see if a new instance was created and is processing the data.
 
-13. **Check the Logs**:
+15. **Check the Logs**:
     - SSH into the VM instance created by the Cloud Function and check the `simulation.log` file located in `/home/user_simulator` to verify that the script ran successfully and processed the data.
 
-14. **Monitor GKE Autoscaling**:
+16. **Monitor GKE Autoscaling**:
     - Navigate to **Kubernetes Engine** > **Clusters** in the Google Cloud Console.
     - Select your GKE cluster and go to the **Workloads** tab.
     - Monitor the number of replicas for your flight delay prediction service to see if autoscaling is triggered in response to the simulated load.
