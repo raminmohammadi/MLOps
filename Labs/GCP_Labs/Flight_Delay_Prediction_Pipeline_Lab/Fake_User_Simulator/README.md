@@ -17,7 +17,8 @@ We are setting up this service to simulate user requests and load on our flight 
        - **OS**: `Debian GNU/Linux`
        - **Version**: `Debian 10`
    - Click **Create** to create the instance.
-   ![Create VM](assets/create-vm.png)
+   
+![Create VM](assets/create-vm.png)
 
 2. **Install Necessary Software and Set Up the Directory**:
    - SSH into the VM instance from the Google Cloud Console.
@@ -50,7 +51,9 @@ We are setting up this service to simulate user requests and load on our flight 
      - **Family**: Leave blank (optional)
      - **Description**: "Custom image for user simulation VM"
    - Click **Create** to create the image.
+
 ![Create Image](assets/create-image.png)
+
 5. **Create a Service Account**:
    - Go to **IAM & Admin** > **Service accounts**, click **+ CREATE SERVICE ACCOUNT**, and fill in the details:
      - **Service account name**: `user-simulator-vm-creation`
@@ -78,7 +81,9 @@ We are setting up this service to simulate user requests and load on our flight 
 8. **Navigate to Cloud Functions**:
    - Go to the [Google Cloud Console](https://console.cloud.google.com/), navigate to **Cloud Functions**, and select your function or create a new one.
    - Click **Create function** or **Edit** an existing function.
-    ![Create cloud function](assets/create-function-1.png)
+    
+![Create cloud function](assets/create-function-1.png)
+
 9. **Set Environment Variables**:
    - Expand the **Environment variables** section and add the following variables:
      - **PROJECT_ID**: `mlops-final-lab`
@@ -212,9 +217,15 @@ We are setting up this service to simulate user requests and load on our flight 
 12. **Upload a File to the Bucket**:
     - Go to **Storage** > **Browser** > your bucket and upload a CSV file. This will trigger the Cloud Function.
 
+![cloud function trigger](assets/cloud-function-trigger.png)
+
 13. **Monitor the Cloud Function and VM**:
     - Check the logs in **Cloud Functions** to see if the function was triggered.
     - Go to **Compute Engine** > **VM instances** to see if a new instance was created and is processing the data.
+
+![cloud function triggered](assets/cloud-function-triggered.png)
+
+![Simulation VM created](assets/simulator-vm-instance-created.png)
 
 14. **Check the Logs**:
     - SSH into the VM instance created by the Cloud Function and check the `simulation.log` file located in `/home/user_simulator` to verify that the script ran successfully and processed the data.
@@ -224,5 +235,9 @@ We are setting up this service to simulate user requests and load on our flight 
     - Select your GKE cluster and go to the **Workloads** tab.
     - Monitor the number of replicas for your flight delay prediction service to see if autoscaling is triggered in response to the simulated load.
     - Check the **Logs** tab to see the incoming requests and responses to ensure that the service is handling the load correctly and that autoscaling is functioning as expected.
+
+![GKE Scale Up](assets/gke-scaled-up.png)
+
+![GKE Scale Up](assets/gke-scaling-logs.png)
 
 By following these steps, you ensure that the Cloud Function triggers the creation of a VM instance, passes the necessary arguments to the simulator script, processes the uploaded CSV file, logs the necessary information, and monitors the autoscaling of your GKE deployment. Adjust the configurations and scripts according to your specific needs and environment.
