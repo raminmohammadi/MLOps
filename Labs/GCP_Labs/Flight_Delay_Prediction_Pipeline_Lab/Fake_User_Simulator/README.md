@@ -106,7 +106,7 @@ We are setting up this service to simulate user requests and load on our flight 
       ```
 11. **Update the Cloud Function Code**:
    - Use the following code for your Cloud Function:
-     ```python
+```python
     import functions_framework
     import os
     import googleapiclient.discovery
@@ -211,7 +211,8 @@ We are setting up this service to simulate user requests and load on our flight 
         )
         response = request.execute()
         print(response)
-     ```
+```
+        
 ![Create cloud function](assets/create-function-3.png)
 
 12. **Upload a File to the Bucket**:
