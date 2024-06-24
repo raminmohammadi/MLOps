@@ -93,7 +93,7 @@ We are setting up this service to simulate user requests and load on our flight 
      - **API_URL**: `http://external_ip/flight/prediction`
    - Using environment variables ensures that the Cloud Function can easily access configuration details without hardcoding them into the function code.
 
-![Create cloud function](assets/create-function-3.png)
+![Create cloud function](assets/create-function-2.png)
 
 10. **Add Requirements for the Cloud Function**:
     - In `requirements.txt` file for your Cloud Function to specify the necessary dependencies:
