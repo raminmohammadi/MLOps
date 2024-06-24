@@ -2,7 +2,7 @@ import functions_framework
 import os
 import googleapiclient.discovery
 from google.auth import compute_engine
-# Triggered by a change in a storage bucket
+import re
 
 @functions_framework.cloud_event
 def start_vm(event):
@@ -35,11 +35,18 @@ def start_vm(event):
     file_name = data['name']
     bucket_name = data['bucket']
 
+    # Sanitize the instance name to conform to the required format
+    instance_id = re.sub(r'[^-a-z0-9]', '-', file_name.split('.')[0].lower())[:60]
+    instance_name = f"{INSTANCE_NAME_PREFIX}-{instance_id}"
+
+    # Ensure the CUSTOM_IMAGE is a full URL
+    if not CUSTOM_IMAGE.startswith('projects/'):
+        raise ValueError("CUSTOM_IMAGE must be a full URL in the format 'projects/IMAGE_PROJECT/global/images/IMAGE'")
+
     # Configure the instance properties
-    instance_name = f"{INSTANCE_NAME_PREFIX}"
     instance_body = {
         'name': instance_name,
-        'machineType': f"zones/{ZONE}/machineTypes/e2-micro",
+        'machineType': f"zones/{ZONE}/machineTypes/n1-standard-1",
         'disks': [
             {
                 'boot': True,
@@ -65,7 +72,7 @@ def start_vm(event):
                         gsutil cp gs://{bucket_name}/{file_name} /home/user_simulator/{file_name}
                         # Set up and activate the virtual environment
                         cd /home/user_simulator
-                        source venv/bin/activate
+                        . venv/bin/activate
                         # Run the Python script with arguments
                         python3 simulate_requests.py /home/user_simulator/{file_name} {API_URL}
                         # Schedule instance shutdown after script completion
