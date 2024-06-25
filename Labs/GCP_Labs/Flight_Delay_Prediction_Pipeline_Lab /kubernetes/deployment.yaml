@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: flight-fastapi-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flight-fastapi-app
+  template:
+    metadata:
+      labels:
+        app: flight-fastapi-app
+    spec:
+      containers:
+          - name: flight-prediction-api
+            image: us-east4-docker.pkg.dev/mlops-final-lab/backend-fastapi-app/fast-api-app
+            imagePullPolicy: Always
+            envFrom:
+            - configMapRef:
+                name: flight-fastapi-env
+            ports:
+              - containerPort: 8080
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "50m"
+              limits:
+                memory: "200Mi"
+                cpu: "100m"

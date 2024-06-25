@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mlops
+  name: flight-fastapi-service
+spec:
+  selector:
+    app: flight-fastapi-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
