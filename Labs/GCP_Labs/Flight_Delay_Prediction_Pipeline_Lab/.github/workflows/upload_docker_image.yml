@@ -1,0 +1,27 @@
+name: Build and Push Docker Image to GCR
+
+on:
+  push:
+    branches:
+      # - main Uncomment this code to run the actions
+
+jobs:
+  build-and-push-to-gcr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+
+      - name: Install gcloud cli
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: mlops-final-lab
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+          
+      - name: Build and Push Docker Image
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+          IMAGE_TAG=$(uuidgen)
+          docker build -t us-central1-docker.pkg.dev/mlops-final-lab/ml-model-training/ml-training-image:${IMAGE_TAG} .
+          docker push us-central1-docker.pkg.dev/mlops-final-lab/ml-model-training/ml-training-image:${IMAGE_TAG}
