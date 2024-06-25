@@ -3,6 +3,7 @@ import numpy as np
 import warnings
 import logging
 import calendar
+from google.cloud import storage
 
 warnings.filterwarnings("ignore")
 
@@ -16,16 +17,33 @@ def main():
     try:
         # Data Loading
         logging.info("Loading data from GCS")
-        df1 = pd.read_csv(
-            'gs://us-central1-mlops-composer-c43be234-bucket/data/2015.csv'
-        )
-        df2 = pd.read_csv(
-            'gs://us-central1-mlops-composer-c43be234-bucket/data/2016.csv'
-        )
-        logging.info("Data loaded successfully")
 
-        # Combine the datasets
-        df = pd.concat([df1, df2], ignore_index=True)
+        # Initialize a client
+        storage_client = storage.Client()
+
+        # Define the bucket name
+        bucket_name = 'us-central1-mlops-composer-c43be234-bucket'
+        data_prefix = 'data/'  # This is the folder within the bucket where your CSV files are stored
+
+        # Get the bucket
+        bucket = storage_client.bucket(bucket_name)
+
+        # List all blobs in the specified folder
+        blobs = bucket.list_blobs(prefix=data_prefix)
+
+        # Initialize an empty list to store DataFrames
+        dfs = []
+
+        # Iterate over the blobs and read each CSV file
+        for blob in blobs:
+            if blob.name.endswith('.csv'):
+                logging.info(f"Loading data from {blob.name}")
+                blob_path = f'gs://{bucket_name}/{blob.name}'
+                df = pd.read_csv(blob_path)
+                dfs.append(df)
+
+        # Combine all DataFrames
+        df = pd.concat(dfs, ignore_index=True)
         logging.info("Data combined successfully")
 
         # Renaming Airlines

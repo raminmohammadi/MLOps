@@ -8,6 +8,7 @@ from google.auth.transport.requests import AuthorizedSession
 import requests
 import functions_framework
 import logging
+import time
 
 # Set up logger
 logging.basicConfig(level=logging.INFO)
@@ -57,6 +58,8 @@ def trigger_dag(web_server_url: str, dag_id: str, data: dict) -> str:
     endpoint = f"api/v1/dags/{dag_id}/dagRuns"
     request_url = f"{web_server_url}/{endpoint}"
     json_data = {"conf": data}
+
+    time.sleep(200) #Sleep for 200s so your dags are imported in Airflow
 
     response = make_composer2_web_server_request(
         request_url, method="POST", json=json_data
