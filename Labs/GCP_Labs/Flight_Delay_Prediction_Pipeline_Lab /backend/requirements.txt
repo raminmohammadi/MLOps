@@ -1,0 +1,9 @@
+python-dotenv==0.21.1
+fastapi==0.92.0
+uvicorn
+google-cloud-storage
+google-cloud-pubsub
+pandas
+numpy
+scikit-learn==1.5.0
+xgboost==2.1.0
