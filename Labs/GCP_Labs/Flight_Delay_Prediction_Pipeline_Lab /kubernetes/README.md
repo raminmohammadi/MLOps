@@ -54,7 +54,7 @@ Adjust the files in the kubernetes/ directory as needed, and then use kubectl to
 kubectl apply -k kubernetes/deployment.yaml
 ```
 #### Verify Deployment:
-![GKE Deployment](./assets/deployment.png)
+![GKE Deployment](../assets/deployment.png)
 Check the deployment status with:
 ```
 kubectl get all -n mlops
