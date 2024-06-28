@@ -1,5 +1,7 @@
 # Advanced Google Cloud Composer and Airflow Project
 
+Watch the tutorial video for this lab on our Youtube channel - [Tutorial Video](https://youtu.be/PKhUQBHpaAc)
+
 ## Overview
 
 This project demonstrates advanced concepts in Google Cloud Composer and Airflow, including custom operators, integration with GCP services, monitoring and alerting, and security best practices. The project involves building a robust data pipeline that processes data, loads it into BigQuery, trains a machine learning model, and deploys the model to Google Cloud Storage (GCS).
