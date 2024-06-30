@@ -1,6 +1,7 @@
 # Airflow lab
 
-in order to install Airflow using docker you can watch our [Airflow Lab1 Ttorial Video](https://youtu.be/exFSeGUbn4Q?feature=shared)
+- In order to install Airflow using docker you can watch our [Airflow Lab1 Tutorial Video](https://youtu.be/exFSeGUbn4Q?feature=shared)
+- For latest step-by-step instructions, check out this blog - [AirFlow Lab-1](https://www.mlwithramin.com/blog/airflow-lab1)
 
 ### ML Model
 
@@ -186,10 +187,10 @@ The script defines an Airflow DAG named `your_python_dag` that consists of sever
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from src.lab2 import load_data, data_preprocessing, build_save_model, load_model_elbow
+from src.lab import load_data, data_preprocessing, build_save_model, load_model_elbow
 from airflow import configuration as conf
 ```
-The script starts by importing the required libraries and modules. Notable imports include the `DAG` and `PythonOperator` classes from the `airflow` package, datetime manipulation functions, and custom functions from the `src.lab2` module.
+The script starts by importing the required libraries and modules. Notable imports include the `DAG` and `PythonOperator` classes from the `airflow` package, datetime manipulation functions, and custom functions from the `src.lab` module.
 
 
 
@@ -247,7 +248,7 @@ The 'data_preprocessing_task' depends on the 'load_data_task' and calls the data
 build_save_model_task = PythonOperator(
     task_id='build_save_model_task',
     python_callable=build_save_model,
-    op_args=[data_preprocessing_task.output, "model2.sav"],
+    op_args=[data_preprocessing_task.output, "model.sav"],
     provide_context=True,
     dag=dag,
 )
@@ -259,7 +260,7 @@ The 'build_save_model_task' depends on the 'data_preprocessing_task' and calls t
 load_model_task = PythonOperator(
     task_id='load_model_task',
     python_callable=load_model_elbow,
-    op_args=["model2.sav", build_save_model_task.output],
+    op_args=["model.sav", build_save_model_task.output],
     dag=dag,
 )
 ```
@@ -296,7 +297,7 @@ your_airflow_project/
 ├── dags/
 │   ├── airflow.py     # Your DAG script
 ├── src/
-│   ├── lab2.py                # Data processing and modeling functions
+│   ├── lab.py                # Data processing and modeling functions
 ├── data/                       # Directory for data (if needed)
 ├── docker-compose.yaml         # Docker Compose configuration
 ```
