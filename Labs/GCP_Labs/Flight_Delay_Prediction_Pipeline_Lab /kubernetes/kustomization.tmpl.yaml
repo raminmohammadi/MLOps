@@ -1,0 +1,7 @@
+resources:
+  - deployment.yaml
+
+images:
+  - name: us-east4-docker.pkg.dev/mlops-final-lab/backend-fastapi-app/fast-api-app
+    newName: ${GCR_REPOSITORY}
+    newTag: ${IMAGE_TAG}
