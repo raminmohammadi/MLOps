@@ -1,0 +1,12 @@
+taskGroups:
+  - taskSpec:
+      runnables:
+        - container:
+            imageUri: "us-central1-docker.pkg.dev/mlops-final-lab/ml-model-training/ml-training-image"
+      computeResource:
+        cpuMilli: 4000
+        memoryMib: 32768
+      maxRetryCount: 1
+      maxRunDuration: "900s"
+    taskCount: 1
+    parallelism: 1
