@@ -2,7 +2,7 @@
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from src.lab2 import load_data, data_preprocessing, build_save_model,load_model_elbow
+from src.lab import load_data, data_preprocessing, build_save_model,load_model_elbow
 
 from airflow import configuration as conf
 
@@ -17,7 +17,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5), # Delay before retries
 }
 
-# Create a DAG instance named 'your_python_dag' with the defined default arguments
+# Create a DAG instance named 'Airflow_Lab1' with the defined default arguments
 dag = DAG(
     'Airflow_Lab1',
     default_args=default_args,
@@ -45,7 +45,7 @@ data_preprocessing_task = PythonOperator(
 build_save_model_task = PythonOperator(
     task_id='build_save_model_task',
     python_callable=build_save_model,
-    op_args=[data_preprocessing_task.output, "model2.sav"],
+    op_args=[data_preprocessing_task.output, "model.sav"],
     provide_context=True,
     dag=dag,
 )
@@ -53,7 +53,7 @@ build_save_model_task = PythonOperator(
 load_model_task = PythonOperator(
     task_id='load_model_task',
     python_callable=load_model_elbow,
-    op_args=["model2.sav", build_save_model_task.output],
+    op_args=["model.sav", build_save_model_task.output],
     dag=dag,
 )
 

@@ -36,11 +36,9 @@ with DAG(dag_id="demo", start_date=datetime(2022, 1, 1), schedule="0 0 * * *") a
 
 Here you see:
 
-A DAG named “demo”, starting on Jan 1st 2022 and running once a day. A DAG is Airflow’s representation of a workflow.
-
-Two tasks, a BashOperator running a Bash script and a Python function defined using the @task decorator
-
->> between the tasks defines a dependency and controls in which order the tasks will be executed
+- A DAG named “demo”, starting on Jan 1st 2022 and running once a day. A DAG is Airflow’s representation of a workflow.
+- Two tasks, a BashOperator running a Bash script and a Python function defined using the @task decorator
+- `>>` between the tasks defines a dependency and controls in which order the tasks will be executed
 
 Airflow evaluates this script and executes the tasks at the set interval and in the defined order. The status of the “demo” DAG is visible in the web interface:
 
