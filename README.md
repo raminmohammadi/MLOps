@@ -1,3 +1,5 @@
+[![Testing Github Lab1 Python Unittests](https://github.com/raminmohammadi/MLOps/actions/workflows/github_lab2_unittest_action.yml/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/github_lab2_unittest_action.yml)
+
 # MLOps Repository
 
 ## Overview
