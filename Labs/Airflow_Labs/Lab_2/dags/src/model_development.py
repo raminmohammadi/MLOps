@@ -39,25 +39,25 @@ def data_preprocessing(data):
     X_train = ct.fit_transform(X_train)
     X_test = ct.transform(X_test)
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train.values, y_test.values
 
 # Build and save a logistic regression model
 def build_model(data, filename):
     X_train, X_test, y_train, y_test = data
 
-    # Define hyperparameter grid for grid search
-    lr_clf = LogisticRegression()
-    penalty = ['l1', 'l2']
-    C = [0.5, 0.6, 0.7, 0.8]
-    class_weight = [{1: 0.5, 0: 0.5}, {1: 0.4, 0: 0.6}, {1: 0.6, 0: 0.4}, {1: 0.7, 0: 0.3}]
-    solver = ['liblinear', 'saga']
+    # Define hyperparameter grid for grid search if required
+    # lr_clf = LogisticRegression()
+    # penalty = ['l1', 'l2']
+    # C = [0.5, 0.6, 0.7, 0.8]
+    # class_weight = [{1: 0.5, 0: 0.5}, {1: 0.4, 0: 0.6}, {1: 0.6, 0: 0.4}, {1: 0.7, 0: 0.3}]
+    # solver = ['liblinear', 'saga']
 
-    param_grid = dict(
-        penalty=penalty,
-        C=C,
-        class_weight=class_weight,
-        solver=solver
-    )
+    # param_grid = dict(
+    #     penalty=penalty,
+    #     C=C,
+    #     class_weight=class_weight,
+    #     solver=solver
+    # )
 
     # Create and train a logistic regression model with the best parameters
     lr_clf = LogisticRegression()

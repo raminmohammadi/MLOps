@@ -46,7 +46,7 @@ def notify_failure(context):
 dag  = DAG('Airflow_Lab2', 
            default_args=default_args,
            description='Aiflow-Lab2 DAG Description',
-           schedule_interval='1 * * * *',
+           schedule_interval='*/1 * * * *',
            catchup=False, #The scheduler, by default, will kick off a DAG Run for any data interval that has not been run since the last data interval (or has been cleared). This concept is called Catchup.
            tags=['example'],
            owner_links={"Ramin Mohammadi": "https://github.com/raminmohammadi/MLOps/"}         
