@@ -45,7 +45,7 @@ def failure():
 
 # Function to start Flask app
 def start_flask_app():
-    app.run(host='0.0.0.1', port=5555)
+    app.run(host='0.0.0.0', port=5555)
 
 #To address this issue, you can use the TriggerDagRunOperator to trigger a separate DAG once start_flask_API starts the Flask server.
 # This new DAG can handle the Flask server's lifecycle independently, allowing the current DAG to proceed with sending the email.
