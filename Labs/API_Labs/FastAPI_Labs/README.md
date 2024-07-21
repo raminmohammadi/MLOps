@@ -39,6 +39,9 @@ mlops_labs
     └── requirements.txt
 ```
 
+Note:
+- **fastapi[all]** in **requirements.txt** will install optional additional dependencies for fastapi which contains **uvicorn** too.
+
 ## Running the Lab
 
 1. First step is to train a Decision Tree Classifier(Although you have **`model/iris_model.pkl`** when you cloned from the repo, let's create a new model). To do this, move into **src/** folder with
