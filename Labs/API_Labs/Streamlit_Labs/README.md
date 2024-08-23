@@ -1,3 +1,7 @@
+---
+- Blog: [FastAPI Lab-1](https://www.mlwithramin.com/blog/streamlit-lab1)
+---
+
 ## Streamlit Introduction
 
 Data Science models often need to be shared and presented in an interactive manner for various applications. Streamlit provides a convenient platform to build user-friendly interfaces, allowing practitioners to showcase their remarkable machine learning models to a broader audience effectively.

@@ -7,9 +7,11 @@ from streamlit.logger import get_logger
 # If you start the fast api server on a different port
 # make sure to change the port below
 FASTAPI_BACKEND_ENDPOINT = "http://localhost:8000"
+
 # Make sure you have iris_model.pkl file in FastAPI_Labs/src folder.
-# If it's missing run train.py in FastAPI_Labs/src folder 
-FASTAPI_IRIS_MODEL_LOCATION = Path(__file__).resolve().parents[2] / 'FastAPI_Labs' / 'src' / 'iris_model.pkl'
+# If it's missing run train.py in FastAPI_Labs/src folder
+# If your FastAPI_Labs folder name is different, update accordingly in the following path
+FASTAPI_IRIS_MODEL_LOCATION = Path(__file__).resolve().parents[2] / 'FastAPI_Labs' / 'model' / 'iris_model.pkl'
 
 # streamlit logger
 LOGGER = get_logger(__name__)
