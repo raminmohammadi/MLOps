@@ -162,7 +162,3 @@ gsutil cp gs://<your-bucket-name>/data/dataset.csv ./data/dataset.csv
 ---
 
 With these steps, your local system is now connected to the GCS bucket, and you can store and version datasets securely. Additionally, by enabling versioning and lifecycle management, you gain fine-grained control over how your data is stored and managed in the cloud.
-
----
-
-This structure should fit well in a `README.md` for GitHub, giving a clear, beginner-friendly guide on how to connect to Google Cloud Storage and manage datasets.
