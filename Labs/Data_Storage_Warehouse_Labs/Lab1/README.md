@@ -12,7 +12,7 @@ This lab introduce you to how GCS and BigQuery work together to provide a full s
 
 ---
 
-## Lab 1: Google Cloud Storage (GCS)
+##  Google Cloud Storage (GCS)
 
 - **Scalable Data Storage**  
   GCS is designed to store data of any size, from small files to large datasets. It provides a centralized location for securely storing data that can be easily accessed from anywhere.
@@ -25,7 +25,7 @@ This lab introduce you to how GCS and BigQuery work together to provide a full s
 
 ---
 
-## Lab 2: Google BigQuery
+##  Google BigQuery
 
 - **Fast, Serverless Analytics**  
   BigQuery allows you to analyze massive datasets using SQL, without needing to manage any infrastructure. You’ll explore how to run queries and extract insights quickly and efficiently.
