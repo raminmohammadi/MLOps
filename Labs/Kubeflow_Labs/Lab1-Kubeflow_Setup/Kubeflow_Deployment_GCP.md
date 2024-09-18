@@ -93,6 +93,7 @@ git checkout master
 cd management
 ```
 - Fill in environment variables in kubeflow-distribution/management/env.sh as followed:
+- Ensure that a different location from 'us-central1' is chosen, and it should also not be the same location used to create the 'tmp-cluster'.
 ```commandline
 MGMT_PROJECT=<the project where you deploy your management cluster>
 
