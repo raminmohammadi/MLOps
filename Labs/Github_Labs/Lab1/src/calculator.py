@@ -26,7 +26,7 @@ def fun2(x, y):
         ValueError: If x or y is not a number.
     """
     if not (isinstance(x, (int, float)) and isinstance(y, (int, float))):
-        raise ValueError("Both inputs must be numbers.")
+        raise ValueError("Both  must be numbers.")
     return x - y
 
 def fun3(x, y):
