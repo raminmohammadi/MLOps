@@ -4,6 +4,7 @@ This lab focuses on 5 modules, which includes creating a virtual environment, cr
 
 
 
+
 ## Step 1: Creating a Virtual Environment
 
 In software development, it's crucial to manage project dependencies and isolate your project's environment from the global Python environment. This isolation ensures that your project remains consistent, stable, and free from conflicts with other Python packages or projects. To achieve this, we create a virtual environment dedicated to our project. <br>
