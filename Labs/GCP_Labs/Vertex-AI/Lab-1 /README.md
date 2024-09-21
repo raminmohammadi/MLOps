@@ -3,6 +3,11 @@
 Vertex AI is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. Vertex AI combines data engineering, data science, and ML engineering workflows, enabling your teams to collaborate using a common toolset and scale your applications using the benefits of Google Cloud. For folks using different cloud services, it is similar to AWS SageMaker, Azure ML Studio, etc.
 Please refer to the official documentation for more detailed concepts and working of the services 
 
+## Tutorial Video below
+Check this video for intro to features in Vertex AI and a simple demo of creating a dataset, notebook instance and model registry.
+
+[Video](https://www.loom.com/share/016a64921fb74cf69fde609a8fe71736?sid=65589692-e06a-4270-a11b-dbbd43b60140)
+
 ## How to setup Vertex AI in GCP console
 After creating your project in GCP, search for /Vertex AI in search bar, and then you'll be landed in the homepage where you have to enable all recommended APIs to start using Vertex AI services as shown in the image below.
 ![Screenshot 2024-09-20 at 12 55 14 PM](https://github.com/user-attachments/assets/c604c64e-fe4a-4dd1-8b6d-e520757fb5eb)
