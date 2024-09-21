@@ -26,9 +26,9 @@ def run_training():
     model.feature_names = X.columns
 
     # Persist the trained model
-    if not os.path.exists("model"):
-        os.makedirs("model")
-    joblib.dump(model, "model/model.pkl")
+    if not os.path.exists("../model"):
+        os.makedirs("../model")
+    joblib.dump(model, "../model/model.pkl")
 
 if __name__ == "__main__":
     run_training()
