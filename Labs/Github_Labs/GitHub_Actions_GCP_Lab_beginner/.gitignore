@@ -1,0 +1,26 @@
+# Service account keys
+*.json
+
+# macOS system files
+.DS_Store
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+*.venv/
+
+# Operating System generated files
+Thumbs.db
+ehthumbs.db
+
+# VSCode
+.vscode/
+
+# Ignore model files
+*.joblib
