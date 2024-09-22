@@ -1,7 +1,3 @@
-Here's the lab in a clean and properly formatted GitHub README layout:
-
----
-
 # Intermediate Lab - Advanced Querying and Visualization in BigQuery
 
 ## Objective
@@ -58,11 +54,3 @@ ORDER BY avg_sales DESC;
 
 ## Conclusion
 This lab allows you to practice advanced data analysis and visualization techniques using BigQuery, reinforcing the importance of extracting and sharing insights from data.
-
-## Deliverables
-- Submit your SQL queries along with screenshots of the visualizations you created.
-- Upload the exported Google Sheets or CSV file containing your query results.
-
----
-
-This version is structured in a way that’s typical for a GitHub README, making it easy to follow and upload.
