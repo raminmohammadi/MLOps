@@ -87,7 +87,7 @@ def create_schema_from_yaml(table_schema):
     return schema
 
 
-# Triggered by a change in a storage bucket
+
 @functions_framework.cloud_event
 def hello_gcs(cloud_event):
     data = cloud_event.data

@@ -41,7 +41,7 @@ def validate_features(features):
     except ValueError:
         return False
 
-def hello(request):
+def logfunction(request):
     """Predicts the Iris flower class based on input features."""
     try:
         if not request.is_json:
