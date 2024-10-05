@@ -222,9 +222,29 @@ Now after the training, you'll see the "model.joblib" file saved for further usa
 <img width="1502" alt="Screenshot 2024-10-05 at 3 41 58 AM" src="https://github.com/user-attachments/assets/b08e53ea-628f-46f6-9ce2-3801e4e149a3">
 
 
+Now open `Model Registry` in GCP console and select the import button
+- Now name the model and give the region you're located in
+- For "model settings" select the model framework, version and give the location of the Model artifact location "gs://stroke_outputs/job_outputs/model/model.joblib"
+- leave rest as default settings
 
 
-  
+<img width="1478" alt="Screenshot 2024-10-05 at 3 56 27 AM" src="https://github.com/user-attachments/assets/e046a510-1d99-4abd-a59b-1d4dc261e71c">
+
+Now you can see the model in the model registry, we have to next deploy the model to an endpoint, follow a similar path as mentioned in AutoML method and you can see the predictions
+
+
+<img width="1512" alt="Screenshot 2024-10-05 at 4 13 22 AM" src="https://github.com/user-attachments/assets/199f41c0-7fde-41b8-be66-2db271a109c7">
+
+NOTE: Important points
+- INPUT_DATA_FILE should be a .json file
+- Also you should make sure that no.of input features for your model in the training script should match the input you're giving to the model deployed at the endpoint
+
+
+
+
+
+
+
 
 
 
