@@ -1,6 +1,6 @@
 # Pipelines with AutoML and Pre-built Containers
 
-In this lab, we'll explore how to create end-to-end pipelines and get online predictions in Vertex AI.
+In this lab, we'll explore how to create end-to-end pipelines and get online predictions in Vertex AI using AutoML.
 Two ways discussed here are:
 - Using AutoML
 - Using Pre-built containers
@@ -131,12 +131,40 @@ Now if you run the commands shown in `SAMPLE REQUEST` you'll get a URL similar t
 
 Now to actually send data to this model and get predictions, you can copy and paste this link into POSTMAN application.
 
-To run this you'll need an access token to your GCP, which you'll get it by running this command `gcloud auth print-access-token`
+To run this you'll need an access token to your GCP, which you'll get by running this command `gcloud auth print-access-token`
 in Google cloud shell
 
 Use this token as authorization in the POSTMAN application and give your data in the format specified in the `SAMPLE REQUEST` to get your prediction.
 
 <img width="1497" alt="Screenshot 2024-10-05 at 12 54 12 AM" src="https://github.com/user-attachments/assets/766dbe56-4c3d-4e8b-ab70-80fbd32dadbf">
+
+
+While AutoML is hassle-free, it abstracts most machine learning pipelines, including model selection, hyperparameter tuning, and feature engineering. While this is beneficial for users with less ML expertise, it provides less control for advanced users who might want to experiment with custom algorithms or fine-tune specific parameter and is very costly to train.
+
+
+## End-to-end pipeline with custom model and pre-built container
+
+Pre-built Containers provide more flexibility and are generally better suited for highly specialized use cases, large-scale custom models, or where specific optimization is needed.
+
+In this method, we'll use our own machine-learning model with pre-built containers like TensorFlow, Scikit-learn, Pytorch & XGBoost
+which covers most of the use cases.
+
+For this, we'll use a different dataset https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset
+
+**Application structure**
+
+stroke_package
+--setup.py
+  trainer
+  --__init__.py
+  --task.py
+
+
+
+
+
+
+
 
 
 
