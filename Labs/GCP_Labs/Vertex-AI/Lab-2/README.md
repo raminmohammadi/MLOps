@@ -159,7 +159,72 @@ stroke_package
   --__init__.py
   --task.py
 
+ ### Source Distribution 
 
+Before you can perform custom training with a prebuilt container, you must create a [Python source distribution](https://cloud.google.com/vertex-ai/docs/training/create-python-pre-built-container.com) that contains your training application and upload it to a Cloud Storage bucket that your Google Cloud project can access. 
+
+Create this kind of structure with the files in the repository in your GCP workbench (jupyterlab) and open a terminal inside that jupyter lab
+
+
+`python setup.py sdist --formats=gztar`
+
+This command creates required source distribution
+
+you'll see 2 new folders `dist` & `trainer.egg-info` as shown below
+
+<img width="1433" alt="Screenshot 2024-10-05 at 2 34 33 AM" src="https://github.com/user-attachments/assets/b15670b4-04b9-4f21-a4b4-4f0bb160096b">
+
+now upload this source distribution to cloud storage using the command
+
+`gcloud storage cp dist/trainer-0.1.tar.gz gs://vertexai-lab2/prebuilt_container`
+
+<img width="1496" alt="Screenshot 2024-10-05 at 2 37 58 AM" src="https://github.com/user-attachments/assets/a9460f15-52c4-43cf-b116-45fdba6058f1">
+
+
+###Training Model
+
+Now we'll start a new training job with `No managed dataset`
+
+
+<img width="1506" alt="Screenshot 2024-10-05 at 2 44 29 AM" src="https://github.com/user-attachments/assets/b470c3ed-4a66-4d38-ac3d-8e57bd9aff79">
+
+Now I'm naming the new training job "stroke_model" and leave the rest as default
+
+<img width="1498" alt="Screenshot 2024-10-05 at 2 45 56 AM" src="https://github.com/user-attachments/assets/586ef663-5c84-4f60-8df8-3aab3c50774d">
+
+Before we go to next step make sure to create 2 new buckets in GCS (google cloud storage) for "model_outputs" and to store the "dataset" 
+
+- Now click the  `pre-built container`
+- choose framework `scikit-learn` and version `0.23`
+- now for `Package location (cloud storage path) 1` choose the cloud directory where you uploaded the source distribution "gs://vertexai-lab2/prebuilt_container"
+- python module is your training code, here it is `trainer.task` (path to task.py in trainer folder as in the initial structure)
+- Model output directory is  "gs://stroke_outputs/job_outputs/model/"
+- At last, give your data location as argument in the "Arguments" section 
+  " --data_gcs_path= gs://stroke_dataset_test/stroke_data.csv " (in task.py we wrote the code to take in a argument of data location )
+
+  
+<img width="1512" alt="Screenshot 2024-10-05 at 2 55 39 AM" src="https://github.com/user-attachments/assets/4e4c298e-d0d6-49cb-b358-dd96a8bbd26a">
+
+
+<img width="610" alt="Screenshot 2024-10-05 at 2 55 45 AM" src="https://github.com/user-attachments/assets/2c84ee0f-cf89-4792-ad0b-23c05e7ddff1">
+
+Now you can select hyperparameters as per the model requirements and select the required compute resources for training and click continue
+
+Wait for the training job to get finished then you'll see something of this sort
+
+
+
+<img width="1487" alt="Screenshot 2024-10-05 at 3 37 17 AM" src="https://github.com/user-attachments/assets/a556447f-b5a6-4561-a8a6-6f6bf5700536">
+
+Now after the training, you'll see the model.joblib file saved for further usage in GCS model output bucket given while initiating training job
+
+
+<img width="1502" alt="Screenshot 2024-10-05 at 3 41 58 AM" src="https://github.com/user-attachments/assets/b08e53ea-628f-46f6-9ce2-3801e4e149a3">
+
+
+
+
+  
 
 
 
