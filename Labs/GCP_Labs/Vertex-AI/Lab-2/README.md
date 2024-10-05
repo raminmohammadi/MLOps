@@ -216,7 +216,7 @@ Wait for the training job to get finished then you'll see something of this sort
 
 <img width="1487" alt="Screenshot 2024-10-05 at 3 37 17 AM" src="https://github.com/user-attachments/assets/a556447f-b5a6-4561-a8a6-6f6bf5700536">
 
-Now after the training, you'll see the model.joblib file saved for further usage in GCS model output bucket given while initiating training job
+Now after the training, you'll see the "model.joblib" file saved for further usage in GCS model output bucket given while initiating training job
 
 
 <img width="1502" alt="Screenshot 2024-10-05 at 3 41 58 AM" src="https://github.com/user-attachments/assets/b08e53ea-628f-46f6-9ce2-3801e4e149a3">
