@@ -119,6 +119,8 @@ Here you can see the MBA_data endpoint is `active`, if you scroll the tab to lef
 
 <img width="1491" alt="Screenshot 2024-10-05 at 12 23 38 AM" src="https://github.com/user-attachments/assets/e7043deb-5f9f-44f6-a0e2-2a57a0da52ec">
 
+### Prediction
+
 The GCP interface has this feature where you can test if the deployed model on endpoint is working or not by giving the inputs without having to run the " curl  -POST " command directly in the same "DELPOY & TEST" page
 
 <img width="1507" alt="Screenshot 2024-10-05 at 12 27 13 AM" src="https://github.com/user-attachments/assets/0cfe63ed-15eb-4cba-a6b0-28421946389e">
