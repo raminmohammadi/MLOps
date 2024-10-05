@@ -134,7 +134,7 @@ in Google cloud shell
 
 Use this token as authorization in the POSTMAN application and give your data in the format specified in the `SAMPLE REQUEST` to get your prediction.
 
-<img width="1504" alt="Screenshot 2024-10-05 at 12 52 26 AM" src="https://github.com/user-attachments/assets/5ce77497-d70b-445c-889d-047bd3d7a387">
+<img width="1497" alt="Screenshot 2024-10-05 at 12 54 12 AM" src="https://github.com/user-attachments/assets/766dbe56-4c3d-4e8b-ab70-80fbd32dadbf">
 
 
 
