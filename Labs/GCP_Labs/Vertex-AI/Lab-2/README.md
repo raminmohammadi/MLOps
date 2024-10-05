@@ -235,7 +235,9 @@ Now you can see the model in the model registry, we have to next deploy the mode
 
 <img width="1512" alt="Screenshot 2024-10-05 at 4 13 22 AM" src="https://github.com/user-attachments/assets/199f41c0-7fde-41b8-be66-2db271a109c7">
 
-NOTE: Important points
+
+**NOTE: Important points**
+
 - INPUT_DATA_FILE should be a .json file
 - Also you should make sure that no.of input features for your model in the training script should match the input you're giving to the model deployed at the endpoint
 
