@@ -19,7 +19,7 @@ In this lab, you will learn how to:
 
 ### Lab Setup:
 
-We will use the `mlopslabsstorage001.bikeshare001.bikeshare` dataset.
+We will use the `table_name.bikeshare001.bikeshare` dataset.
 
 ---
 
@@ -33,7 +33,7 @@ SELECT
   COUNT(trip_id) AS total_rides,
   EXTRACT(MONTH FROM start_time) AS ride_month
 FROM 
-  `mlopslabsstorage001.bikeshare001.bikeshare`
+  `table_name.bikeshare001.bikeshare`
 WHERE 
   start_time BETWEEN '2023-10-01' AND '2024-10-01'
 GROUP BY 
@@ -55,13 +55,13 @@ SELECT
   b.total_rides AS rides_2024
 FROM (
   SELECT start_station_name, COUNT(trip_id) AS total_rides
-  FROM `mlopslabsstorage001.bikeshare001.bikeshare`
+  FROM `table_name.bikeshare001.bikeshare`
   WHERE EXTRACT(YEAR FROM start_time) = 2023
   GROUP BY start_station_name
 ) AS a
 JOIN (
   SELECT start_station_name, COUNT(trip_id) AS total_rides
-  FROM `mlopslabsstorage001.bikeshare001.bikeshare`
+  FROM `table_name.bikeshare001.bikeshare`
   WHERE EXTRACT(YEAR FROM start_time) = 2024
   GROUP BY start_station_name
 ) AS b
@@ -77,9 +77,9 @@ This query compares the number of rides that started at each station between 202
 1. **Partitioning Tables:**
 
 ```sql
-CREATE OR REPLACE TABLE `mlopslabsstorage001.bikeshare001.partitioned_trips`
+CREATE OR REPLACE TABLE `table_name.bikeshare001.partitioned_trips`
 PARTITION BY DATE(start_time) AS
-SELECT * FROM `mlopslabsstorage001.bikeshare001.bikeshare`;
+SELECT * FROM `table_name.bikeshare001.bikeshare`;
 ```
 
 This query creates a partitioned table based on the `start_time` column, allowing for faster queries when filtering by date.
@@ -89,10 +89,10 @@ This query creates a partitioned table based on the `start_time` column, allowin
 2. **Clustering:**
 
 ```sql
-CREATE OR REPLACE TABLE `mlopslabsstorage001.bikeshare001.clustered_trips`
+CREATE OR REPLACE TABLE `table_name.bikeshare001.clustered_trips`
 PARTITION BY DATE(start_time)
 CLUSTER BY start_station_name AS
-SELECT * FROM `mlopslabsstorage001.bikeshare001.bikeshare`;
+SELECT * FROM `table_name.bikeshare001.bikeshare`;
 ```
 
 This query creates a table that is partitioned by date and clustered by the `start_station_name`. Clustering allows for more efficient queries when filtering by station names.
@@ -104,7 +104,7 @@ This query creates a table that is partitioned by date and clustered by the `sta
 1. **Create the UDF:**
 
 ```sql
-CREATE OR REPLACE FUNCTION `mlopslabsstorage001.bikeshare001.calculate_distance`(
+CREATE OR REPLACE FUNCTION `table_name.bikeshare001.calculate_distance`(
   lat1 FLOAT64, lon1 FLOAT64, lat2 FLOAT64, lon2 FLOAT64)
 RETURNS FLOAT64
 LANGUAGE js AS """
@@ -131,11 +131,11 @@ This creates a User-Defined Function (UDF) that calculates the distance between 
 SELECT 
   start_station_name, 
   end_station_name, 
-  `mlopslabsstorage001.bikeshare001.calculate_distance`(
+  `table_name.bikeshare001.calculate_distance`(
     start_station_latitude, start_station_longitude, 
     end_station_latitude, end_station_longitude) AS distance_km
 FROM 
-  `mlopslabsstorage001.bikeshare001.bikeshare`
+  `table_name.bikeshare001.bikeshare`
 ORDER BY distance_km DESC
 LIMIT 10;
 ```
@@ -154,7 +154,7 @@ SELECT
   COUNT(trip_id) AS total_rides,
   RANK() OVER (ORDER BY COUNT(trip_id) DESC) AS rank
 FROM 
-  `mlopslabsstorage001.bikeshare001.bikeshare`
+  `table_name.bikeshare001.bikeshare`
 GROUP BY 
   start_station_name
 ORDER BY 
@@ -170,13 +170,13 @@ This query ranks each station based on the total number of rides starting from t
 1. **Create a Materialized View:**
 
 ```sql
-CREATE MATERIALIZED VIEW `mlopslabsstorage001.bikeshare001.materialized_view`
+CREATE MATERIALIZED VIEW `table_name.bikeshare001.materialized_view`
 AS 
 SELECT 
   start_station_name, 
   COUNT(trip_id) AS total_rides
 FROM 
-  `mlopslabsstorage001.bikeshare001.bikeshare`
+  `table_name.bikeshare001.bikeshare`
 GROUP BY 
   start_station_name;
 ```
@@ -188,7 +188,7 @@ This creates a materialized view that precomputes and stores the total rides per
 2. **Querying the Materialized View:**
 
 ```sql
-SELECT * FROM `mlopslabsstorage001.bikeshare001.materialized_view`
+SELECT * FROM `table_name.bikeshare001.materialized_view`
 ORDER BY total_rides DESC;
 ```
 
@@ -202,5 +202,3 @@ In this lab, you've learned how to:
 - Implement optimizations using partitioning, clustering, and materialized views.
 - Create and use User-Defined Functions.
 - Apply window functions for analytics.
-
-This lab now reflects the actual date range in your dataset and should work correctly. Let me know if you need further adjustments!
