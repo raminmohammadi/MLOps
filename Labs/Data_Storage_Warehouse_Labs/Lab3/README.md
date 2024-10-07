@@ -13,13 +13,13 @@ In this lab, you will learn how to:
 ### Prerequisites:
 - Basic knowledge of SQL and BigQuery.
 - Access to Google Cloud Platform with BigQuery enabled.
-- Familiarity with the public dataset `bigquery-public-data.austin_bikeshare.bikeshare_trips`.
+- A dataset available in BigQuery or instructions to import your CSV dataset (`Bikeshare_Trip_Dataset.csv`).
 
 ---
 
 ### Lab Setup:
 
-We will be using the public dataset: `mlopslabsstorage001.bikeshare001.bikeshare`. No additional datasets are required for this lab.
+We will use the `mlopslabsstorage001.bikeshare001.bikeshare` dataset (or your equivalent imported CSV file).
 
 ---
 
@@ -41,6 +41,10 @@ GROUP BY
 ORDER BY 
   total_rides DESC;
 ```
+
+This query filters the dataset for trips that occurred in 2022 and groups the trips by the start station and the month of the trip. It counts the total number of rides for each station in each month and orders the result by the number of rides in descending order.
+
+---
 
 2. **JOIN Example (Merging Data)**
 
@@ -64,6 +68,8 @@ JOIN (
 ON a.start_station_name = b.start_station_name;
 ```
 
+This query compares the number of rides that started at each station between 2022 and 2023 by performing a self-join on the `start_station_name`.
+
 ---
 
 ### Step 2: **Optimizing Query Performance**
@@ -76,6 +82,10 @@ PARTITION BY DATE(start_time) AS
 SELECT * FROM `mlopslabsstorage001.bikeshare001.bikeshare`;
 ```
 
+This query creates a partitioned table based on the `start_time` column, allowing for faster queries when filtering by date.
+
+---
+
 2. **Clustering:**
 
 ```sql
@@ -84,6 +94,8 @@ PARTITION BY DATE(start_time)
 CLUSTER BY start_station_name AS
 SELECT * FROM `mlopslabsstorage001.bikeshare001.bikeshare`;
 ```
+
+This query creates a table that is partitioned by date and clustered by the `start_station_name`. Clustering allows for more efficient queries when filtering by station names.
 
 ---
 
@@ -109,6 +121,10 @@ LANGUAGE js AS """
 """;
 ```
 
+This creates a User-Defined Function (UDF) that calculates the distance between two points (start and end stations) based on their latitude and longitude coordinates using the haversine formula.
+
+---
+
 2. **Use the UDF in a Query:**
 
 ```sql
@@ -120,11 +136,11 @@ SELECT
     end_station_latitude, end_station_longitude) AS distance_km
 FROM 
   `mlopslabsstorage001.bikeshare001.bikeshare`
-WHERE 
-  distance_km IS NOT NULL
 ORDER BY distance_km DESC
 LIMIT 10;
 ```
+
+This query uses the UDF to calculate the distance between the start and end stations for each trip and returns the 10 longest trips.
 
 ---
 
@@ -145,6 +161,8 @@ ORDER BY
   rank;
 ```
 
+This query ranks each station based on the total number of rides starting from that station, providing a way to see the busiest stations.
+
 ---
 
 ### Step 5: **Creating Materialized Views**
@@ -163,12 +181,18 @@ GROUP BY
   start_station_name;
 ```
 
+This creates a materialized view that precomputes and stores the total rides per station, improving performance for future queries.
+
+---
+
 2. **Querying the Materialized View:**
 
 ```sql
 SELECT * FROM `mlopslabsstorage001.bikeshare001.materialized_view`
 ORDER BY total_rides DESC;
 ```
+
+This query retrieves the results from the materialized view, showing the stations ordered by the number of trips that started there.
 
 ---
 
@@ -179,6 +203,4 @@ In this lab, you've learned how to:
 - Create and use User-Defined Functions.
 - Apply window functions for analytics.
 
----
-
-This is the final version without Step 6. You can now upload this to GitHub as a structured lab. Let me know if there are any additional tweaks you'd like!
+This lab is now fully tailored to your uploaded dataset. Let me know if you need further adjustments!
