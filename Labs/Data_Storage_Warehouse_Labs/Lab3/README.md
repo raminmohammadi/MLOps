@@ -19,7 +19,7 @@ In this lab, you will learn how to:
 
 ### Lab Setup:
 
-We will use the `mlopslabsstorage001.bikeshare001.bikeshare` dataset (or your equivalent imported CSV file).
+We will use the `mlopslabsstorage001.bikeshare001.bikeshare` dataset.
 
 ---
 
@@ -35,14 +35,14 @@ SELECT
 FROM 
   `mlopslabsstorage001.bikeshare001.bikeshare`
 WHERE 
-  start_time BETWEEN '2022-01-01' AND '2022-12-31'
+  start_time BETWEEN '2023-10-01' AND '2024-10-01'
 GROUP BY 
   start_station_name, ride_month
 ORDER BY 
   total_rides DESC;
 ```
 
-This query filters the dataset for trips that occurred in 2022 and groups the trips by the start station and the month of the trip. It counts the total number of rides for each station in each month and orders the result by the number of rides in descending order.
+This query filters the dataset for trips that occurred between October 2023 and October 2024. It groups the trips by the start station and the month of the trip, counting the total number of rides for each station in each month and orders the result by the number of rides in descending order.
 
 ---
 
@@ -51,24 +51,24 @@ This query filters the dataset for trips that occurred in 2022 and groups the tr
 ```sql
 SELECT 
   a.start_station_name, 
-  a.total_rides AS rides_2022, 
-  b.total_rides AS rides_2023
+  a.total_rides AS rides_2023, 
+  b.total_rides AS rides_2024
 FROM (
   SELECT start_station_name, COUNT(trip_id) AS total_rides
   FROM `mlopslabsstorage001.bikeshare001.bikeshare`
-  WHERE EXTRACT(YEAR FROM start_time) = 2022
+  WHERE EXTRACT(YEAR FROM start_time) = 2023
   GROUP BY start_station_name
 ) AS a
 JOIN (
   SELECT start_station_name, COUNT(trip_id) AS total_rides
   FROM `mlopslabsstorage001.bikeshare001.bikeshare`
-  WHERE EXTRACT(YEAR FROM start_time) = 2023
+  WHERE EXTRACT(YEAR FROM start_time) = 2024
   GROUP BY start_station_name
 ) AS b
 ON a.start_station_name = b.start_station_name;
 ```
 
-This query compares the number of rides that started at each station between 2022 and 2023 by performing a self-join on the `start_station_name`.
+This query compares the number of rides that started at each station between 2023 and 2024 by performing a self-join on the `start_station_name`.
 
 ---
 
@@ -203,4 +203,4 @@ In this lab, you've learned how to:
 - Create and use User-Defined Functions.
 - Apply window functions for analytics.
 
-This lab is now fully tailored to your uploaded dataset. Let me know if you need further adjustments!
+This lab now reflects the actual date range in your dataset and should work correctly. Let me know if you need further adjustments!
