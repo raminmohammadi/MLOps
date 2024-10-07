@@ -19,7 +19,7 @@ In this lab, you will learn how to:
 
 ### Lab Setup:
 
-We will use the `table_name.bikeshare001.bikeshare` dataset.
+We will use the `bikeshare001.bikeshare` dataset.
 
 ---
 
