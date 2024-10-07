@@ -1,145 +1,229 @@
-### **BigQuery Lab: MLOps Pipeline Using BigQuery and Cloud Functions**
+### Lab Title: **Advance BigQuery: Data Transformation and Query Optimization**
+
+### Lab Objective:
+In this lab, you will learn how to:
+1. Perform advanced SQL transformations in BigQuery.
+2. Optimize query performance using partitioning and clustering.
+3. Work with user-defined functions (UDFs) for custom data processing.
+4. Use window functions to aggregate data over partitions.
+5. Create materialized views to improve query efficiency.
 
 ---
 
-### **Step 1: Setting Up the Environment**
-1. **Create a New GCP Project:**
-   - Log into **Google Cloud Platform (GCP)** and create a new project.
-   - Enable the following APIs:
-     - **BigQuery**
-     - **Google Cloud Storage**
-     - **Cloud Functions**
-
-2. **Create a Service Account:**
-   - Create a service account and give it permissions for BigQuery and Cloud Functions.
-   - Download the service account key for authentication.
+### Prerequisites:
+- Basic knowledge of SQL and BigQuery.
+- Access to Google Cloud Platform with BigQuery enabled.
+- A dataset available in BigQuery or instructions to import a public dataset.
 
 ---
 
-### **Step 2: Data Preparation and Ingestion**
-1. **Download the Dataset:**
-   - Download a simple dataset in CSV format (e.g., a sales or e-commerce dataset with columns such as `customer_id`, `total_sales`, `purchase_date`).
+### Lab Setup:
 
-2. **Upload the Dataset to Google Cloud Storage:**
-   - Create a **Cloud Storage bucket** and upload the dataset.
-   - Ensure the bucket is accessible to BigQuery and Cloud Functions.
+1. **Create a Dataset in BigQuery:**
+   - Open the [Google Cloud Console](https://console.cloud.google.com/).
+   - Navigate to **BigQuery**.
+   - Create a new dataset called `sales_data_analysis`.
 
-3. **Ingest Data into BigQuery:**
-   - Use BigQuery’s UI or a SQL query to load the CSV file from Cloud Storage into BigQuery.
-   - For example:
-     ```sql
-     CREATE OR REPLACE TABLE `your_project.your_dataset.sales_data`
-     AS
-     SELECT * FROM `your_bucket/sales_data.csv`;
-     ```
+2. **Use the Public Dataset (or Custom Data):**
+   - We will be using a public dataset such as `bigquery-public-data.austin_bikeshare.bikeshare_trips`.
+   - If you want to use custom data, upload a CSV file to a Google Cloud Storage bucket and load it into BigQuery.
 
 ---
 
-### **Step 3: Automate Data Ingestion with Cloud Functions**
-1. **Create a Cloud Function for Automation:**
-   - Write a Cloud Function that listens for new file uploads in Cloud Storage and automatically ingests them into BigQuery.
-   - Example Python function:
-     ```python
-     from google.cloud import bigquery
+### Step 1: **Advanced Data Transformation with SQL**
 
-     def ingest_data(event, context):
-         client = bigquery.Client()
-         uri = f"gs://{event['bucket']}/{event['name']}"
-         table_id = "your_project.your_dataset.sales_data"
-         job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.CSV)
-         client.load_table_from_uri(uri, table_id, job_config=job_config).result()
-     ```
+You will begin by writing SQL queries that perform complex transformations on the dataset. You’ll filter, aggregate, and join tables.
 
-2. **Deploy the Cloud Function:**
-   - Deploy the Cloud Function in GCP with a Pub/Sub trigger that activates whenever a new file is uploaded to the bucket.
+1. **Filter Data and Aggregate**
+   - Query to filter data by date and group by specific conditions.
 
-3. **Test the Function:**
-   - Upload a new file to the Cloud Storage bucket and verify that the function ingests it into the BigQuery table.
+```sql
+SELECT 
+  start_station_name,
+  COUNT(trip_id) AS total_rides,
+  EXTRACT(MONTH FROM start_time) AS ride_month
+FROM 
+  `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+WHERE 
+  start_time BETWEEN '2022-01-01' AND '2022-12-31'
+GROUP BY 
+  start_station_name, ride_month
+ORDER BY 
+  total_rides DESC;
+```
 
----
+2. **JOIN Example (Merging Data)**
+   - Demonstrate how to join two tables (self-join in this case) to enrich data.
 
-### **Step 4: Train a Model Using BigQuery ML**
-1. **Prepare the Data for Training:**
-   - Use BigQuery SQL to clean and prepare the dataset for training a simple machine learning model:
-     ```sql
-     SELECT *, 
-            CASE 
-              WHEN total_sales > 500 THEN 'high_value'
-              ELSE 'low_value'
-            END AS sales_category
-     FROM `your_project.your_dataset.sales_data`;
-     ```
-
-2. **Train a Model with BigQuery ML:**
-   - Use **BigQuery ML** to train a **classification model** that predicts high- or low-value customers:
-     ```sql
-     CREATE OR REPLACE MODEL `your_project.your_dataset.customer_value_model`
-     OPTIONS(model_type = 'logistic_reg') AS
-     SELECT total_sales, customer_age, sales_category
-     FROM `your_project.your_dataset.sales_data`
-     WHERE sales_category IS NOT NULL;
-     ```
-
-3. **Evaluate the Model:**
-   - Use **ML.EVALUATE** to check the model’s accuracy and other performance metrics:
-     ```sql
-     SELECT * FROM ML.EVALUATE(MODEL `your_project.your_dataset.customer_value_model`);
-     ```
+```sql
+SELECT 
+  a.start_station_name, 
+  a.total_rides AS rides_2022, 
+  b.total_rides AS rides_2023
+FROM (
+  SELECT start_station_name, COUNT(trip_id) AS total_rides
+  FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+  WHERE EXTRACT(YEAR FROM start_time) = 2022
+  GROUP BY start_station_name
+) AS a
+JOIN (
+  SELECT start_station_name, COUNT(trip_id) AS total_rides
+  FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+  WHERE EXTRACT(YEAR FROM start_time) = 2023
+  GROUP BY start_station_name
+) AS b
+ON a.start_station_name = b.start_station_name;
+```
 
 ---
 
-### **Step 5: Automate Model Retraining with Cloud Scheduler**
-1. **Set Up Cloud Scheduler for Automation:**
-   - Use **Cloud Scheduler** to trigger the Cloud Function daily (or on any schedule) to automatically check for new data and retrain the model with BigQuery ML.
+### Step 2: **Optimizing Query Performance**
 
-2. **Cloud Function for Retraining:**
-   - Modify your Cloud Function to trigger the model training query after the new data is ingested:
-     ```python
-     def retrain_model(event, context):
-         client = bigquery.Client()
-         query = '''
-         CREATE OR REPLACE MODEL `your_project.your_dataset.customer_value_model`
-         OPTIONS(model_type = 'logistic_reg') AS
-         SELECT total_sales, customer_age, sales_category
-         FROM `your_project.your_dataset.sales_data`
-         WHERE sales_category IS NOT NULL;
-         '''
-         client.query(query).result()
-     ```
+1. **Partitioning Tables:**
+   - Partition the dataset by the `start_time` column to improve query performance.
 
-3. **Deploy and Test:**
-   - Deploy the updated function and test that the function triggers model retraining on schedule.
+```sql
+CREATE OR REPLACE TABLE `your_project.sales_data_analysis.partitioned_trips`
+PARTITION BY DATE(start_time) AS
+SELECT * FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`;
+```
 
----
+2. **Clustering:**
+   - Cluster the table by `start_station_name` to enhance performance for queries filtering by station name.
 
-### **Step 6: Batch Predictions with BigQuery ML**
-1. **Generate Predictions:**
-   - Use **ML.PREDICT** to generate predictions on new customer data:
-     ```sql
-     SELECT customer_id, predicted_label
-     FROM ML.PREDICT(MODEL `your_project.your_dataset.customer_value_model`, 
-     (SELECT customer_id, total_sales, customer_age 
-      FROM `your_project.your_dataset.sales_data`));
-     ```
-
-2. **Store Predictions in BigQuery:**
-   - Save the predictions into a separate table for further analysis:
-     ```sql
-     CREATE OR REPLACE TABLE `your_project.your_dataset.customer_predictions` AS
-     SELECT customer_id, predicted_label
-     FROM ML.PREDICT(MODEL `your_project.your_dataset.customer_value_model`, 
-     (SELECT customer_id, total_sales, customer_age 
-      FROM `your_project.your_dataset.sales_data`));
-     ```
+```sql
+CREATE OR REPLACE TABLE `your_project.sales_data_analysis.clustered_trips`
+PARTITION BY DATE(start_time)
+CLUSTER BY start_station_name AS
+SELECT * FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`;
+```
 
 ---
 
-### **Step 7: Monitoring and Visualization**
-1. **Use Google Data Studio for Monitoring:**
-   - Connect **Google Data Studio** to BigQuery to create a dashboard displaying:
-     - Customer value predictions
-     - Model performance metrics (accuracy, precision)
-     - Ingestion status and new data insights
+### Step 3: **Working with User-Defined Functions (UDFs)**
 
-2. **Monitor the Model:**
-   - Track performance over time and set up alerts for model degradation (if accuracy drops below a threshold).
+You will create and use a user-defined function to calculate distance between bike stations using latitude and longitude coordinates.
+
+1. **Create the UDF:**
+
+```sql
+CREATE OR REPLACE FUNCTION `your_project.sales_data_analysis.calculate_distance`(
+  lat1 FLOAT64, lon1 FLOAT64, lat2 FLOAT64, lon2 FLOAT64)
+RETURNS FLOAT64
+LANGUAGE js AS """
+  function toRadians(deg) { return deg * (Math.PI / 180); }
+  var R = 6371; // Radius of the Earth in km
+  var dLat = toRadians(lat2 - lat1);
+  var dLon = toRadians(lon2 - lon1);
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var distance = R * c;
+  return distance;
+""";
+```
+
+2. **Use the UDF in a Query:**
+
+```sql
+SELECT 
+  start_station_name, 
+  end_station_name, 
+  `your_project.sales_data_analysis.calculate_distance`(
+    start_station_latitude, start_station_longitude, 
+    end_station_latitude, end_station_longitude) AS distance_km
+FROM 
+  `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+WHERE 
+  distance_km IS NOT NULL
+ORDER BY distance_km DESC
+LIMIT 10;
+```
+
+---
+
+### Step 4: **Using Window Functions**
+
+Window functions allow you to perform calculations across a set of table rows related to the current row.
+
+1. **Rank the Start Stations by Rides:**
+
+```sql
+SELECT 
+  start_station_name,
+  COUNT(trip_id) AS total_rides,
+  RANK() OVER (ORDER BY COUNT(trip_id) DESC) AS rank
+FROM 
+  `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+GROUP BY 
+  start_station_name
+ORDER BY 
+  rank;
+```
+
+---
+
+### Step 5: **Creating Materialized Views**
+
+Materialized views are used to store precomputed query results, improving query performance for frequently accessed data.
+
+1. **Create a Materialized View:**
+
+```sql
+CREATE MATERIALIZED VIEW `your_project.sales_data_analysis.materialized_view`
+AS 
+SELECT 
+  start_station_name, 
+  COUNT(trip_id) AS total_rides
+FROM 
+  `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+GROUP BY 
+  start_station_name;
+```
+
+2. **Querying the Materialized View:**
+
+```sql
+SELECT * FROM `your_project.sales_data_analysis.materialized_view`
+ORDER BY total_rides DESC;
+```
+
+---
+
+### Step 6: **Final Cleanup and Review**
+
+1. **Review Table Partitions and Clustering:**
+
+```sql
+SELECT
+  table_id, 
+  creation_time, 
+  partitioning_type, 
+  clustering_fields
+FROM 
+  `your_project.your_dataset.INFORMATION_SCHEMA.TABLES`
+WHERE 
+  table_id = 'partitioned_trips' OR table_id = 'clustered_trips';
+```
+
+2. **Drop Tables and Views When Done:**
+
+```sql
+DROP TABLE IF EXISTS `your_project.sales_data_analysis.partitioned_trips`;
+DROP TABLE IF EXISTS `your_project.sales_data_analysis.clustered_trips`;
+DROP MATERIALIZED VIEW IF EXISTS `your_project.sales_data_analysis.materialized_view`;
+```
+
+---
+
+### Conclusion:
+In this lab, you've learned how to:
+- Use advanced SQL queries in BigQuery.
+- Implement optimizations using partitioning, clustering, and materialized views.
+- Create and use User-Defined Functions.
+- Apply window functions for analytics.
+
+---
+
+You can now upload this to GitHub as a structured lab. Make sure to include a `README.md` with clear instructions for users to follow along.
