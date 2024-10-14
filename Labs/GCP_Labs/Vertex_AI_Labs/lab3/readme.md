@@ -4,7 +4,7 @@
 ## Overview
 In this lab, we guide you through creating, training, serving, and monitoring a model using a custom container in Vertex AI. We will explore the flexibility custom containers offer in managing compute resources and model code, enabling deployment with any ML framework. The objectives include building and containerizing model training code, submitting a training job to Vertex AI, deploying the model to an endpoint, and setting up monitoring for predictions. Follow along as we dive into the process step by step.
 
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/flow.png)
+![](./Images/flow.png)
 
 ## Learning Objectives
 - Build and containerize model training code in Vertex Notebooks.
@@ -25,8 +25,8 @@ In this lab, we guide you through creating, training, serving, and monitoring a 
    - Navigate to Vertex AI > Workbench.
    - Create a new notebook instance with TensorFlow Enterprise 2.11.
 
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/workbench.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/JupyterLab.png)
+![](./Images/workbench.png)
+![](./Images/JupyterLab.png)
 
 ### Task 2: Containerize Training Code
 
@@ -59,7 +59,7 @@ We are going to submit training job to Vertex by putting our training code in a 
 2. Kick off the training job:
    - Navigate to the Model Registry section in Vertex AI and create a new training job using the custom container.
 
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/training.png)
+![](./Images/training.png)
 
 ### Task 4: Deploy a Model Endpoint
 1. Once training is complete, deploy the model to an endpoint:
@@ -75,10 +75,10 @@ We are going to submit training job to Vertex by putting our training code in a 
    print('API response: ', response)
    print('Predicted MPG: ', response.predictions[0][0])
    ```
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/model%20registry.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/deployment.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/deployed%20model%20details.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/endpoint%20prediction.png)
+![](./Images/model%20registry.png)
+![](./Images/deployment.png)
+![](./Images/deployed%20model%20details.png)
+![](./Images/endpoint%20prediction.png)
 
 #### Model Monitoring
 
@@ -86,10 +86,10 @@ Vertex AI Model Monitoring lets us run monitoring jobs as needed or on a regular
 
 Vertex AI Model Monitoring can track and alert us when deviations exceed a specified threshold. We can then re-evaluate or retrain your model to ensure the model is behaving as intended.
 
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/monitoring%201.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/monitoring%202.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/monitoring%204.png)
-![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/monitoring%203.png)
+![](./Images/monitoring%201.png)
+![](./Images/monitoring%202.png)
+![](./Images/monitoring%204.png)
+![](./Images/monitoring%203.png)
 
 ## Conclusion
 We have successfully trained and deployed a TensorFlow model using Vertex AI and a custom container. We can now make predictions using the deployed model endpoint.
