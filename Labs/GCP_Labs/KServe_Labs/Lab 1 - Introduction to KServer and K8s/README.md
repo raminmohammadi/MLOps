@@ -121,7 +121,7 @@ The `gcloud` command-line interface (CLI) lets you manage resources on GCP, incl
 
 ---
 
-### **Installing `kubectl`**
+### **Installing `kubectl**
 
     `kubectl` is the command-line tool used to interact with Kubernetes clusters. Once installed, you can use it to deploy, manage, and inspect your cluster.
 
