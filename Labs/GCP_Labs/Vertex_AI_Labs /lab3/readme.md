@@ -4,6 +4,8 @@
 ## Overview
 In this lab, we guide you through creating, training, serving, and monitoring a model using a custom container in Vertex AI. We will explore the flexibility custom containers offer in managing compute resources and model code, enabling deployment with any ML framework. The objectives include building and containerizing model training code, submitting a training job to Vertex AI, deploying the model to an endpoint, and setting up monitoring for predictions. Follow along as we dive into the process step by step.
 
+You can watch the tutorial video for this lab on our chaneel [Video](https://youtu.be/q2TPWsL2KJI)
+
 ![](https://github.com/rahulodedra30/MLOps/blob/vertex_ai/Labs/GCP_Labs/Vertex_AI_Labs%20/lab3/Images/flow.png)
 
 ## Learning Objectives
