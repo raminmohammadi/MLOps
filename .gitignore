@@ -8,7 +8,8 @@ __pycache__/
 .vscode/
 .idea/
 .virtual_documents/
-
+transform_*/
+pipeline/
 # C extensions
 *.so
 
