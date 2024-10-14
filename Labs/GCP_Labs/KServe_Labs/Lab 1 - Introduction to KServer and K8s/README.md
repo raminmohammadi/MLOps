@@ -121,23 +121,23 @@ The `gcloud` command-line interface (CLI) lets you manage resources on GCP, incl
 
 ---
 
-### **Installing `kubectl**
+### **Installing `kubectl`**
 
-    `kubectl` is the command-line tool used to interact with Kubernetes clusters. Once installed, you can use it to deploy, manage, and inspect your cluster.
+`kubectl` is the command-line tool used to interact with Kubernetes clusters. Once installed, you can use it to deploy, manage, and inspect your cluster.
 
-    1. **Using `gcloud` CLI**
+1. **Using `gcloud` CLI**
     Once the Google Cloud SDK is installed, you can install `kubectl` by running:
 
     ```bash
     gcloud components install kubectl
     ```
-    2. **Verify the Installation:**
+2. **Verify the Installation:**
     After installation, run the following command to check if `kubectl` was installed successfully:
 
     ```bash
     kubectl version --client
     ```
-    3. **Alternative Methods:**
+3. **Alternative Methods:**
         - You can also install kubectl using package managers like **`apt`**, **`yum`**, or **`brew`** for macOS
 
 ## **Conclusion**
