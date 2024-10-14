@@ -5,7 +5,7 @@ Welcome to the "GitHub Actions and GCP Connections" beginner lab! In this lab, y
 
 The provided project includes a simple machine learning model (RandomForestClassifier) trained on the Iris dataset. Your focus will be on setting up the cloud environment and automating the workflow using GitHub Actions.
 
-You can watch the video toturial for this lab on our channel [video](https://youtu.be/H6D27FFh6D4)
+You can watch the video tutorial for this lab on our channel [video](https://youtu.be/H6D27FFh6D4)
 
 ## Learning Objectives
 By completing this lab, you will:
