@@ -34,6 +34,15 @@ spec:
 
 For the complete InferenceService code, please refer to the YAML file provided in this repository.
 
+
+### Create a NameSpace
+
+In order to deploy our model to above mentioned name space we need to first create this name space as by default it does not exist.
+
+```bash
+kubectl create ns kserve-test
+```
+
 ### Deploying the Model
 
 To deploy your model, apply the YAML configuration using the following command:
