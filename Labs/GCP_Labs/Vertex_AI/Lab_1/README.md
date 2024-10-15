@@ -6,7 +6,7 @@ Please refer to the official documentation for more detailed concepts and workin
 ## Tutorial Video below
 Check this video for intro to features in Vertex AI and a simple demo of creating a dataset, notebook instance and model registry.
 
-[Video](https://www.loom.com/share/016a64921fb74cf69fde609a8fe71736?sid=65589692-e06a-4270-a11b-dbbd43b60140)
+[Video](https://www.youtube.com/watch?v=q2TPWsL2KJI)
 
 ## How to setup Vertex AI in GCP console
 After creating your project in GCP, search for /Vertex AI in search bar, and then you'll be landed in the homepage where you have to enable all recommended APIs to start using Vertex AI services as shown in the image below.
