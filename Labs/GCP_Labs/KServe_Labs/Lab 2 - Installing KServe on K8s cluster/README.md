@@ -4,6 +4,9 @@ This guide will walk you through installing **KServe** on a **Kubernetes** clust
 
 ![](assets/kserver_main.png)
 
+
+You can watch the tutorial video for this lab on our channel [video link](https://youtu.be/XqK58OQZy-8)
+
 ---
 
 ### Setting Up Your Environment
