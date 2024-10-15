@@ -2,6 +2,9 @@
 
 Welcome to the ReadMe on deploying your first machine learning model using **KServe**. This tutorial will guide you through creating an **InferenceService** with a pre-trained **Scikit-learn Iris** model, understanding the YAML configuration, deploying the model, and sending test inference requests.
 
+
+You can watch the tutorial video for this lab on our channel [video link](https://youtu.be/V8HtahnEQNU)
+
 ---
 
 ### **Understanding InferenceService YAML Configuration**
