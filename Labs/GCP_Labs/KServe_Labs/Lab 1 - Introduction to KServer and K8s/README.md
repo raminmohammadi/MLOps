@@ -4,6 +4,9 @@
 
 Setting up a Kubernetes cluster on **Google Cloud Platform (GCP)** using **Google Kubernetes Engine (GKE)** is straightforward. GKE allows you to quickly create a managed Kubernetes cluster that you can use to deploy your applications (in this case, KServe).
 
+[Video](https://youtu.be/PpODtZbq3pc)
+
+
 ### **Step 1: Google Cloud Console**
 To create a Kubernetes cluster using the Google Cloud Console, follow these steps:
 1. **Log into Google Cloud Console:** Visit [Google Cloud Console](https://console.cloud.google.com/) and log in with your Google account.
