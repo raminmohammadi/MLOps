@@ -45,7 +45,7 @@ def check_dag_status():
 
 # Flask routes for success and failure
 @app.route('/success')
-def success():
+def success():# -> Any:
     return render_template('success.html')
 
 @app.route('/failure')
