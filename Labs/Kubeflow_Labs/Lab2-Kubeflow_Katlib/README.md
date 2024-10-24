@@ -35,17 +35,17 @@ Before running the Katib experiment, we need to package the training code (`mnis
    Run the following command from the directory containing your `Dockerfile` and `mnist.py` script to build the image:
 
    ```bash
-   docker build -t <dockerhub-username>/kcndsubvhfsvujfsnbv .
+   docker build -t <user-name>/<image-name>:<tag> .
    ```
 
-   This command builds the Docker image and tags it as `asxcnudbvnfsjv/sadfbvubvfsjv`.
+   This command builds the Docker image and tags it as `<image-name>:<tag>`.
 
 3. **Push the Docker Image to Docker Hub**
 
    After building the image, push it to Docker Hub to make it accessible from any Kubernetes cluster:
 
    ```bash
-   docker push kubeflowkatib/pytorch-mnist-cpu:latest
+   docker push <user-name>/<image-name>:<tag>
    ```
 
    This step is critical since Katib needs to pull the image to run your training job on different nodes in the cluster.
