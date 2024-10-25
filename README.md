@@ -1,6 +1,6 @@
-[![Testing Github Lab1 Python Unittests](https://github.com/raminmohammadi/MLOps/actions/workflows/github_lab2_unittest_action.yml/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/github_lab2_unittest_action.yml)
+[![pages-build-deployment](https://github.com/raminmohammadi/MLOps/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/pages/pages-build-deployment)
 
-# MLOps Repository
+# MLOps Repository 
 
 ## Overview
 
