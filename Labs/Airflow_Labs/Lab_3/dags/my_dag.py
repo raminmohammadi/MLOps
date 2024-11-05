@@ -21,7 +21,7 @@ default_args = {
 
 # Create DAG instance
 dag = DAG(
-    'Airflow_Lab3_new',
+    'Airflow_Lab3_new2',
     default_args=default_args,
     description='Airflow-Lab3 DAG Description',
     # schedule_interval='*/1 * * * *',  # Every minute
