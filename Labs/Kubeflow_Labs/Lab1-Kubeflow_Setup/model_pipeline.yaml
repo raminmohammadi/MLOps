@@ -1,0 +1,150 @@
+# PIPELINE DEFINITION
+# Name: iris-classification-pipeline
+# Description: Loads the Iris dataset and trains a RandomForest model
+components:
+  comp-load-iris-data:
+    executorLabel: exec-load-iris-data
+    outputDefinitions:
+      parameters:
+        X_test:
+          parameterType: LIST
+        X_train:
+          parameterType: LIST
+        y_test:
+          parameterType: LIST
+        y_train:
+          parameterType: LIST
+  comp-train-model:
+    executorLabel: exec-train-model
+    inputDefinitions:
+      parameters:
+        X_test:
+          parameterType: LIST
+        X_train:
+          parameterType: LIST
+        y_test:
+          parameterType: LIST
+        y_train:
+          parameterType: LIST
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: NUMBER_DOUBLE
+deploymentSpec:
+  executors:
+    exec-load-iris-data:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - load_iris_data
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef load_iris_data() -> NamedTuple('Outputs', [('X_train', list),\
+          \ ('X_test', list), ('y_train', list), ('y_test', list)]):\n\n    import\
+          \ subprocess \n    subprocess.run(['pip', 'install', 'scikit-learn', 'pandas'])\n\
+          \n    from sklearn.datasets import load_iris\n    from sklearn.model_selection\
+          \ import train_test_split\n    import pandas as pd\n\n    iris = load_iris()\n\
+          \    X = iris.data\n    y = iris.target\n\n    X_train, X_test, y_train,\
+          \ y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n  \
+          \  print(f\"Training data: {X_train.shape}, Testing data: {X_test.shape}\"\
+          )\n\n    return (X_train.tolist(), X_test.tolist(), y_train.tolist(), y_test.tolist())\n\
+          \n"
+        image: python:3.8
+    exec-train-model:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - train_model
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef train_model(X_train: list, X_test: list, y_train: list, y_test:\
+          \ list) -> float:\n\n    import subprocess\n    subprocess.run(['pip', 'install',\
+          \ 'scikit-learn', 'pandas'])\n\n    from sklearn.ensemble import RandomForestClassifier\n\
+          \    from sklearn.metrics import accuracy_score\n    import numpy as np\n\
+          \n\n    X_train = np.array(X_train)\n    X_test = np.array(X_test)\n   \
+          \ y_train = np.array(y_train)\n    y_test = np.array(y_test)\n\n\n    model\
+          \ = RandomForestClassifier(n_estimators=100, random_state=42)\n    model.fit(X_train,\
+          \ y_train)\n\n\n    y_pred = model.predict(X_test)\n\n\n    accuracy = accuracy_score(y_test,\
+          \ y_pred)\n    print(f\"Model accuracy: {accuracy}\")\n\n    return accuracy\n\
+          \n"
+        image: python:3.8
+pipelineInfo:
+  description: Loads the Iris dataset and trains a RandomForest model
+  name: iris-classification-pipeline
+root:
+  dag:
+    tasks:
+      load-iris-data:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-load-iris-data
+        taskInfo:
+          name: load-iris-data
+      train-model:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-train-model
+        dependentTasks:
+        - load-iris-data
+        inputs:
+          parameters:
+            X_test:
+              taskOutputParameter:
+                outputParameterKey: X_test
+                producerTask: load-iris-data
+            X_train:
+              taskOutputParameter:
+                outputParameterKey: X_train
+                producerTask: load-iris-data
+            y_test:
+              taskOutputParameter:
+                outputParameterKey: y_test
+                producerTask: load-iris-data
+            y_train:
+              taskOutputParameter:
+                outputParameterKey: y_train
+                producerTask: load-iris-data
+        taskInfo:
+          name: train-model
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.9.0
