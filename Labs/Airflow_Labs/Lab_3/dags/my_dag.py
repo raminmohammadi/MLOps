@@ -14,7 +14,7 @@ conf.set('core', 'enable_xcom_pickling', 'True')
 
 # Default arguments for DAG
 default_args = {
-    'owner': 'airflow',
+    'owner': 'Ramin Mohammadi',
     'start_date': datetime.now(),
     'retries': 0  # Number of retry attempts
 }
@@ -28,15 +28,6 @@ dag = DAG(
     catchup=False,  # Disable catchup
     tags=['example']
     )
-
-# Task definitions
-# owner_task = BashOperator(
-#     task_id="task_using_linked_owner",
-#     bash_command="echo 1",
-#     owner="Ramin Mohammadi",
-#     dag=dag
-# )
-
 
 load_data_task = PythonOperator(
     task_id='load_data_task',
@@ -80,4 +71,3 @@ task_send_email = PythonOperator(
 
 # Set task dependencies
 load_data_task >> data_preprocessing_task >> separate_data_outputs_task >> build_save_model_task >> task_send_email
-# >> load_model_task >> send_email >> TriggerDagRunOperator
