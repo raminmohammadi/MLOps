@@ -1,5 +1,8 @@
 ### Lab Title: **Advanced BigQuery: Data Transformation and Query Optimization**
 
+You can watch the toturial video at [Kubernetes-lab2](https://youtu.be/sw2Wy6gGBLw)
+
+
 ### Lab Objective:
 In this lab, you will learn how to:
 1. Perform advanced SQL transformations in BigQuery.
