@@ -1,5 +1,7 @@
 # Data Storage and Warehousing using Google Cloud (GCP)
 
+You can watch the toturial video at [Kubernetes-lab2](https://youtu.be/8AzHqHQWTCw)
+
 ## Introduction
 
 In today’s data-driven landscape, efficiently storing, managing, and analyzing large volumes of data is critical. Google Cloud Platform (GCP) offers powerful services to simplify these tasks. Two essential services in this space are **Google Cloud Storage (GCS)** and **Google BigQuery**.
