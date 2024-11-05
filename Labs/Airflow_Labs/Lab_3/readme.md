@@ -1,4 +1,4 @@
-Here’s a complete guide to setting up, deploying, and triggering Apache Airflow DAGs from a virtual machine (VM). This includes creating an Airflow environment, configuring the API, organizing the folder structure, and setting up DAGs to run a sample Python script.
+A complete guide to setting up, deploying, and triggering Apache Airflow DAGs from a virtual machine (VM). This includes creating an Airflow environment, configuring the API, organizing the folder structure, and setting up DAGs to run a sample Python script.
 
 ---
 
@@ -78,11 +78,11 @@ To enable the Airflow API, configure the `airflow.cfg` file:
 To authenticate with the API, create a user:
 ```bash
 airflow users create \
-  --username triggerdag \
-  --firstname Rahul \
-  --lastname Odedra \
+  --username yourusername \
+  --firstname yourname \
+  --lastname yourname \
   --role Admin \
-  --email mlops.fall.2024@gmail.com
+  --email youremail
 ```
 
 ---
@@ -122,18 +122,7 @@ airflow users create \
 
    Sample `my_dag.py` content:
    ```python
-   from airflow import DAG
-   from airflow.operators.python_operator import PythonOperator
-   from datetime import datetime
-
-   def sample_task():
-       print("Executing the sample task.")
-
-   with DAG('sample_dag', start_date=datetime(2023, 1, 1), schedule_interval='@daily', catchup=False) as dag:
-       task1 = PythonOperator(
-           task_id='sample_task',
-           python_callable=sample_task
-       )
+   Code added in files
    ```
 
 2. **Additional Python Scripts**:
