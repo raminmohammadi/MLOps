@@ -3,6 +3,9 @@ In this lab, we'll explore how to create end-to-end pipelines and get online pre
 Two ways discussed here are:
 - Using AutoML
 - Using Pre-built containers
+
+You can watch the toturial video for this lab on out channel [Video](https://youtu.be/7XU9GSkW9VU)
+
 ## 1. End-to-End using AutoML
 Dataset used is https://www.kaggle.com/datasets/taweilo/mba-admission-dataset
 **Steps:**
