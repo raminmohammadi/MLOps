@@ -1,6 +1,6 @@
 ### Lab Title: **Advanced BigQuery: Data Transformation and Query Optimization**
 
-You can watch the toturial video at [Kubernetes-lab2](https://youtu.be/sw2Wy6gGBLw)
+You can watch the toturial video at [Video](https://youtu.be/sw2Wy6gGBLw)
 
 
 ### Lab Objective:
