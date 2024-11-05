@@ -1,5 +1,8 @@
 # Intermediate Lab: Advanced Querying and Visualization in BigQuery
 
+
+You can watch the toturial video at [Kubernetes-lab2](https://youtu.be/pAg5D4K3nkU)
+
 ## Objective
 
 In this lab, you will learn how to:
