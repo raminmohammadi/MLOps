@@ -32,19 +32,115 @@ The MLOps course at Northeastern University is designed to provide students with
 
 This repository hosts the labs, code samples, and documentation related to these topics.
 
-## Lab Content
+## Labs Content
 
-The labs in this repository are organized according to the topics covered in the MLOps course. Each lab may include code examples, Jupyter notebooks, configuration files, and relevant documentation. Some of the key topics covered in the labs include:
+This repository offers a series of hands-on labs designed to enhance your understanding of MLOps concepts. Each lab focuses on a specific aspect of the machine learning lifecycle, providing practical experience with tools and methodologies essential for deploying and managing machine learning models in production environments.
 
-- Data preprocessing and feature engineering
-- Model training and evaluation
-- Model deployment using containerization (e.g., Docker) and orchestration (e.g., Kubernetes)
-- Monitoring and logging of deployed models
-- CI/CD for ML pipelines
-- Data labeling with Snorkel
-- Handling data drift and retraining models
+1. **[API Labs](./Labs/API_Labs)**
+   - **Objective:** Learn to develop and deploy APIs for ML models.
+   - **Key Topics:**
+     - Flask and FastAPI basics
+     - Building and serving prediction APIs
 
-And more...
+2. **[Airflow Labs](./Labs/Airflow_Labs)**
+   - **Objective:** Gain practical experience with Apache Airflow for orchestrating complex data workflows.
+   - **Key Topics:**
+     - DAG creation and scheduling
+     - Task dependencies and monitoring
+
+3. **[CloudFunction Labs](./Labs/CloudFunction_Labs)**
+   - **Objective:** Learn how to deploy lightweight functions using cloud-based services.
+   - **Key Topics:**
+     - Cloud Function basics
+     - Event-driven programming
+
+4. **[Data Labs](./Labs/Data_Labs)**
+   - **Objective:** Understand data engineering and preprocessing steps.
+   - **Key Topics:**
+     - Data cleaning and transformation
+     - Data pipeline setup
+
+5. **[Data Storage & Warehouse Labs](./Labs/Data_Storage_Warehouse_Labs)**
+   - **Objective:** Explore data storage solutions and data warehousing.
+   - **Key Topics:**
+     - Data warehousing concepts
+     - Storage optimization and management
+
+6. **[Docker Container Labs](./Labs/Docker_Container_Labs)**
+   - **Objective:** Learn containerization techniques for ML applications.
+   - **Key Topics:**
+     - Docker basics
+     - Creating and managing containers
+
+7. **[ELK Labs](./Labs/ELK_Labs)**
+   - **Objective:** Set up logging and monitoring using the ELK stack.
+   - **Key Topics:**
+     - Elasticsearch, Logstash, and Kibana integration
+     - Monitoring data pipelines
+
+8. **[Experiment Tracking Labs](./Labs/Experiment_Tracking_Labs)**
+   - **Objective:** Track and manage ML experiments.
+   - **Key Topics:**
+     - Logging metrics and parameters
+     - Versioning experiments
+
+9. **GCP Labs**
+   - **[Cloud Composer Labs](./Labs/GCP_Labs/Cloud_Composer_Labs)**
+     - **Objective:** Learn how to use Google Cloud Composer for managing and orchestrating workflows.
+     - **Key Topics:**
+       - Airflow integration in GCP
+       - Workflow automation and scheduling
+
+   - **[Compute Engine Labs](./Labs/GCP_Labs/Compute_Engine_Labs)**
+     - **Objective:** Gain hands-on experience with Google Compute Engine for scalable virtual machine instances.
+     - **Key Topics:**
+       - Setting up and managing VMs
+       - Using Compute Engine for ML model training
+
+   - **[KServe Labs](./Labs/GCP_Labs/KServe_Labs)**
+     - **Objective:** Explore KServe for serving ML models at scale on Kubernetes.
+     - **Key Topics:**
+       - Model serving with KServe
+       - Scaling models on Kubernetes
+
+   - **[Kubernetes Labs](./Labs/GCP_Labs/Kubernetes_Labs)**
+     - **Objective:** Learn Kubernetes basics and deploy ML workloads in a managed Kubernetes environment.
+     - **Key Topics:**
+       - GKE setup and management
+       - Deploying containers for ML
+
+   - **[Vertex AI Labs](./Labs/GCP_Labs/Vertex_AI)**
+     - **Objective:** Understand and utilize Vertex AI for end-to-end ML workflows.
+     - **Key Topics:**
+       - Managed datasets, training, and deployment
+       - Model monitoring and pipeline automation
+
+10. **[GitHub Labs](./Labs/Github_Labs)**
+    - **Objective:** Implement GitHub Actions for CI/CD.
+    - **Key Topics:**
+      - Setting up workflows
+      - Automating testing and deployment
+
+11. **[Kubeflow Labs](./Labs/Kubeflow_Labs)**
+    - **Objective:** Orchestrate ML workflows with Kubeflow.
+    - **Key Topics:**
+      - Kubeflow Pipelines
+      - Model management
+
+12. **[MLMD Labs](./Labs/MLMD_Labs)**
+    - **Objective:** Understand ML Metadata (MLMD) for tracking metadata.
+    - **Key Topics:**
+      - Metadata storage and querying
+      - Workflow lineage tracking
+
+13. **[TensorFlow Labs](./Labs/Tensorflow_Labs)**
+    - **Objective:** Gain hands-on experience with TensorFlow for ML model development.
+    - **Key Topics:**
+      - Model training and evaluation
+      - Using TFX for production-grade ML pipelines
+
+Each lab is accompanied by detailed instructions and code examples to facilitate hands-on learning. It's recommended to follow the labs sequentially, as concepts build upon each other. For additional resources and support, refer to the [Reading Materials](./Labs/Reading%20Materials) section of this repository.
+
 
 ## Getting Started
 
