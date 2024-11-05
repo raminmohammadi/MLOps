@@ -1,7 +1,7 @@
 
 # Kubeflow Deployment on Google Cloud
 
-
+You can watch the tutorial video for this lab on our channel [video link](https://youtu.be/V8HtahnEQNU)
 
 ---
 
