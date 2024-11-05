@@ -1,0 +1,20 @@
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/

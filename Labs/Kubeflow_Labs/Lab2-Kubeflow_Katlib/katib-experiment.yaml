@@ -1,0 +1,58 @@
+---
+apiVersion: kubeflow.org/v1beta1
+kind: Experiment
+metadata:
+  namespace: kubeflow
+  name: firstexperiment
+spec:
+  objective:
+    type: minimize
+    goal: 0.001
+    objectiveMetricName: loss
+  algorithm:
+    algorithmName: random
+  parallelTrialCount: 3
+  maxTrialCount: 12
+  maxFailedTrialCount: 3
+  parameters:
+    - name: lr
+      parameterType: double
+      feasibleSpace:
+        min: "0.01"
+        max: "0.05"
+    - name: momentum
+      parameterType: double
+      feasibleSpace:
+        min: "0.5"
+        max: "0.9"
+  trialTemplate:
+    primaryContainerName: training-container
+    retain: true
+    trialParameters:
+      - name: learningRate
+        description: Learning rate for the training model
+        reference: lr
+      - name: momentum
+        description: Momentum for the training model
+        reference: momentum
+    trialSpec:
+      apiVersion: batch/v1
+      kind: Job
+      spec:
+        template:
+          spec:
+            containers:
+              - name: training-container
+                image: draj6/katib-client:latest
+                command:
+                  - "python3"
+                  - "/app/mnist.py"
+                  - "--epochs=1"
+                  - "--batch-size=16"
+                  - "--lr=${trialParameters.learningRate}"
+                  - "--momentum=${trialParameters.momentum}"
+                resources:
+                  limits:
+                    memory: "1Gi"
+                    cpu: "0.5"
+            restartPolicy: Never
