@@ -1,6 +1,6 @@
 # Data Storage and Warehousing using Google Cloud (GCP)
 
-You can watch the toturial video at [Kubernetes-lab2](https://youtu.be/8AzHqHQWTCw)
+You can watch the toturial video at [Video](https://youtu.be/8AzHqHQWTCw)
 
 ## Introduction
 
