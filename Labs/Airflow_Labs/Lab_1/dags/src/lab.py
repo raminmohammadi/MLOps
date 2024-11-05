@@ -59,13 +59,16 @@ def build_save_model(data, filename):
         kmeans.fit(df)
         sse.append(kmeans.inertia_)
     
-    output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model", filename)
+    output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model")
+    # Create the model directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+    
+    output_path = os.path.join(output_dir, filename)
 
     # Save the trained model to a file
-    pickle.dump(kmeans, open(output_path, 'wb'))
-
+    with open(output_path, 'wb') as f:
+        pickle.dump(kmeans, f)
     return sse
-
 
 def load_model_elbow(filename,sse):
     """
