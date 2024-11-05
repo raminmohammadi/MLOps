@@ -1,0 +1,4 @@
+tfx
+matplotlib
+scipy
+seaborn

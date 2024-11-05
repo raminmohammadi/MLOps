@@ -15,13 +15,6 @@ default_args = {
 }
 
 
-# Function to prevent the task from exiting early
-# def wait_for_flask():
-#     # Infinite loop to prevent task termination
-#     while True:
-#         time.sleep(60)
-
-
 # Lets create a Flask API to show success or failure of the main dag
 app = Flask(__name__)
 
@@ -45,7 +38,7 @@ def check_dag_status():
 
 # Flask routes for success and failure
 @app.route('/success')
-def success():
+def success():# -> Any:
     return render_template('success.html')
 
 @app.route('/failure')

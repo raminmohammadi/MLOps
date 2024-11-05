@@ -653,7 +653,6 @@ feature {
     min_count: 1
   }
   not_in_environment: "SERVING"
-  not_in_environment: "SERVING"
   shape {
     dim {
       size: 1

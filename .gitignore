@@ -8,9 +8,14 @@ __pycache__/
 .vscode/
 .idea/
 .virtual_documents/
-
+transform_*/
+pipeline/
+istio-1.23.2/
+google-cloud-sdk/
 # C extensions
 *.so
+*.tar.gz
+
 
 # Distribution / packaging
 .Python
