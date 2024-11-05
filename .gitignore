@@ -15,7 +15,8 @@ google-cloud-sdk/
 # C extensions
 *.so
 *.tar.gz
-
+*.json
+*.pdf
 
 # Distribution / packaging
 .Python
