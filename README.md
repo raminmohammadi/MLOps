@@ -38,106 +38,92 @@ This repository offers a series of hands-on labs designed to enhance your unders
 
 1. **[API Labs](./Labs/API_Labs)**
    - **Objective:** Learn to develop and deploy APIs for ML models.
-   - **Key Topics:**
-     - Flask and FastAPI basics
-     - Building and serving prediction APIs
+   - **Sub-Labs:**
+     - **[FLASK_GCP_LAB](./Labs/API_Labs/FLASK_GCP_LAB):** Flask lab data.
+     - **[FastAPI Labs](./Labs/API_Labs/FastAPI_Labs):** FastAPI lab details.
+     - **[Streamlit Labs](./Labs/API_Labs/Streamlit_Labs):** Streamlit README - updated.
 
 2. **[Airflow Labs](./Labs/Airflow_Labs)**
    - **Objective:** Gain practical experience with Apache Airflow for orchestrating complex data workflows.
-   - **Key Topics:**
-     - DAG creation and scheduling
-     - Task dependencies and monitoring
+   - **Sub-Labs:**
+     - **[Lab 1](./Labs/Airflow_Labs/Lab_1):** Basic Airflow setup and DAGs.
+     - **[Lab 2](./Labs/Airflow_Labs/Lab_2):** Advanced DAG dependencies and scheduling.
+     - **[assets](./Labs/Airflow_Labs/assets):** Contains additional assets for Airflow labs.
 
 3. **[CloudFunction Labs](./Labs/CloudFunction_Labs)**
    - **Objective:** Learn how to deploy lightweight functions using cloud-based services.
-   - **Key Topics:**
-     - Cloud Function basics
-     - Event-driven programming
+   - **Sub-Labs:**
+     - **[Lab1-CloudFunction Setup](./Labs/CloudFunction_Labs/Lab1-CloudFunction_Setup):** Setting up Google Cloud Functions.
+     - **[Lab2-CloudFunction Intermediate](./Labs/CloudFunction_Labs/Lab2-CloudFunction_Intermediate):** Intermediate Cloud Function concepts and use cases.
 
 4. **[Data Labs](./Labs/Data_Labs)**
    - **Objective:** Understand data engineering and preprocessing steps.
-   - **Key Topics:**
-     - Data cleaning and transformation
-     - Data pipeline setup
+   - **Sub-Labs:**
+     - **[Apache](./Labs/Data_Labs/Apache):** Apache setup for data handling.
+     - **[DVC Labs/Lab 1](./Labs/Data_Labs/DVC_Labs/Lab_1):** DVC setup and basic commands.
+     - **[Data Labeling Labs](./Labs/Data_Labs/Data_Labeling_Labs):** Lab focused on data labeling processes.
 
 5. **[Data Storage & Warehouse Labs](./Labs/Data_Storage_Warehouse_Labs)**
    - **Objective:** Explore data storage solutions and data warehousing.
-   - **Key Topics:**
-     - Data warehousing concepts
-     - Storage optimization and management
+   - **Sub-Labs:**
+     - **[Lab1](./Labs/Data_Storage_Warehouse_Labs/Lab1):** Introduction to data warehousing.
+     - **[Lab2](./Labs/Data_Storage_Warehouse_Labs/Lab2):** Advanced data storage techniques.
+     - **[Lab3](./Labs/Data_Storage_Warehouse_Labs/Lab3):** Optimization and data retrieval practices.
 
 6. **[Docker Container Labs](./Labs/Docker_Container_Labs)**
    - **Objective:** Learn containerization techniques for ML applications.
-   - **Key Topics:**
-     - Docker basics
-     - Creating and managing containers
+   - **Sub-Labs:**
+     - **[Week7_Docker_Container](./Labs/Docker_Container_Labs/Week7_Docker_Container):** Introduction to Docker containers.
+     - **[Week8_Docker_Container](./Labs/Docker_Container_Labs/Week8_Docker_Container):** Advanced Docker techniques and orchestration.
 
 7. **[ELK Labs](./Labs/ELK_Labs)**
    - **Objective:** Set up logging and monitoring using the ELK stack.
-   - **Key Topics:**
-     - Elasticsearch, Logstash, and Kibana integration
-     - Monitoring data pipelines
+   - **Sub-Labs:**
+     - **[Lab1_Setup_Windows_WSL_Ubuntu](./Labs/ELK_Labs/Lab1_Setup_Windows_WSL_Ubuntu):** ELK setup on Windows with WSL.
+     - **[Lab2_ELK_Setup_Mac](./Labs/ELK_Labs/Lab2_ELK_Setup_Mac):** ELK setup on macOS.
+     - **[Lab3_Example](./Labs/ELK_Labs/Lab3_Example):** Example of ELK in practice.
 
 8. **[Experiment Tracking Labs](./Labs/Experiment_Tracking_Labs)**
    - **Objective:** Track and manage ML experiments.
-   - **Key Topics:**
-     - Logging metrics and parameters
-     - Versioning experiments
+   - **Sub-Labs:**
+     - **[Logging Labs](./Labs/Experiment_Tracking_Labs/Logging_Labs):** Tracking logs for model training.
+     - **[Mlflow Labs](./Labs/Experiment_Tracking_Labs/Mlflow_Labs):** Using MLflow for experiment tracking.
 
 9. **GCP Labs**
-   - **[Cloud Composer Labs](./Labs/GCP_Labs/Cloud_Composer_Labs)**
-     - **Objective:** Learn how to use Google Cloud Composer for managing and orchestrating workflows.
-     - **Key Topics:**
-       - Airflow integration in GCP
-       - Workflow automation and scheduling
-
-   - **[Compute Engine Labs](./Labs/GCP_Labs/Compute_Engine_Labs)**
-     - **Objective:** Gain hands-on experience with Google Compute Engine for scalable virtual machine instances.
-     - **Key Topics:**
-       - Setting up and managing VMs
-       - Using Compute Engine for ML model training
-
-   - **[KServe Labs](./Labs/GCP_Labs/KServe_Labs)**
-     - **Objective:** Explore KServe for serving ML models at scale on Kubernetes.
-     - **Key Topics:**
-       - Model serving with KServe
-       - Scaling models on Kubernetes
-
-   - **[Kubernetes Labs](./Labs/GCP_Labs/Kubernetes_Labs)**
-     - **Objective:** Learn Kubernetes basics and deploy ML workloads in a managed Kubernetes environment.
-     - **Key Topics:**
-       - GKE setup and management
-       - Deploying containers for ML
-
-   - **[Vertex AI Labs](./Labs/GCP_Labs/Vertex_AI)**
-     - **Objective:** Understand and utilize Vertex AI for end-to-end ML workflows.
-     - **Key Topics:**
-       - Managed datasets, training, and deployment
-       - Model monitoring and pipeline automation
+   - **[Cloud Composer Labs](./Labs/GCP_Labs/Cloud_Composer_Labs):** Set up and manage workflows with Cloud Composer.
+   - **[Compute Engine Labs](./Labs/GCP_Labs/Compute_Engine_Labs):** Hands-on with Google Compute Engine.
+   - **[KServe Labs](./Labs/GCP_Labs/KServe_Labs):** Serving ML models with KServe on Kubernetes.
+   - **[Kubernetes Labs](./Labs/GCP_Labs/Kubernetes_Labs):** Running and managing containers on GKE.
+   - **[Vertex AI Labs](./Labs/GCP_Labs/Vertex_AI):** End-to-end ML workflows with Vertex AI.
 
 10. **[GitHub Labs](./Labs/Github_Labs)**
     - **Objective:** Implement GitHub Actions for CI/CD.
-    - **Key Topics:**
-      - Setting up workflows
-      - Automating testing and deployment
+    - **Sub-Labs:**
+      - **[GitHub_Actions_GCP_Lab_beginner](./Labs/Github_Labs/GitHub_Actions_GCP_Lab_beginner):** Beginner-level CI/CD with GitHub Actions.
+      - **[Lab1](./Labs/Github_Labs/Lab1):** Basics of GitHub Actions.
+      - **[Lab2](./Labs/Github_Labs/Lab2):** Intermediate CI/CD practices with GitHub.
+      - **[github-actions-gcp-intermediate-lab](./Labs/Github_Labs/github-actions-gcp-intermediate-lab):** Intermediate GCP integration with GitHub Actions.
 
 11. **[Kubeflow Labs](./Labs/Kubeflow_Labs)**
     - **Objective:** Orchestrate ML workflows with Kubeflow.
-    - **Key Topics:**
-      - Kubeflow Pipelines
-      - Model management
+    - **Sub-Labs:**
+      - **[Lab1-Kubeflow Setup](./Labs/Kubeflow_Labs/Lab1-Kubeflow_Setup):** Setting up Kubeflow environment.
+      - **[Lab2-Kubeflow Katib](./Labs/Kubeflow_Labs/Lab2-Kubeflow_Katib):** Hyperparameter tuning with Katib in Kubeflow.
 
 12. **[MLMD Labs](./Labs/MLMD_Labs)**
     - **Objective:** Understand ML Metadata (MLMD) for tracking metadata.
-    - **Key Topics:**
-      - Metadata storage and querying
-      - Workflow lineage tracking
+    - **Sub-Labs:**
+      - **[Lab1](./Labs/MLMD_Labs/Lab1):** Introduction to ML metadata concepts.
+      - **[Lab2](./Labs/MLMD_Labs/Lab2):** Advanced usage and querying of ML metadata.
+      - **[assets](./Labs/MLMD_Labs/assets):** Supporting materials and assets for MLMD labs.
 
 13. **[TensorFlow Labs](./Labs/Tensorflow_Labs)**
     - **Objective:** Gain hands-on experience with TensorFlow for ML model development.
-    - **Key Topics:**
-      - Model training and evaluation
-      - Using TFX for production-grade ML pipelines
+    - **Sub-Labs:**
+      - **[TFDV Labs](./Labs/Tensorflow_Labs/TFDV_Labs):** TensorFlow Data Validation labs.
+      - **[TFDV TFX Installation](./Labs/Tensorflow_Labs/TFDV_TFX_Installation):** Setting up TFX and TFDV.
+      - **[TFT Labs](./Labs/Tensorflow_Labs/TFT_Labs):** TensorFlow Transform labs.
+      - **[TFX Labs](./Labs/Tensorflow_Labs/TFX_Labs):** TensorFlow Extended for production pipelines.
 
 Each lab is accompanied by detailed instructions and code examples to facilitate hands-on learning. It's recommended to follow the labs sequentially, as concepts build upon each other. For additional resources and support, refer to the [Reading Materials](./Labs/Reading%20Materials) section of this repository.
 
