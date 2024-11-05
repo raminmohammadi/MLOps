@@ -1,4 +1,4 @@
-A complete guide to setting up, deploying, and triggering Apache Airflow DAGs from a virtual machine (VM). This includes creating an Airflow environment, configuring the API, organizing the folder structure, and setting up DAGs to run a sample Python script.
+A comprehensive guide to setting up, deploying, and triggering Apache Airflow DAGs on a virtual machine (VM). This walkthrough covers creating an Airflow environment, configuring the API, structuring folders, and setting up DAGs to run a sample Python script with email notifications.
 
 ---
 
