@@ -1,5 +1,7 @@
 # GCS to BigQuery Iris Dataset Lab
 
+Watch the tutorial for this lab on our channel [Video](https://youtu.be/VMnLPP_ohi0)
+
 ## Learning Objectives
 
 In this lab, we will introduce several key concepts in cloud data engineering using Google Cloud Platform (GCP) and Apache Airflow. By completing this lab, you will learn:
