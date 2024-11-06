@@ -1,0 +1,29 @@
+main:
+  steps:
+  - initiate-data-processing:
+      call: http.post
+      args:
+        url: https://us-central1-{Project_ID}.cloudfunctions.net/process_data # Replace with Project ID
+        body:
+          bucket: BUCKET_NAME # Replace with bucket name
+          file: data.csv
+      result: data_processing_result
+
+  - initiate-model-training:
+      call: http.post
+      args:
+        url: https://us-central1-{Project_ID}.cloudfunctions.net/train_model # Replace with Project ID
+        body:
+          file: data.csv
+      result: model_training_result
+
+  - initiate-model-serving:
+      call: http.post
+      args:
+        url: https://us-central1-{Project_ID}.cloudfunctions.net/ml_model_predict # Replace with Project ID
+        body:
+          features: [5.1, 3.5, 1.4, 0.2]
+      result: model_prediction
+
+  - return_prediction:
+      return: ${model_prediction.body}
