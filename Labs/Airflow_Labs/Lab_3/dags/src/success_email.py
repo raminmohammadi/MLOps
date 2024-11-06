@@ -11,7 +11,7 @@ def send_success_email(**kwargs):
     password = conn.password
     # sender_email = Variable.get('EMAIL_USER')
     # password = Variable.get('EMAIL_PASSWORD')
-    receiver_emails = 'odedra.r@northeastern.edu'
+    receiver_emails = 'your_email' # define receiver email
 
     # Define subject and body templates
     subject_template = 'Airflow Success: {{ dag.dag_id }} - Data Pipeline tasks succeeded'
