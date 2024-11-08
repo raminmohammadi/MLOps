@@ -6,7 +6,6 @@ Welcome to the intermediate Cloud Runner lab! In this lab, we'll dive deeper int
 
 - [Objectives](#objectives)
 - [Prerequisites](#prerequisites)
-- [Lab Setup](#lab-setup)
 - [Step-by-Step Guide](#step-by-step-guide)
   - [Step 1: Setting Up Google Cloud Project and Storage](#step-1-setting-up-google-cloud-project-and-storage)
   - [Step 2: Configuring Cloud Runner](#step-2-configuring-cloud-runner)
@@ -33,25 +32,6 @@ Before you start, ensure you have:
 2. **Cloud Runner CLI**: Installed on your local machine.
 3. **Basic knowledge of Python**: For data analysis and pipeline scripting.
 4. **Git**: Installed and configured on your local machine.
-
-## Lab Setup
-
-### 1. Clone the Repository
-Start by cloning this repository:
-
-```bash
-git clone https://github.com/username/cloud-runner-intermediate-lab.git
-cd cloud-runner-intermediate-lab
-```
-
-### 2. Set Up Python Virtual Environment
-We recommend using a virtual environment to manage dependencies.
-
-```bash
-python3 -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-```
 
 ## Step-by-Step Guide
 
@@ -189,4 +169,4 @@ Congratulations! You have completed the Cloud Runner Intermediate Lab. You have 
 - Clean up resources to ensure cost efficiency.
 
 Feel free to expand this pipeline with more complex data processing or model training tasks! For any issues, please reach out in the Issues section.
-``` 
+```
