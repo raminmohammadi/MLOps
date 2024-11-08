@@ -1,0 +1,683 @@
+# PIPELINE DEFINITION
+# Name: model-pipeline
+# Inputs:
+#    data_size: int
+#    data_url: str
+# Outputs:
+#    daal4py-inference-metrics: system.Metrics
+#    plot-roc-curve-class_metrics: system.ClassificationMetrics
+components:
+  comp-convert-xgboost-to-daal4py:
+    executorLabel: exec-convert-xgboost-to-daal4py
+    inputDefinitions:
+      artifacts:
+        xgb_model:
+          artifactType:
+            schemaTitle: system.Model
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        daal4py_model:
+          artifactType:
+            schemaTitle: system.Model
+            schemaVersion: 0.0.1
+  comp-create-train-test-set:
+    executorLabel: exec-create-train-test-set
+    inputDefinitions:
+      artifacts:
+        data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        x_test_data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        x_train_data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        y_test_data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        y_train_data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+  comp-daal4py-inference:
+    executorLabel: exec-daal4py-inference
+    inputDefinitions:
+      artifacts:
+        daal4py_model:
+          artifactType:
+            schemaTitle: system.Model
+            schemaVersion: 0.0.1
+        x_test:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        y_test:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        metrics:
+          artifactType:
+            schemaTitle: system.Metrics
+            schemaVersion: 0.0.1
+        prediction_data:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        report:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+  comp-load-data:
+    executorLabel: exec-load-data
+    inputDefinitions:
+      parameters:
+        data_size:
+          parameterType: NUMBER_INTEGER
+        data_url:
+          parameterType: STRING
+    outputDefinitions:
+      artifacts:
+        credit_risk_dataset:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+  comp-plot-roc-curve:
+    executorLabel: exec-plot-roc-curve
+    inputDefinitions:
+      artifacts:
+        predictions:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        class_metrics:
+          artifactType:
+            schemaTitle: system.ClassificationMetrics
+            schemaVersion: 0.0.1
+  comp-preprocess-features:
+    executorLabel: exec-preprocess-features
+    inputDefinitions:
+      artifacts:
+        x_test:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        x_train:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        x_test_processed:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        x_train_processed:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+  comp-train-xgboost-model:
+    executorLabel: exec-train-xgboost-model
+    inputDefinitions:
+      artifacts:
+        x_train:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        y_train:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+    outputDefinitions:
+      artifacts:
+        xgb_model:
+          artifactType:
+            schemaTitle: system.Model
+            schemaVersion: 0.0.1
+deploymentSpec:
+  executors:
+    exec-convert-xgboost-to-daal4py:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - convert_xgboost_to_daal4py
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'daal4py' 'joblib'\
+          \ 'loguru' 'scikit-learn' 'packaging' 'xgboost' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef convert_xgboost_to_daal4py(\n    xgb_model: Input[Model],\n \
+          \   daal4py_model: Output[Model]):\n\n    '''\n    Converts XGBoost model\
+          \ to inference-optimized daal4py classifier.\n\n    Input Artifacts\n  \
+          \  ---------------\n    xgb_model : Model\n        trained XGBoost classifier\n\
+          \n    Output Artifacts\n    ----------------\n    daal4py_model : Model\n\
+          \        inference-optimized daal4py classifier\n    '''\n\n    import daal4py\
+          \ as d4p\n    import joblib\n    from loguru import logger\n\n    with open(xgb_model.path,\
+          \ \"rb\") as file_reader:\n        clf = joblib.load(file_reader)\n\n  \
+          \  logger.info(\"Converting XGBoost model to Daal4py...\")\n    daal_model\
+          \ = d4p.get_gbt_model_from_xgboost(clf)\n    logger.info(\"Done!\")\n\n\
+          \    with open(daal4py_model.path, \"wb\") as file_writer:\n        joblib.dump(daal_model,\
+          \ file_writer)\n\n"
+        image: python:3.10
+    exec-create-train-test-set:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - create_train_test_set
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'pandas' 'scikit-learn'\
+          \ 'loguru' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef create_train_test_set(\n    data: Input[Dataset],\n    x_train_data:\
+          \ Output[Dataset],\n    y_train_data: Output[Dataset],\n    x_test_data:\
+          \ Output[Dataset],\n    y_test_data: Output[Dataset]):\n\n    '''\n    Creates\
+          \ 75:25 split of input dataset for model evaluation.\n\n    Input Artifacts\n\
+          \    ---------------\n    data : Dataset\n        dataset that has been\
+          \ synthetically augmented by the load_data() function\n\n    Output Artifacts\n\
+          \    ----------------\n    x_train_data : Dataset\n        training features,\
+          \ 75% of original dataset\n    y_train_data : Dataset\n        training\
+          \ labels of target variable, loan_status\n    x_test_data : Dataset\n  \
+          \      test features, 25% of original dataset\n    y_test_data : Dataset\n\
+          \        test labels of target variable, loan_status\n    '''\n\n    import\
+          \ pandas as pd\n    from loguru import logger\n    from sklearn.model_selection\
+          \ import train_test_split\n\n    data = pd.read_csv(data.path)\n\n    logger.info(\"\
+          Creating training and test sets...\")\n    train, test = train_test_split(data,\
+          \ test_size = 0.25, random_state = 0)\n\n    X_train = train.drop([\"loan_status\"\
+          ], axis = 1)\n    y_train = train[\"loan_status\"]\n\n    X_test = test.drop([\"\
+          loan_status\"], axis = 1)\n    y_test = test[\"loan_status\"]\n\n    logger.info(\"\
+          Training and test sets created.\\n\" \\\n                \"X_train size:\
+          \ {}, y_train size: {}\\n\" \\\n                \"X_test size: {}, y_test\
+          \ size: {}\",\n                X_train.shape, y_train.shape, X_test.shape,\
+          \ y_test.shape)\n\n    X_train.to_csv(x_train_data.path, index = False)\n\
+          \    y_train.to_csv(y_train_data.path, index = False, header = None)\n \
+          \   X_test.to_csv(x_test_data.path, index = False)\n    y_test.to_csv(y_test_data.path,\
+          \ index = False, header = None)\n\n"
+        image: python:3.10
+    exec-daal4py-inference:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - daal4py_inference
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'daal4py' 'pandas'\
+          \ 'scikit-learn' 'scikit-learn-intelex' 'joblib' 'packaging' && \"$0\" \"\
+          $@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef daal4py_inference(\n    x_test: Input[Dataset],\n    y_test:\
+          \ Input[Dataset],\n    daal4py_model: Input[Model],\n    prediction_data:\
+          \ Output[Dataset],\n    report: Output[Dataset],\n    metrics: Output[Metrics]\n\
+          ):\n\n    '''\n    Computes predictions using the inference-optimized daal4py\
+          \ classifier\n    and evaluates model performance.\n\n    Input Artifacts\n\
+          \    ---------------\n    x_test : Dataset\n        processed and scaled\
+          \ test features\n    y_test : Dataset\n        test labels of target variable,\
+          \ loan_status\n    daal4py_model : Model\n        inference-optimized daal4py\
+          \ classifier\n\n    Output Artifacts\n    ----------------\n    prediction_data\
+          \ : Dataset\n        dataset containing true test labels and predicted probabilities\n\
+          \    report : Dataset\n        summary of the precision, recall, F1 score\
+          \ for each class\n    metrics : Metrics\n        scalar classification metrics\
+          \ containing the model's AUC and accuracy\n    '''\n\n    import daal4py\
+          \ as d4p\n    import joblib\n    import pandas as pd\n\n    from sklearnex\
+          \ import patch_sklearn\n    patch_sklearn()\n    from sklearn.metrics import\
+          \ roc_auc_score, accuracy_score, classification_report\n\n    X_test = pd.read_csv(x_test.path,\
+          \ header = None)\n    y_test = pd.read_csv(y_test.path, header = None)\n\
+          \n    with open(daal4py_model.path, \"rb\") as file_reader:\n        daal_model\
+          \ = joblib.load(file_reader)\n\n    daal_prediction = d4p.gbt_classification_prediction(\n\
+          \            nClasses = 2,\n            resultsToEvaluate = \"computeClassLabels|computeClassProbabilities\"\
+          \n        ).compute(X_test, daal_model)\n\n    y_pred = daal_prediction.prediction\n\
+          \    y_prob = daal_prediction.probabilities[:,1]\n\n    results = classification_report(\n\
+          \        y_test, y_pred,\n        target_names = [\"Non-Default\", \"Default\"\
+          ],\n        output_dict = True\n    )\n    results = pd.DataFrame(results).transpose()\n\
+          \    results.to_csv(report.path)\n\n    auc = roc_auc_score(y_test, y_prob)\n\
+          \    metrics.log_metric('AUC', auc)\n\n    accuracy = (accuracy_score(y_test,\
+          \ y_pred)*100)\n    metrics.log_metric('Accuracy', accuracy)\n\n    predictions\
+          \ = pd.DataFrame({'y_test': y_test.values.flatten(),\n                 \
+          \               'y_prob': y_prob})\n    predictions.to_csv(prediction_data.path,\
+          \ index = False)\n\n"
+        image: python:3.10
+    exec-load-data:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - load_data
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'numpy' 'pandas'\
+          \ 'loguru' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef load_data(\n    data_url: str,\n    data_size: int,\n    credit_risk_dataset:\
+          \ Output[Dataset]):\n\n    '''\n    Downloads credit_risk_dataset.csv file\
+          \ and generates\n    additional synthetic data for benchmarking and testing\
+          \ purposes.\n\n    Input Parameters\n    ----------------\n    data_url\
+          \ : str\n        url where the dataset is hosted\n    data_size : int\n\
+          \        size of final dataset desired, default 1M rows\n\n    Output Artifacts\n\
+          \    ----------------\n    credit_risk_dataset : Dataset\n        data that\
+          \ has been synthetically augmented or loaded from URL provided\n    '''\n\
+          \n    import numpy as np\n    import pandas as pd\n    from loguru import\
+          \ logger\n\n    logger.info(\"Loading csv from {}\", data_url)\n    data\
+          \ = pd.read_csv(data_url)\n    logger.info(\"Done!\")\n\n    # number of\
+          \ rows to generate\n    if data_size < data.shape[0]:\n        pass\n  \
+          \  else:\n        logger.info(\"Generating {:,} rows of data...\", data_size)\n\
+          \        repeats = data_size // len(data)\n        data = data.loc[np.repeat(data.index.values,\
+          \ repeats + 1)]\n        data = data.iloc[:data_size]\n\n        person_age\
+          \ = data[\"person_age\"].values + np.random.randint(\n            -1, 1,\
+          \ size=len(data)\n        )\n        person_income = data[\"person_income\"\
+          ].values + np.random.normal(\n            0, 10, size=len(data)\n      \
+          \  )\n        person_emp_length = data[\n            \"person_emp_length\"\
+          \n        ].values + np.random.randint(-1, 1, size=len(data))\n        loan_amnt\
+          \ = data[\"loan_amnt\"].values + np.random.normal(\n            0, 5, size=len(data)\n\
+          \        )\n        loan_int_rate = data[\"loan_int_rate\"].values + np.random.normal(\n\
+          \            0, 0.2, size=len(data)\n        )\n        loan_percent_income\
+          \ = data[\"loan_percent_income\"].values + (\n            np.random.randint(0,\
+          \ 100, size=len(data)) / 1000\n        )\n        cb_person_cred_hist_length\
+          \ = data[\n            \"cb_person_cred_hist_length\"\n        ].values\
+          \ + np.random.randint(0, 2, size=len(data))\n\n        perturb_idx = np.random.rand(len(data))\
+          \ > 0.1\n        random_values = np.random.choice(\n            data[\"\
+          person_home_ownership\"].unique(), len(data)\n        )\n        person_home_ownership\
+          \ = np.where(\n            perturb_idx, data[\"person_home_ownership\"],\
+          \ random_values\n        )\n        perturb_idx = np.random.rand(len(data))\
+          \ > 0.1\n        random_values = np.random.choice(\n            data[\"\
+          loan_intent\"].unique(), len(data)\n        )\n        loan_intent = np.where(perturb_idx,\
+          \ data[\"loan_intent\"], random_values)\n        perturb_idx = np.random.rand(len(data))\
+          \ > 0.1\n        random_values = np.random.choice(\n            data[\"\
+          loan_grade\"].unique(), len(data)\n        )\n        loan_grade = np.where(perturb_idx,\
+          \ data[\"loan_grade\"], random_values)\n        perturb_idx = np.random.rand(len(data))\
+          \ > 0.1\n        random_values = np.random.choice(\n            data[\"\
+          cb_person_default_on_file\"].unique(), len(data)\n        )\n        cb_person_default_on_file\
+          \ = np.where(\n            perturb_idx, data[\"cb_person_default_on_file\"\
+          ], random_values\n        )\n        data = pd.DataFrame(\n            list(\n\
+          \                zip(\n                    person_age,\n               \
+          \     person_income,\n                    person_home_ownership,\n     \
+          \               person_emp_length,\n                    loan_intent,\n \
+          \                   loan_grade,\n                    loan_amnt,\n      \
+          \              loan_int_rate,\n                    data[\"loan_status\"\
+          ].values,\n                    loan_percent_income,\n                  \
+          \  cb_person_default_on_file,\n                    cb_person_cred_hist_length,\n\
+          \                )\n            ),\n            columns = data.columns,\n\
+          \        )\n\n        data = data.drop_duplicates()\n        assert len(data)\
+          \ == data_size\n        data.reset_index(drop = True)\n\n    data.to_csv(credit_risk_dataset.path,\
+          \ index = None)\n\n"
+        image: python:3.10
+    exec-plot-roc-curve:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - plot_roc_curve
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'numpy' 'pandas'\
+          \ 'scikit-learn' 'scikit-learn-intelex' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef plot_roc_curve(\n    predictions: Input[Dataset],\n    class_metrics:\
+          \ Output[ClassificationMetrics]\n):\n\n    '''\n    Function to plot Receiver\
+          \ Operating Characteristic (ROC) curve.\n\n    Input Artifacts\n    ---------------\n\
+          \    predictions : Dataset\n        dataset containing true test labels\
+          \ and predicted probabilities\n\n    Output Artifacts\n    ----------------\n\
+          \    class_metrics : ClassificationMetrics\n        classification metrics\
+          \ containing fpr, tpr, and thresholds\n    '''\n\n    import pandas as pd\n\
+          \    from numpy import inf\n\n    from sklearnex import patch_sklearn\n\
+          \    patch_sklearn()\n    from sklearn.metrics import roc_curve\n\n    prediction_data\
+          \ = pd.read_csv(predictions.path)\n\n    fpr, tpr, thresholds = roc_curve(\n\
+          \        y_true = prediction_data['y_test'],\n        y_score = prediction_data['y_prob'],\n\
+          \        pos_label = 1)\n    thresholds[thresholds == inf] = 0\n\n    class_metrics.log_roc_curve(fpr,\
+          \ tpr, thresholds)\n\n"
+        image: python:3.10
+    exec-preprocess-features:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - preprocess_features
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'pandas' 'scikit-learn'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef preprocess_features(\n    x_train: Input[Dataset],\n    x_test:\
+          \ Input[Dataset],\n    x_train_processed: Output[Dataset],\n    x_test_processed:\
+          \ Output[Dataset]):\n\n    '''\n    Performs data preprocessing of training\
+          \ and test features.\n\n    Input Artifacts\n    ---------------\n    x_train\
+          \ : Dataset\n        original unprocessed training features\n    x_test\
+          \ : Dataset\n        original unprocessed test features\n\n    Output Artifacts\n\
+          \    ----------------\n    x_train_processed : Dataset\n        processed\
+          \ and scaled training features\n    x_test_processed : Dataset\n       \
+          \ processed and scaled test features\n    '''\n\n    import pandas as pd\n\
+          \    from sklearn.compose import ColumnTransformer\n    from sklearn.impute\
+          \ import SimpleImputer\n    from sklearn.pipeline import Pipeline\n    from\
+          \ sklearn.preprocessing import OneHotEncoder, PowerTransformer\n\n    X_train\
+          \ = pd.read_csv(x_train.path)\n    X_test = pd.read_csv(x_test.path)\n\n\
+          \    num_imputer = Pipeline(steps=[(\"imputer\", SimpleImputer(strategy\
+          \ = \"median\"))])\n    pow_transformer = PowerTransformer()\n    cat_transformer\
+          \ = OneHotEncoder(handle_unknown = \"ignore\")\n    preprocessor = ColumnTransformer(\n\
+          \        transformers = [\n            (\n                \"num\",\n   \
+          \             num_imputer,\n                [\n                    \"loan_int_rate\"\
+          ,\n                    \"person_emp_length\",\n                    \"cb_person_cred_hist_length\"\
+          ,\n                ],\n            ),\n            (\n                \"\
+          pow\",\n                pow_transformer,\n                [\"person_age\"\
+          , \"person_income\", \"loan_amnt\", \"loan_percent_income\"],\n        \
+          \    ),\n            (\n                \"cat\",\n                cat_transformer,\n\
+          \                [\n                    \"person_home_ownership\",\n   \
+          \                 \"loan_intent\",\n                    \"loan_grade\",\n\
+          \                    \"cb_person_default_on_file\",\n                ],\n\
+          \            ),\n        ],\n        remainder=\"passthrough\",\n    )\n\
+          \n    preprocess = Pipeline(steps = [(\"preprocessor\", preprocessor)])\n\
+          \n    X_train = pd.DataFrame(preprocess.fit_transform(X_train))\n    X_test\
+          \ = pd.DataFrame(preprocess.transform(X_test))\n\n    X_train.to_csv(x_train_processed.path,\
+          \ index = False, header = None)\n    X_test.to_csv(x_test_processed.path,\
+          \ index = False, header = None)\n\n"
+        image: python:3.10
+    exec-train-xgboost-model:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - train_xgboost_model
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.9.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'pandas' 'xgboost'\
+          \ 'joblib' 'loguru' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef train_xgboost_model(\n    x_train: Input[Dataset],\n    y_train:\
+          \ Input[Dataset],\n    xgb_model: Output[Model]):\n\n    '''\n    Trains\
+          \ an XGBoost classification model.\n\n    Input Artifacts\n    ---------------\n\
+          \    x_train : Dataset\n        processed and scaled training features\n\
+          \    y_train : Dataset\n        training labels of target variable, loan_status\n\
+          \n    Output Artifacts\n    ----------------\n    xgb_model : Model\n  \
+          \      trained XGBoost model\n    '''\n\n    import joblib\n    import pandas\
+          \ as pd\n    import xgboost as xgb\n    from loguru import logger\n\n  \
+          \  X_train = pd.read_csv(x_train.path, header = None)\n    y_train = pd.read_csv(y_train.path,\
+          \ header = None)\n\n    dtrain = xgb.DMatrix(X_train.values, y_train.values)\n\
+          \n    params = {\n        \"objective\": \"binary:logistic\",\n        \"\
+          eval_metric\": \"logloss\",\n        \"nthread\": 4,  # num_cpu\n      \
+          \  \"tree_method\": \"hist\",\n        \"learning_rate\": 0.02,\n      \
+          \  \"max_depth\": 10,\n        \"min_child_weight\": 6,\n        \"n_jobs\"\
+          : 4,  # num_cpu,\n        \"verbosity\": 1\n    }\n\n    # train XGBoost\
+          \ model\n    logger.info(\"Training XGBoost model...\")\n    clf = xgb.train(params\
+          \ = params,\n                    dtrain = dtrain,\n                    num_boost_round\
+          \ = 500)\n\n    with open(xgb_model.path, \"wb\") as file_writer:\n    \
+          \    joblib.dump(clf, file_writer)\n\n"
+        image: python:3.10
+pipelineInfo:
+  name: model-pipeline
+root:
+  dag:
+    outputs:
+      artifacts:
+        daal4py-inference-metrics:
+          artifactSelectors:
+          - outputArtifactKey: metrics
+            producerSubtask: daal4py-inference
+        plot-roc-curve-class_metrics:
+          artifactSelectors:
+          - outputArtifactKey: class_metrics
+            producerSubtask: plot-roc-curve
+    tasks:
+      convert-xgboost-to-daal4py:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-convert-xgboost-to-daal4py
+        dependentTasks:
+        - train-xgboost-model
+        inputs:
+          artifacts:
+            xgb_model:
+              taskOutputArtifact:
+                outputArtifactKey: xgb_model
+                producerTask: train-xgboost-model
+        taskInfo:
+          name: convert-xgboost-to-daal4py
+      create-train-test-set:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-create-train-test-set
+        dependentTasks:
+        - load-data
+        inputs:
+          artifacts:
+            data:
+              taskOutputArtifact:
+                outputArtifactKey: credit_risk_dataset
+                producerTask: load-data
+        taskInfo:
+          name: create-train-test-set
+      daal4py-inference:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-daal4py-inference
+        dependentTasks:
+        - convert-xgboost-to-daal4py
+        - create-train-test-set
+        - preprocess-features
+        inputs:
+          artifacts:
+            daal4py_model:
+              taskOutputArtifact:
+                outputArtifactKey: daal4py_model
+                producerTask: convert-xgboost-to-daal4py
+            x_test:
+              taskOutputArtifact:
+                outputArtifactKey: x_test_processed
+                producerTask: preprocess-features
+            y_test:
+              taskOutputArtifact:
+                outputArtifactKey: y_test_data
+                producerTask: create-train-test-set
+        taskInfo:
+          name: daal4py-inference
+      load-data:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-load-data
+        inputs:
+          parameters:
+            data_size:
+              componentInputParameter: data_size
+            data_url:
+              componentInputParameter: data_url
+        taskInfo:
+          name: load-data
+      plot-roc-curve:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-plot-roc-curve
+        dependentTasks:
+        - daal4py-inference
+        inputs:
+          artifacts:
+            predictions:
+              taskOutputArtifact:
+                outputArtifactKey: prediction_data
+                producerTask: daal4py-inference
+        taskInfo:
+          name: plot-roc-curve
+      preprocess-features:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-preprocess-features
+        dependentTasks:
+        - create-train-test-set
+        inputs:
+          artifacts:
+            x_test:
+              taskOutputArtifact:
+                outputArtifactKey: x_test_data
+                producerTask: create-train-test-set
+            x_train:
+              taskOutputArtifact:
+                outputArtifactKey: x_train_data
+                producerTask: create-train-test-set
+        taskInfo:
+          name: preprocess-features
+      train-xgboost-model:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-train-xgboost-model
+        dependentTasks:
+        - create-train-test-set
+        - preprocess-features
+        inputs:
+          artifacts:
+            x_train:
+              taskOutputArtifact:
+                outputArtifactKey: x_train_processed
+                producerTask: preprocess-features
+            y_train:
+              taskOutputArtifact:
+                outputArtifactKey: y_train_data
+                producerTask: create-train-test-set
+        taskInfo:
+          name: train-xgboost-model
+  inputDefinitions:
+    parameters:
+      data_size:
+        parameterType: NUMBER_INTEGER
+      data_url:
+        parameterType: STRING
+  outputDefinitions:
+    artifacts:
+      daal4py-inference-metrics:
+        artifactType:
+          schemaTitle: system.Metrics
+          schemaVersion: 0.0.1
+      plot-roc-curve-class_metrics:
+        artifactType:
+          schemaTitle: system.ClassificationMetrics
+          schemaVersion: 0.0.1
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.9.0
