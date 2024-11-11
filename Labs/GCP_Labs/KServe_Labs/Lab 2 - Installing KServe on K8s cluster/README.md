@@ -1,4 +1,4 @@
-## Installing KServe on Google Cloud Platform (GCP)
+# Installing KServe on Google Cloud Platform (GCP)
 
 This guide will walk you through installing **KServe** on a **Kubernetes** cluster hosted on **Google Cloud Platform (GCP)**. We will cover setting up **Istio**, **Cert Manager**, and deploying **KServe** in **RawDeployment** mode.
 
@@ -6,6 +6,13 @@ This guide will walk you through installing **KServe** on a **Kubernetes** clust
 
 
 You can watch the tutorial video for this lab on our channel [video link](https://youtu.be/XqK58OQZy-8)
+
+## **What You Will Learn**
+
+1. **Setting Up Istio**: Learn how to install and configure Istio, a service mesh that provides traffic management, security, and observability for KServe.
+2. **Installing Cert Manager**: Understand how to install Cert Manager to automate the management of TLS certificates required for secure communication in Kubernetes.
+3. **Deploying KServe**: Install KServe in RawDeployment mode to manage machine learning models and serve inference requests.
+4. **Configuring Ingress and Deployment Modes**: Configure Istio as the ingress controller and set RawDeployment as the default deployment mode for KServe.
 
 ---
 

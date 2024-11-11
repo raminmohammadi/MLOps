@@ -5,6 +5,15 @@ Welcome to the ReadMe on deploying your first machine learning model using **KSe
 
 You can watch the tutorial video for this lab on our channel [video link](https://youtu.be/V8HtahnEQNU)
 
+## **What You Will Learn**
+
+1. **Understanding InferenceService YAML Configuration**: Learn how to configure KServe’s InferenceService to deploy your model.
+2. **Creating a Namespace**: Organize your resources within Kubernetes using namespaces.
+3. **Deploying the Model**: Deploy a Scikit-learn model using **`kubectl`**.
+4. **Verifying Deployment**: Ensure that your model is running successfully.
+5. **Exposing the Model Externally**: Use Istio to expose your model outside of Kubernetes.
+6. **Sending Test Inference Requests**: Send sample data to your deployed model for predictions
+
 ---
 
 ### **Understanding InferenceService YAML Configuration**
