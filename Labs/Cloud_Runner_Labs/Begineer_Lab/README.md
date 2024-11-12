@@ -1,100 +1,124 @@
 # Cloud Runner Basic Lab
 
-This guide will help you create a very basic lab using Cloud Runner and Google Cloud Platform (GCP) buckets. You can use this step-by-step guide to set up a simple lab environment and upload it as a README to your GitHub repository.
+Welcome to the beginners lab on Google Cloud Run! In this lab, you will learn to deploy a containerized application on Google Cloud Run, monitor its performance, and scale it based on traffic needs.
 
-## Prerequisites
+---
 
-- A Google Cloud account with necessary permissions.
-- Cloud SDK installed and set up on your local machine.
-- Basic understanding of command line usage.
-
-## Steps to Create a Basic Cloud Runner Lab
+## Step-by-Step Guide
 
 ### Step 1: Set Up Google Cloud Project
-1. **Create a new GCP project**:
+
+1. **Create a Google Cloud Project**:
    - Go to the [Google Cloud Console](https://console.cloud.google.com/).
-   - Click on the project dropdown in the top left and select "New Project."
-   - Give your project a name and click "Create."
-2. **Set the active project**:
-   - Open a terminal and set your active GCP project with the command:
-   ```bash
-   gcloud config set project <YOUR_PROJECT_ID>
-   ```
+   - Create a new project and give it a meaningful name (e.g., `cloud_runner_lab`).
 
-### Step 2: Create a Cloud Storage Bucket
-1. **Create a new bucket**:
-   - Use the Cloud Console or run the following command to create a bucket:
-   ```bash
-   gsutil mb gs://<YOUR_BUCKET_NAME>
-   ```
-   Replace `<YOUR_BUCKET_NAME>` with a unique name for your bucket.
-2. **Verify the bucket**:
-   - Run the command to list all buckets:
-   ```bash
-   gsutil ls
-   ```
-   - You should see your newly created bucket listed.
+2. **Enable Necessary APIs**:
+   - In the Console, navigate to `APIs & Services > Library`.
+   - Enable the **Cloud Run API** and the **Container Registry API**.
 
-### Step 3: Upload a File to the Bucket
-1. **Create a sample file**:
-   - Create a text file to upload:
-   ```bash
-   echo "Hello, Cloud Runner!" > sample.txt
-   ```
-2. **Upload the file to the bucket**:
-   - Use the `gsutil cp` command to upload:
-   ```bash
-   gsutil cp sample.txt gs://<YOUR_BUCKET_NAME>/
-   ```
-3. **Verify the upload**:
-   - List the files in your bucket:
-   ```bash
-   gsutil ls gs://<YOUR_BUCKET_NAME>/
-   ```
+---
 
-### Step 4: Set Up Cloud Runner
-1. **Install Cloud Runner**:
-   - If not already installed, follow the [Cloud Runner installation guide](https://example.com/cloud-runner-install) to install it on your machine.
-2. **Authenticate Cloud Runner**:
-   - Authenticate Cloud Runner to access your GCP resources:
-   ```bash
-   cloud-runner auth login --project <YOUR_PROJECT_ID>
-   ```
+### Step 2: Create and Containerize the Application
 
-### Step 5: Execute a Cloud Runner Job
-1. **Create a Cloud Runner script**:
-   - Create a file called `runner_script.sh` with the following content:
-   ```bash
-   #!/bin/bash
-   echo "Running a basic Cloud Runner job"
-   gsutil ls gs://<YOUR_BUCKET_NAME>/
-   ```
-2. **Run the job with Cloud Runner**:
-   - Execute the script using Cloud Runner:
-   ```bash
-   cloud-runner run ./runner_script.sh
-   ```
-   - You should see the output of the files in your bucket.
+1. **Create a Simple Flask Application**:
+   - Write a basic Flask application in Python to use as your project.
+   - Example `app.py`:
+     ```python
+     from flask import Flask
 
-### Step 6: Clean Up
-1. **Delete the file from the bucket**:
-   - To avoid incurring charges, delete the uploaded file:
-   ```bash
-   gsutil rm gs://<YOUR_BUCKET_NAME>/sample.txt
-   ```
-2. **Delete the bucket**:
-   - If you no longer need the bucket, delete it:
-   ```bash
-   gsutil rb gs://<YOUR_BUCKET_NAME>
-   ```
+     app = Flask(__name__)
 
-## Summary
-In this lab, you created a GCP bucket, uploaded a file, and executed a basic job using Cloud Runner. This simple walkthrough helps you understand the basic functionality of Cloud Runner and GCP buckets.
+     @app.route('/')
+     def hello_world():
+         return "Hello, World!"
 
-Feel free to modify and extend this guide to include more advanced features.
+     if __name__ == "__main__":
+         app.run(host="0.0.0.0", port=8080)
+     ```
 
-## Next Steps
-- Explore more advanced Cloud Runner jobs.
-- Set up triggers to run jobs automatically based on events.
-- Experiment with more GCP services like Cloud Functions or BigQuery.
+2. **Create a Dockerfile**:
+   - In the same directory as your Flask app, create a Dockerfile to containerize the application.
+   - Example Dockerfile:
+     ```Dockerfile
+     FROM python:3.8-slim
 
+     WORKDIR /app
+     COPY . /app
+     RUN pip install flask
+
+     EXPOSE 8080
+     CMD ["python", "app.py"]
+     ```
+
+3. **Build the Docker Image**:
+   - Ensure Docker is running on your local machine.
+   - In the terminal, navigate to the app’s directory and build the Docker image:
+     ```bash
+     docker build -t gcr.io/YOUR_PROJECT_ID/hello-world .
+     ```
+
+---
+
+### Step 3: Push the Docker Image to Container Registry
+
+1. **Authenticate with Google Cloud**:
+   - Set up authentication with Google Cloud using the following command:
+     ```bash
+     gcloud auth configure-docker
+     ```
+
+2. **Push the Docker Image**:
+   - Tag and push your Docker image to the Container Registry:
+     ```bash
+     docker tag gcr.io/YOUR_PROJECT_ID/hello-world gcr.io/YOUR_PROJECT_ID/hello-world
+     docker push gcr.io/YOUR_PROJECT_ID/hello-world
+     ```
+
+---
+
+### Step 4: Deploy to Google Cloud Run
+
+1. **Navigate to Cloud Run in Google Console**:
+   - Go to the **Cloud Run** service in the Google Cloud Console.
+   - Click **Create Service**.
+
+2. **Configure the Deployment**:
+   - Select **Deploy a container image** and choose the image you pushed to the Container Registry.
+   - Set the **Region** (e.g., `us-central1`) and provide a **Service name**.
+   - For **Authentication**, select "Allow unauthenticated invocations" if you want the app to be publicly accessible.
+
+3. **Deploy the Application**:
+   - Click **Create** to deploy the service. This process may take a few minutes.
+   - Once deployed, Cloud Run will provide a URL for your application.
+
+---
+
+### Step 5: Access and Test the Application
+
+- **Access the URL** provided by Cloud Run to test your application.
+- You should see the message "Hello, World!" displayed if everything is working correctly.
+
+---
+
+### Step 6: Monitor and Scale the Service
+
+1. **Monitor Metrics**:
+   - Use the Cloud Run Console to monitor various metrics such as request count, response latency, and memory usage.
+   - These metrics help you understand traffic and performance patterns.
+
+2. **Auto-Scaling**:
+   - Cloud Run automatically scales your service based on incoming traffic.
+   - You can configure the minimum and maximum number of instances if needed to control scaling.
+
+---
+
+## Conclusion
+
+Congratulations on completing the Cloud Runner Basic Lab! In this lab, you:
+
+- Set up a Google Cloud project and enabled necessary APIs.
+- Created and containerized a Flask application.
+- Deployed it to Google Cloud Run and accessed it via a public URL.
+- Monitored and scaled the service based on demand.
+
+This lab provided a foundational understanding of Google Cloud Run and how to deploy containerized applications in a serverless environment. Enjoy exploring more with Google Cloud!
