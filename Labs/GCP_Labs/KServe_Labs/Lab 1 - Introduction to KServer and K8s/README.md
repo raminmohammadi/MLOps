@@ -1,5 +1,19 @@
 # **Introduction to KServe and Kubernetes**
 
+## **By the end of this guide, you will have:**
+A fully functional Kubernetes cluster running on GCP.
+Installed and configured gcloud CLI and kubectl to interact with your cluster.
+The foundational knowledge needed to deploy machine learning models using KServe in future labs.
+
+## **What You Will Learn**
+
+1. **Setting Up a GCP Kubernetes Cluster**:
+    - You will learn how to create a managed Kubernetes cluster using Google Kubernetes Engine (GKE) via both the Google Cloud Console and the **`gcloud`** command-line tool.
+2. **Installing gcloud CLI and kubectl**:
+    - You will install the **`gcloud`** CLI for managing GCP resources and **`kubectl`** for interacting with your Kubernetes cluster.
+3. **Preparing for KServe Deployment**:
+    - This guide lays the groundwork for deploying KServe on your Kubernetes cluster in future steps.
+
 ## **Setting Up a GCP Kubernetes Cluster**
 
 Setting up a Kubernetes cluster on **Google Cloud Platform (GCP)** using **Google Kubernetes Engine (GKE)** is straightforward. GKE allows you to quickly create a managed Kubernetes cluster that you can use to deploy your applications (in this case, KServe).
