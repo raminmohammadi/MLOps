@@ -11,6 +11,7 @@ __pycache__/
 transform_*/
 pipeline/
 istio-1.23.2/
+test_env/
 google-cloud-sdk/
 # C extensions
 *.so
