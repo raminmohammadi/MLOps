@@ -55,6 +55,18 @@ Nodes usually work together in groups. A **Kubernetes cluster** contains a set o
 - Each pod contains one or more containers. A container hosts the application code and all the dependencies the app requires to run properly.
 
 
+## Related Tools
+
+| **Tool**       | **Usage**                                                      | **Key Details**                                                                                                                                     |
+|----------------|----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Kubectl**    | Command-line tool to interact with Kubernetes clusters         | - Core tool for managing Kubernetes.<br>- Used to deploy, inspect, update, and delete resources.<br>- Executes commands like `apply`, `get`, `logs`, `exec`, etc. |
+| **Kubens**     | CLI tool for switching between Kubernetes namespaces           | - Streamlines navigation in multi-namespace environments.<br>- Quickly switches namespaces without needing to set context manually via `kubectl`.  |
+| **Helm**       | Kubernetes package manager for deploying and managing apps     | - Manages complex applications using "charts" (templated YAML files).<br>- Simplifies upgrades, rollbacks, and app dependency management.           |
+| **Terraform**  | Infrastructure as Code (IaC) tool for Kubernetes provisioning  | - Used to create and manage Kubernetes clusters or resources declaratively.<br>- Manages infrastructure dependencies beyond Kubernetes (e.g., cloud VMs, networks). |
+| **KServe**     | Framework for serving machine learning models on Kubernetes    | - Simplifies deployment of ML models as scalable, serverless services.<br>- Supports multi-framework models (e.g., TensorFlow, PyTorch, XGBoost).<br>- Works with custom inference servers. |
+
+
+
 ### Kubectl
 **Kubectl** is a command line tool for Kubernetes. It allows you to run commands against Kubernetes clusters to deploy applications, inspect and manage cluster resources, and view logs.
 
@@ -82,4 +94,3 @@ A **LoadBalancer** Service is a type of Service that distributes network traffic
 
 ### Label and Selector
 **Labels** are key/value pairs attached to objects, such as pods. **Selectors** are how you specify which pods a service or deployment should target. Labels and selectors are integral for managing components across a Kubernetes environment.
-
