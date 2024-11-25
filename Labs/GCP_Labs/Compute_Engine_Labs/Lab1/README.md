@@ -136,17 +136,19 @@ ssh -i path/to/private/key username@instance_external_ip
 
 ### **Step 8: Run the Code and Note Metrics:**
 
+create a VM machine
+
+```bash
+python3 -m venv env
+source env/bin/activate
+sudo chown $USER:$USER mlops-disk/Lab1/env
+```
+
 Install the requirements from requirements.txt file and run airbnb_random_forest_regressor.py
 
 
 ```bash
-python3 /mlops-disk/compute_engine_lab1/airbnb_random_forest_regressor.py
-```
-
-** In case of permisssion error for installing pips, run **
-
-```bash
-sudo chown -R $USER:$USER /mlops-disk/Lab1/env
+python3 /mlops-disk/lab1/airbnb_random_forest_regressor.py
 ```
 
 

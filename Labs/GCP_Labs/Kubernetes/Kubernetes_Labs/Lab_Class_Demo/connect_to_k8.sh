@@ -1,0 +1,1 @@
+gcloud container clusters get-credentials mlops-kubernetes --region us-east1 --project kubernetes-labs-mlops

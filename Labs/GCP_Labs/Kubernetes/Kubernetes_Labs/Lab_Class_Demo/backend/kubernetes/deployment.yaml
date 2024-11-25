@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: backend-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+          - name: backend-app-container
+            image: heyitsrj/networking-backend-app:v2
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+            resources:
+              requests:
+                memory: "70Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "70m"

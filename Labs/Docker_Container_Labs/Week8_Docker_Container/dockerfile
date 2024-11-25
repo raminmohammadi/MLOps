@@ -8,7 +8,7 @@ COPY src/model_training.py /app/
 
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Run the model training script
 RUN python model_training.py
