@@ -50,7 +50,7 @@
         async function getSum() {
             const number1 = document.getElementById('number1').value;
             const number2 = document.getElementById('number2').value;
-            const response = await fetch(`http://35.227.105.219/add?a=${number1}&b=${number2}`);
+            const response = await fetch(`http://34.23.176.196/add?a=${number1}&b=${number2}`);
             const data = await response.json();
             document.getElementById('result').innerText = 'Sum: ' + data.sum;
         }
