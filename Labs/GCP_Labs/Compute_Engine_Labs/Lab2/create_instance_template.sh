@@ -1,0 +1,16 @@
+gcloud beta compute instance-templates create imdb-sentiment-analysis-template \
+--project=cloud-compute-labs \
+--machine-type=e2-micro \
+--network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=imdb-sentiment-analysis-vpc-subnet \
+--instance-template-region=us-central1 \
+--metadata=startup-script=\#\!/bin/bash$'\n'$'\n'\#\ Navigate\ to\ the\ project\ directory$'\n'cd\ /home/imdb-sentiment-analysis/MLOps/Labs/GCP_Labs/Compute_Engine_Labs/Lab2$'\n'$'\n'\#\ Activate\ the\ virtual\ environment$'\n'.\ env/bin/activate$'\n'$'\n'\#\ Start\ the\ FastAPI\ service$'\n'nohup\ python3\ imdb_sentiment_analysis_service.py\ \& \
+--maintenance-policy=MIGRATE \
+--provisioning-model=STANDARD \
+--service-account=108010409596-compute@developer.gserviceaccount.com \
+--scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/trace.append \
+--region=us-central1 \
+--create-disk=auto-delete=yes,boot=yes,device-name=instance-template-20241120-202449,image=projects/cloud-compute-labs/global/images/imdb-sentiment-analysis-image,mode=rw,size=10,type=pd-balanced \
+--no-shielded-secure-boot \
+--shielded-vtpm \
+--shielded-integrity-monitoring \
+--reservation-affinity=any

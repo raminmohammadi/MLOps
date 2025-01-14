@@ -1,0 +1,3 @@
+gcloud beta compute networks create imdb-sentiment-analysis-vpc --project=cloud-compute-labs --subnet-mode=custom --mtu=1460 --bgp-routing-mode=regional --bgp-best-path-selection-mode=legacy
+
+gcloud beta compute networks subnets create imdb-sentiment-analysis-vpc-subnet --project=cloud-compute-labs --range=10.0.0.0/24 --stack-type=IPV4_ONLY --network=imdb-sentiment-analysis-vpc --region=us-central1
