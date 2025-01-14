@@ -39,9 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # - name: Run tests
-      #   run: pytest Labs/Github_Labs/Lab4/tests/test_train_and_save_model.py
-      
       - name: Run tests
         run: pytest tests/
         
@@ -64,7 +61,7 @@ jobs:
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
       - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=${{ github.workspace }}/Labs/Github_Labs/Lab4/src" >> $GITHUB_ENV
+        run: echo "PYTHONPATH=${{ github.workspace }}/Labs/Github_Labs/Lab4/" >> $GITHUB_ENV
 
       - name: Train and save model
         env:
