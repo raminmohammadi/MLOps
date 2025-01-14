@@ -40,7 +40,7 @@ jobs:
           pip install -r Labs/Github_Labs/Lab4/requirements.txt
 
       - name: Run tests
-        run: pytest Labs/Github_Labs/Lab4/tests/
+        run: pytest Labs/Github_Labs/Lab4/test/
         
       - name: Tests passed message
         if: success()
