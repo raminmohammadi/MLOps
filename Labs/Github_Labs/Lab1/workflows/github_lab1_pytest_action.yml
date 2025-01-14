@@ -1,8 +1,20 @@
 name: Testing with Pytest
+run-nam: Pytest
 on:
   push:
     branches:
       - main
+      - 'releases/**' # Filters to run only when a push to a branch that matches the branches filter occurs
+    branches-ignore:
+     - dev
+
+  label:
+    types:
+      - created
+  issues:
+    types:
+      - opened
+      - labeled
 
 jobs:
   build:

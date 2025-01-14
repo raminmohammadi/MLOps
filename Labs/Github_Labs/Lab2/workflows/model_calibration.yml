@@ -2,7 +2,7 @@ name: Periodic Model Calibration
 
 on: 
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: '0 0 * * *'  #minutes, hours, day, month, day of week 
 
 jobs:
   retrain:

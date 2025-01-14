@@ -33,7 +33,7 @@ jobs:
 
     - name: Set File Permissions
       run: |
-        chmod +x ./src/train_model.py
+        chmod +x ./src/train_model.py #making it executable
 
     - name: Retrain Model
       run: |
