@@ -60,15 +60,12 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
-      # - name: Set PYTHONPATH
-      #   run: echo "PYTHONPATH=${{ github.workspace }}/Labs/Github_Labs/Lab4/" >> $GITHUB_ENV
-
       - name: Train and save model
         env:
           GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
           VERSION_FILE_NAME: ${{ secrets.VERSION_FILE_NAME }}
         run: |
-          python train_and_save_model.py > output.txt
+          python src/train_and_save_model.py > output.txt
           echo "MODEL_VERSION=$(grep 'MODEL_VERSION_OUTPUT:' output.txt | cut -d' ' -f2)" >> $GITHUB_ENV
 
       - name: Build and Push Docker image
