@@ -63,6 +63,9 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${{ github.workspace }}/Labs/Github_Labs/Lab4/src" >> $GITHUB_ENV
+
       - name: Train and save model
         env:
           GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
