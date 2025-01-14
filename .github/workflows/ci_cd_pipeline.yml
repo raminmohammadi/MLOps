@@ -31,14 +31,20 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
 
+      - name: Add project directory to PYTHONPATH
+        run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r Labs/Github_Labs/Lab4/requirements.txt
+          pip install -r requirements.txt
 
-      - name: Run tests
-        run: pytest Labs/Github_Labs/Lab4/tests/test_train_and_save_model.py
+      # - name: Run tests
+      #   run: pytest Labs/Github_Labs/Lab4/tests/test_train_and_save_model.py
       
+      - name: Run tests
+        run: pytest tests/
+
       - name: Tests passed message
         if: success()
         run: echo "All tests passed, proceeding to deployment."
