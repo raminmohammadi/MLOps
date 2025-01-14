@@ -4,10 +4,10 @@ import pytest
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from unittest.mock import patch, MagicMock
-from src.train_and_save_model import download_data, preprocess_data, train_model
-from src.train_and_save_model import get_model_version, update_model_version
-from src.train_and_save_model import ensure_folder_exists, save_model_to_gcs
-from src.train_and_save_model import storage
+from train_and_save_model import download_data, preprocess_data, train_model
+from train_and_save_model import get_model_version, update_model_version
+from train_and_save_model import ensure_folder_exists, save_model_to_gcs
+from train_and_save_model import storage
 
 # ----------------- Test Download ----------------- #
 # Test the download_data function to ensure it correctly downloads and returns data
