@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r Labs/Github_Labs/Lab4/requirements.txt
+          pip install -r requirements.txt
 
       - name: Run tests
         run: pytest test/
