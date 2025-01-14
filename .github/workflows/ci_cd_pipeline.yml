@@ -16,9 +16,9 @@ env:
 jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: Labs/Github_Labs/Lab4/
+    defaults:
+      run:
+        working-directory: Labs/Github_Labs/Lab4/
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
           pip install -r Labs/Github_Labs/Lab4/requirements.txt
 
       - name: Run tests
-        run: pytest Labs/Github_Labs/Lab4/test/
+        run: pytest test/
         
       - name: Tests passed message
         if: success()
