@@ -1,0 +1,83 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main]
+  pull_request: 
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight
+  workflow_dispatch: 
+
+env:
+  REGION: us
+  REPOSITORY_NAME: github-gcp-lab
+
+jobs:
+  build_test_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest
+      
+      - name: Tests passed message
+        if: success()
+        run: echo "All tests passed, proceeding to deployment."
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY2 }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Set GCP project ID
+        run: gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Train and save model
+        env:
+          GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
+          VERSION_FILE_NAME: ${{ secrets.VERSION_FILE_NAME }}
+        run: |
+          python train_and_save_model.py > output.txt
+          echo "MODEL_VERSION=$(grep 'MODEL_VERSION_OUTPUT:' output.txt | cut -d' ' -f2)" >> $GITHUB_ENV
+
+      - name: Build and Push Docker image
+        env:
+          IMAGE_NAME: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/model-image
+        run: |
+          docker build -t ${IMAGE_NAME}:${{ env.MODEL_VERSION }} .
+          docker push ${IMAGE_NAME}:${{ env.MODEL_VERSION }}
+          docker tag ${IMAGE_NAME}:${{ env.MODEL_VERSION }} ${IMAGE_NAME}:latest
+          docker push ${IMAGE_NAME}:latest
+
+      - name: Deployment success message
+        if: success()
+        run: echo "Model trained, Docker image built and pushed successfully."
+
+      - name: Deployment failed notification
+        if: failure()
+        run: echo "Deployment failed. Check the logs for details."
