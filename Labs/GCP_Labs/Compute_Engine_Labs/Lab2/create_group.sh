@@ -1,9 +1,9 @@
 gcloud beta compute instance-groups managed create imdb-mig \
     --project=cloud-compute-labs \
     --base-instance-name=imdb-mig \
-    --template=projects/cloud-compute-labs/regions/us-central1/instanceTemplates/imdb-sentiment-analysis-template \
+    --template=projects/cloud-compute-labs/regions/#regions/instanceTemplates/#name-of-template \
     --size=1 \
-    --zone=us-central1-c \
+    --zone=#zone_name \
     --default-action-on-vm-failure=repair \
     --no-force-update-on-repair \
     --standby-policy-mode=manual \

@@ -1,5 +1,5 @@
-gcloud compute images create imdb-sentiment-analysis-image \
-    --project=cloud-compute-labs \
-    --source-disk=imdb-sentiment-analysis-vm-restored \
-    --source-disk-zone=us-central1-a \
+gcloud compute images create #name-of-the-image \
+    --project=#project_id \
+    --source-disk=#name-of-vm \
+    --source-disk-zone=#zone-name \
     --storage-location=us

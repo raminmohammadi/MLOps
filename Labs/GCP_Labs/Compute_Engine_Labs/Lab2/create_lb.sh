@@ -1,3 +1,5 @@
+# Need to get this from your own gcp - follow the video for steps
+
 POST https://compute.googleapis.com/compute/beta/projects/cloud-compute-441619/global/healthChecks
 {
   "checkIntervalSec": 5,
