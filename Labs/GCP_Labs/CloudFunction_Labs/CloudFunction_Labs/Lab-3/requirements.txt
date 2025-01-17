@@ -1,0 +1,5 @@
+functions-framework==3.*
+google-cloud-container==2.20.0
+google-cloud-functions==1.13.1
+protobuf==4.23.4
+pytest
