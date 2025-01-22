@@ -38,8 +38,11 @@ def train_model(X_train, y_train):
 # Function to retrieve the current model version from Google Cloud Storage
 def get_model_version(bucket_name, version_file_name):
     storage_client = storage.Client()  # Create a GCP Storage client
+
     bucket = storage_client.bucket(bucket_name)  # Access the specified bucket
-    blob = bucket.blob(version_file_name)  # Access the specified blob (file) within the bucket
+
+    blob = bucket.blob(version_file_name)  # Access the specified blob (binary large objects) within the bucket
+    
     if blob.exists():
         version_as_string = blob.download_as_text()  # Retrieve the version number as text
         version = int(version_as_string)  # Convert the version number to an integer

@@ -51,6 +51,7 @@ def test_train_model():
     assert hasattr(model, 'predict')                  # Ensure the model has a predict method
 
 # ----------------- Test Model versioning ----------------- #
+# mock test a practice exam designed to mimic the format and difficulty level of a real exam
 # This function tests the get_model_version function responsible for retrieving the version of the model stored in Google Cloud Storage.
 def test_get_model_version():
     # Patch the GCP storage client to prevent actual network operations during the test.
@@ -164,30 +165,40 @@ def test_ensure_folder_exists():
         mock_blob.upload_from_string.assert_not_called()
 
 # ----------------- Test Save model to GCS ----------------- #
-# Test save_model_to_gcs function to ensure it saves the model to Google Cloud Storage correctly
+# This function tests the 'save_model_to_gcs' function to ensure it correctly saves a model to Google Cloud Storage.
 def test_save_model_to_gcs():
-    # Create a mock model for testing
+    # Create a mock RandomForestClassifier model for testing purposes. This represents the model that you want to save.
     model = RandomForestClassifier()
     
-    # Set up a patch context manager for storage.Client to mock GCS interactions
+    # 'patch' is used to temporarily replace the 'google.cloud.storage.Client' class with a mock, so that no real network operations are performed.
     with patch('google.cloud.storage.Client') as mock_storage_client:
+        # Create a mock bucket object. This mock simulates the bucket where the model will be stored in GCS.
         mock_bucket = MagicMock()
+        # Create a mock blob object. This simulates the file or object within the GCS bucket.
         mock_blob = MagicMock()
         
-        # Define mock bucket and blob objects using a chain of return values
+        # Set up the return values for when the storage client, bucket, and blob are called.
+        # This ensures that when the save_model_to_gcs function tries to interact with GCS, it uses these mock objects instead.
         mock_storage_client.return_value.bucket.return_value = mock_bucket
         mock_bucket.blob.return_value = mock_blob
         
-        # Set the exists value on mock blob to return False
+        # Configure the mock blob to simulate a scenario where the blob does not already exist in the GCS bucket.
         mock_blob.exists.return_value = False
         
-        # Call save_model_to_gcs with mock objects and check method calls
+        # Call the function 'save_model_to_gcs' with the mock model and specific bucket and blob names.
+        # This is the function you are testing, which should perform the actual saving of the model.
         save_model_to_gcs(model, 'bucket-test', 'blob-test')
         
+        # Ensure the storage client was initialized exactly once.
         mock_storage_client.assert_called_once()
+        # Check that the bucket was fetched exactly once with the specified name.
         mock_storage_client.return_value.bucket.assert_called_once_with('bucket-test')
         
+        # Assert that the blob method was called exactly twice (once for checking existence, once for uploading).
+        # This line checks that the blob method is called with the correct parameters at least once.
         assert mock_bucket.blob.call_count == 2
+        # These calls ensure that both blob invocations were with the expected names.
         mock_bucket.blob.assert_any_call('trained_models/')
         mock_bucket.blob.assert_any_call('blob-test')
+        # Verify that the blob's 'upload_from_filename' method was called once with the filename 'model.joblib' to upload the model.
         mock_blob.upload_from_filename.assert_called_once_with('model.joblib')
