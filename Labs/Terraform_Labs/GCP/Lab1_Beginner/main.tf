@@ -9,19 +9,15 @@ resource "google_compute_instance" "vm_instance" {
     machine_type = "f1-micro"
     zone         = "us-central1-a"
 
-    metadata = {
-        startup-script = "#!/bin/bash\necho Hello, Terraform! > /tmp/terraform.log"
-    }
-
-    tags = [ "terraform-vm-tag" ]
-
     labels = {
-        environment = "dev"
+        environment = "development"
+        owner = "team-terraform"
     }
 
     boot_disk {
         initialize_params {
             image = "debian-cloud/debian-11"
+            size = 12
         }
     }
 

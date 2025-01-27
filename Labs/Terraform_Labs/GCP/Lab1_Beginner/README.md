@@ -105,27 +105,27 @@ Learn the fundamentals of Terraform by creating, managing, and destroying a simp
 
 You can modify any resource in the configuration file and apply the changes using the `terraform apply` command.
 
-1. **Modify the VM instance**: Add metadata to the VM instance.
+1. **Modify the VM instance**: Add labels to the VM instance and change the machine type.
     ```hcl
     resource "google_compute_instance" "vm_instance" {
         name         = "terraform-vm"
-        machine_type = "f1-micro"
-        zone         = "us-central1-a"
+        machine_type = "e2-micro" # Change the machine type
+        zone         = "us-central1-a
 
-        metadata = {
-            startup-script = "#!/bin/bash\necho Hello, Terraform! > /tmp/terraform.log"
+        labels = {
+            environment = "development"
+            owner = "team-terraform"
         }
 
         boot_disk {
             initialize_params {
                 image = "debian-cloud/debian-11"
+                size = 12 # Increase the size of the boot disk
             }
         }
 
         network_interface {
             network = "default"
-            access_config {
-            }
         }
     }
     ```
@@ -135,7 +135,7 @@ You can modify any resource in the configuration file and apply the changes usin
     terraform apply
     ```
 
-3. **View the changes in the GCP Console**: Check the **Compute Engine** section and confirm that the metadata was added.
+3. **View the changes in the GCP Console**: Check the **Compute Engine** section and confirm the machine type, labels and boot disk size.
 
 ## Part 4: Adding More Resources
 
