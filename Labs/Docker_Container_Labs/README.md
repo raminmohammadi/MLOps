@@ -9,14 +9,13 @@ Docker is a platform for developing, shipping, and running applications in a con
 
 ## Key Concepts
 
-<img src="/images/MLOps/docker-containers.webp" width="500" height="500" alt="altexsoft"><p>
-<p align='center'> Figure 2. AltexSoft</p>
+![microsoft](docker-containers.webp)
+
 
 ### Containers
 - **Containers** are lightweight, standalone, and executable packages that include everything needed to run a piece of software, including the code, runtime, system tools, libraries, and settings. Containers are isolated from each other and the host system, ensuring consistent behavior.
 
-<img src="/images/MLOps/Docker_image.webp" width="500" height="500" alt="cto.ai"><p>
-<p align='center'> Figure 3. CTO.ai</p>
+![microsoft](Docker_image.webp)
 
 ### Images
 - **Images** are read-only templates that define the file system and configuration of a container. You can create images from a Dockerfile, which is a script that specifies all the necessary instructions to build an image.
@@ -24,8 +23,8 @@ Docker is a platform for developing, shipping, and running applications in a con
 ### Dockerfile
 - A **Dockerfile** is a text file that contains instructions for building a Docker image. It includes commands for installing software, copying files, setting environment variables, and configuring the container.
 
-<img src="/images/MLOps/docker_registry.webp" width="500" height="500" alt="blogs.sap"><p>
-<p align='center'> Figure 4. blogs.sap</p>
+![microsoft](docker_registry.webp)
+
 
 ### Registry
 - A **Docker Registry** is a central repository for storing and sharing Docker images. Docker Hub is a popular public registry, but you can also set up private registries for your organization's images.
@@ -47,8 +46,8 @@ Docker is a platform for developing, shipping, and running applications in a con
 
 - **Security:** Containers provide a level of isolation, and Docker offers security features such as namespaces, control groups, and user namespaces to enhance security.
 
-<img src="/images/MLOps/Docker_for_ML.webp" width="500" height="500" alt="medium"><p>
-<p align='center'> Figure 5. Medium</p>
+![microsoft](Docker_for_ML.webp)
+
 
 ## Getting Started
 
