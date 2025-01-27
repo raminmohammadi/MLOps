@@ -1,8 +1,7 @@
 # Toturial Video
 you can watch the toturial vidoe on my channel [Video](https://youtu.be/stdbAFjHAQY?si=vgOsFnBz_lMUF1X-)
 
-<img src="/images/MLOps/taxonomy-of-docker-terms-and-concepts.webp" width="500" height="500" alt="microsoft"><p>
-<p align='center'> Figure 1. Microsoft</p>
+<img src="/images/MLOps/taxonomy-of-docker-terms-and-concepts.webp" width="500" height="500" alt="microsoft">
 
 # Docker
 
