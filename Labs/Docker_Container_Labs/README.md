@@ -1,7 +1,7 @@
 # Toturial Video
 you can watch the toturial vidoe on my channel [Video](https://youtu.be/stdbAFjHAQY?si=vgOsFnBz_lMUF1X-)
 
-![microsoft](/images/MLOps/taxonomy-of-docker-terms-and-concepts.webp)
+![microsoft](taxonomy-of-docker-terms-and-concepts.webp)
 
 # Docker
 
