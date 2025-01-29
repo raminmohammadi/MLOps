@@ -72,4 +72,4 @@ start_flask_API
 
 # If this script is run directly, allow command-line interaction with the DAG
 if __name__ == "__main__":
-    start_flask_API.cli()
+    start_flask_API.cli() #Automatic Startup

@@ -1,55 +1,58 @@
 version: '3.6'
+
 services:
+  # Elasticsearch service configuration
   Elasticsearch:
-    image: elasticsearch:7.16.2
+    image: elasticsearch:7.16.2  # Elasticsearch image version
     container_name: elasticsearch
-    restart: always
+    restart: always  # Ensures the container restarts automatically on failure
     volumes:
-      - elastic_data:/usr/share/elasticsearch/data/
-      - ./logstash/:/logstash_dir
+      - elastic_data:/usr/share/elasticsearch/data/  # Persistent data volume
+      - ./logstash/:/logstash_dir  # Volume for Logstash configurations
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node    
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"  # Java options for Elasticsearch
+      discovery.type: single-node  # Configuration for a single-node cluster
     ports:
-      - '9200:9200'
-      - '9300:9300'
+      - '9200:9200'  # Port for Elasticsearch HTTP interface
+      - '9300:9300'  # Port for Elasticsearch TCP transport
     networks:
-      - elk
+      - elk  # Connects to the 'elk' network
 
+  # Logstash service configuration
   Logstash:
-    image: logstash:7.16.2
+    image: logstash:7.16.2  # Logstash image version
     container_name: logstash
-    restart: always
+    restart: always  # Ensures the container restarts automatically on failure
     volumes:
-      - ./logstash/:/logstash_dir
-    command: logstash -f /logstash_dir/logstash.conf 
+      - ./logstash/:/logstash_dir  # Mounts the Logstash configuration directory
+    command: logstash -f /logstash_dir/logstash.conf  # Command to start Logstash
     depends_on:
-      - Elasticsearch
+      - Elasticsearch  # Depends on Elasticsearch service to be started first
     ports:
-      - '9600:9600'
+      - '9600:9600'  # Port for Logstash HTTP interface
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"    
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"  # Java options for Logstash
     networks:
-      - elk
+      - elk  # Connects to the 'elk' network
 
+  # Kibana service configuration
   Kibana:
-    image: kibana:7.16.2
+    image: kibana:7.16.2  # Kibana image version
     container_name: kibana
-    restart: always       
+    restart: always  # Ensures the container restarts automatically on failure
     ports:
-      - '5601:5601'
+      - '5601:5601'  # Port for Kibana web interface
     environment:
-    - ELASTICSEARCH_URL=http://elasticsearch:9200
-    - xpack.security.enabled=false  # Only if you're not using security features
-    - xpack.encryptedSavedObjects.encryptionKey=TnX1pCE7fwYV3jSBDcg7nd/L821GTk/w/aVde8Q4lnY=
-    
+      - ELASTICSEARCH_URL=http://elasticsearch:9200  # URL for connecting to Elasticsearch
+      - xpack.security.enabled=false  # Disables security features
+      - xpack.encryptedSavedObjects.encryptionKey=TnX1pCE7fwYV3jSBDcg7nd/L821GTk/w/aVde8Q4lnY=  # Key for encrypted saved objects
     depends_on:
-      - Elasticsearch  
+      - Elasticsearch  # Depends on Elasticsearch service to be started first
     networks:
-      - elk
+      - elk  # Connects to the 'elk' network
 
 volumes:
-  elastic_data: {}
+  elastic_data:  # Defines a volume for Elasticsearch data
 
 networks:
-  elk:
+  elk:  # Defines the 'elk' network used by all services

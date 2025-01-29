@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import tensorflow as tf
 import numpy as np
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='statics')
 
 # URL of your Flask API for making predictions
 api_url = 'http://0.0.0.0:4000/predict'  # Update with the actual URL

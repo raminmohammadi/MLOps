@@ -17,6 +17,7 @@ default_args = {
     'retries': 0  # Number of retry attempts
 }
 
+
 # Create DAG instance
 dag = DAG(
     'Airflow_Lab2',
@@ -25,10 +26,10 @@ dag = DAG(
     schedule_interval='*/1 * * * *',  # Every minute
     catchup=False,  # Disable catchup
     tags=['example'],
-    owner_links={"Ramin Mohammadi": "https://github.com/raminmohammadi/MLOps/"}
+    owner_links={"Ramin Mohammadi": "https://github.com/raminmohammadi/MLOps/"} # Automatic setting for the DAG - Not functional 
 )
 
-# Task definitions
+# Task definitions - Manual Setting as a function
 owner_task = BashOperator(
     task_id="task_using_linked_owner",
     bash_command="echo 1",

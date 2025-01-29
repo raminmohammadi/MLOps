@@ -1,3 +1,3 @@
 docker build -t dockerfile:v1 .
 
-docker run 
+docker run dockerfile:v1

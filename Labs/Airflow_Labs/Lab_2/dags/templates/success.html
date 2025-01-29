@@ -3,23 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success</title>
+    <title>Operation Status</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .success-message {
-            font-size: 48px;
-            color: green;
-            text-shadow: 2px 2px 4px #aaa;
-            margin-top: 50px;
+        .status-container {
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 40px;
+            background: #ffffff;
+        }
+        .status-header {
+            font-size: 32px;
+            color: #4CAF50;
+        }
+        .status-message {
+            font-size: 20px;
+            color: #555;
+            margin-top: 20px;
+        }
+        .status-details {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <div class="success-message">
-        Success!
+    <div class="status-container">
+        <div class="status-header">
+            Success!
+        </div>
+        <div class="status-message">
+            The model's run/training was successful.
+        </div>
+        <div class="status-details">
+            Date: <span id="date"></span><br>
+            Time: <span id="time"></span>
+        </div>
     </div>
+    <script>
+        const dateElement = document.getElementById('date');
+        const timeElement = document.getElementById('time');
+
+        function updateDateTime() {
+            const now = new Date();
+            dateElement.textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            timeElement.textContent = now.toLocaleTimeString('en-US');
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000); // Update time every second
+    </script>
 </body>
 </html>

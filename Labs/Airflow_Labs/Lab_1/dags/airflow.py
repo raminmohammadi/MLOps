@@ -12,7 +12,7 @@ conf.set('core', 'enable_xcom_pickling', 'True')
 # Define default arguments for your DAG
 default_args = {
     'owner': 'your_name',
-    'start_date': datetime(2023, 9, 17),
+    'start_date': datetime(2025, 1, 15),
     'retries': 0, # Number of retries in case of task failure
     'retry_delay': timedelta(minutes=5), # Delay before retries
 }

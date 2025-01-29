@@ -1,28 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Iris Classifier</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #5c67f2;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: calc(100% - 22px);
+            display: block;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .predicted-class {
+            color: #31708e;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .flower-image {
+            margin-top: 20px;
+            display: block;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Iris Classifier API!</h1>
-    <form method="POST">
+    <h1>Welcome to the Iris Classifier API - MLOps Class of 2025!</h1>
+    <form id="predictionForm">
         <label for="sepal_length">Sepal Length:</label>
-        <input type="number" name="sepal_length" step="0.01" required><br>
+        <input type="number" id="sepal_length" step="0.01" required><br>
 
         <label for="sepal_width">Sepal Width:</label>
-        <input type="number" name="sepal_width" step="0.01" required><br>
+        <input type="number" id="sepal_width" step="0.01" required><br>
 
         <label for="petal_length">Petal Length:</label>
-        <input type="number" name="petal_length" step="0.01" required><br>
+        <input type="number" id="petal_length" step="0.01" required><br>
 
         <label for="petal_width">Petal Width:</label>
-        <input type="number" name="petal_width" step="0.01" required><br>
+        <input type="number" id="petal_width" step="0.01" required><br>
 
         <input type="submit" value="Predict">
     </form>
 
-    {% if predicted_class %}
-    <h2>Predicted Class: {{ predicted_class }}</h2>
-    {% endif %}
+    <div class="predicted-class" style="display:none;">
+        <h2 id="predictedClass">Predicted Class:</h2>
+        <img src="" id="flowerImage" class="flower-image" alt="Iris Flower"
+             data-setosa="{{ url_for('static', filename='setosa.jpeg') }}"
+             data-versicolor="{{ url_for('static', filename='versicolor.jpeg') }}"
+             data-virginica="{{ url_for('static', filename='virginica.jpeg') }}" />
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#predictionForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var formData = {
+                    'sepal_length': $('#sepal_length').val(),
+                    'sepal_width': $('#sepal_width').val(),
+                    'petal_length': $('#petal_length').val(),
+                    'petal_width': $('#petal_width').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                }).done(function(data) {
+                    console.log(data);
+                    $('#predictedClass').text("Predicted Class: " + data.predicted_class);
+                    var imageUrl = '';
+                    switch (data.predicted_class) {
+                        case 'Setosa':
+                            imageUrl = $('#flowerImage').data('setosa');
+                            break;
+                        case 'Versicolor':
+                            imageUrl = $('#flowerImage').data('versicolor');
+                            break;
+                        case 'Virginica':
+                            imageUrl = $('#flowerImage').data('virginica');
+                            break;
+                    }
+                    $('#flowerImage').attr('src', imageUrl);
+                    $('.predicted-class').show();
+                }).fail(function(data) {
+                    alert('Error: Could not reach the prediction server.');
+                    console.log(data);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
