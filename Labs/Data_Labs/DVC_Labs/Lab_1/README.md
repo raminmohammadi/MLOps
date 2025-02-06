@@ -31,6 +31,8 @@
     ['remote "lab2"']
         url = gs://ie7374
 	```
+
+	dvc remote modify --git-action-gcp credentialpath git-action-gcp git-action-gcp-3e47dbac54ff.json 
 	2. Next, use `dvc add data/CC_GENERAL.csv` to instruct DVC to start tracking this specific dataset.
 	3. To ensure version control, add the generated `.dvc` file to your Git repository with `git add data/CC_GENERAL_csv.dvc`.
 	4. Also, include the `.gitignore` file located in the "data" folder in your Git repository by running `git add data/.gitignore`.
