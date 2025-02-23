@@ -50,6 +50,26 @@ services:
       - Elasticsearch  # Depends on Elasticsearch service to be started first
     networks:
       - elk  # Connects to the 'elk' network
+  
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.16.2
+    container_name: metricbeat
+    restart: always
+    user: root
+    depends_on:
+      - Elasticsearch
+    volumes:
+      - ./metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      ELASTIC_HOSTS: "elasticsearch:9200"
+      LOGSTASH_HOSTS: "logstash:9600"
+      KIBANA_HOSTS: "kibana:5601"
+      BEAT_STRICT_PERMS: "false"          # <--- Add this line
+    command: ["metricbeat", "-e"]
+    networks:
+      - elk
+
 
 volumes:
   elastic_data:  # Defines a volume for Elasticsearch data

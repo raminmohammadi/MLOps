@@ -6,26 +6,19 @@ metricbeat.modules:
 - module: elasticsearch
   xpack.enabled: true
   period: 10s
-  hosts: ${ELASTIC_HOSTS}
-  ssl.certificate_authorities: "certs/ca/ca.crt"
-  ssl.certificate: "certs/es01/es01.crt"
-  ssl.key: "certs/es01/es01.key"
-  username: ${ELASTIC_USER}
-  password: ${ELASTIC_PASSWORD}
-  ssl.enabled: true
+  hosts: ["${ELASTIC_HOSTS}"]   # We'll pass env var via docker-compose
+  # Remove all ssl.* keys if you don’t have TLS
 
 - module: logstash
   xpack.enabled: true
   period: 10s
-  hosts: ${LOGSTASH_HOSTS}
+  hosts: ["${LOGSTASH_HOSTS}"]
 
 - module: kibana
-  metricsets: 
+  metricsets:
     - stats
   period: 10s
-  hosts: ${KIBANA_HOSTS}
-  username: ${ELASTIC_USER}
-  password: ${ELASTIC_PASSWORD}
+  hosts: ["${KIBANA_HOSTS}"]
   xpack.enabled: true
 
 - module: docker
@@ -35,7 +28,6 @@ metricbeat.modules:
     - "diskio"
     - "healthcheck"
     - "info"
-    #- "image"
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
@@ -47,11 +39,5 @@ processors:
   - add_docker_metadata: ~
 
 output.elasticsearch:
-  hosts: ${ELASTIC_HOSTS}
-  username: ${ELASTIC_USER}
-  password: ${ELASTIC_PASSWORD}
-  ssl:
-    certificate: "certs/es01/es01.crt"
-    certificate_authorities: "certs/ca/ca.crt"
-    key: "certs/es01/es01.key"
-
+  # Point Metricbeat output to Elasticsearch (no SSL)
+  hosts: ["${ELASTIC_HOSTS}"]
