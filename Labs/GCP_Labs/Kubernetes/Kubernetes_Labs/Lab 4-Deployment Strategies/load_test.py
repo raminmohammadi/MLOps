@@ -31,7 +31,7 @@ class WebsiteUser(HttpUser):
     """
     tasks = [UserBehavior]
     wait_time = between(1, 2)
-    host = "http://34.44.132.161"  # Set this to the correct URL where your FastAPI app is running
+    host = "http://34.27.39.118"  # Set this to the correct URL where your FastAPI app is running
 
 if __name__ == "__main__":
     import os

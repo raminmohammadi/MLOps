@@ -1,17 +1,19 @@
 # Use the official Nginx image from the Docker Hub
 FROM nginx:alpine
 
-# Copy custom configuration file if needed (not required for this simple example)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Remove the default Nginx HTML file
+# Remove the default Nginx HTML files
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy the HTML file to the Nginx server
+# Copy HTML files to the Nginx directory
 COPY index.html /usr/share/nginx/html
+COPY favicon.ico /usr/share/nginx/html
+
+# Copy the custom nginx.conf file to the nginx configuration directory
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx when the container has provisioned.
+# Start Nginx when the container has provisioned
 CMD ["nginx", "-g", "daemon off;"]
+

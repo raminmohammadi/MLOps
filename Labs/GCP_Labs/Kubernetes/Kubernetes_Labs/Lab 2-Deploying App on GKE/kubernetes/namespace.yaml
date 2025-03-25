@@ -1,3 +1,5 @@
+# This YAML file defines a Kubernetes Namespace resource.
+# A Namespace is a way to divide cluster resources between multiple users or teams.
 apiVersion: v1
 kind: Namespace
 metadata:

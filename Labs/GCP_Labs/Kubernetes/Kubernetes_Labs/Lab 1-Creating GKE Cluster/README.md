@@ -71,7 +71,7 @@ Once your cluster is up and running, you can manage it using either the Google C
 - `kubectl rollout status deployment <name>`: Rollout status of a deployment.
 
 ### Pods (po)
-- `kubectl get pod`: List pods.
+- `kubectl get pod`: List pods. (First change namespace)
 - `kubectl delete pod <name>`: Delete a pod.
 - `kubectl describe pod <name>`: Detailed pod state.
 - `kubectl exec <pod> -c <container> <command>`: Execute command in a pod's container.

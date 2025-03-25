@@ -48,12 +48,25 @@
     </div>
     <script>
         async function getSum() {
-            const number1 = document.getElementById('number1').value;
-            const number2 = document.getElementById('number2').value;
-            const response = await fetch(`http://34.23.176.196/add?a=${number1}&b=${number2}`);
-            const data = await response.json();
-            document.getElementById('result').innerText = 'Sum: ' + data.sum;
+    const number1 = document.getElementById('number1').value;
+    const number2 = document.getElementById('number2').value;
+
+    try {
+        const response = await fetch(`http://34.148.75.180/add?a=${number1}&b=${number2}`);
+        
+        if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
         }
+        
+        const data = await response.json();
+        console.log("Response received:", data);
+        document.getElementById('result').innerText = 'Sum: ' + data.sum;
+    } catch (error) {
+        console.error("Error occurred:", error);
+        document.getElementById('result').innerText = 'Error: ' + error.message;
+    }
+}
+
     </script>
 </body>
 </html>

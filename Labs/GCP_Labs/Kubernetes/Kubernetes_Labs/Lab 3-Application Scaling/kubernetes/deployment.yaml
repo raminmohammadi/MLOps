@@ -1,3 +1,28 @@
+# This YAML file defines a Kubernetes Deployment for the FastAPI application.
+
+# apiVersion: Specifies the API version used for the Deployment resource.
+# kind: Indicates that this resource is a Deployment.
+# metadata: Contains metadata about the Deployment, including:
+#   - namespace: The namespace where the Deployment will be created.
+#   - name: The name of the Deployment.
+
+# spec: Defines the desired state of the Deployment, including:
+#   - replicas: The number of pod replicas to maintain.
+#   - selector: Specifies how to identify the pods managed by this Deployment using matchLabels.
+#   - template: Describes the pod template used to create pods.
+
+# template.metadata: Contains metadata for the pods, including labels for identification.
+# template.spec: Defines the specification for the pod, including:
+#   - containers: A list of containers to run in the pod.
+
+# containers:
+#   - name: The name of the container.
+#   - image: The container image to use, including the version tag.
+#   - imagePullPolicy: Specifies when the image should be pulled (Always in this case).
+#   - ports: Lists the container ports to expose (8080 in this case).
+#   - resources: Specifies resource requests and limits for the container:
+#       - requests: Minimum resources required for the container to run.
+#       - limits: Maximum resources the container can use before being terminated.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,3 +51,15 @@ spec:
             limits: # If a pod resource utilization surpassed these numbers, gracefully eliminate it. 
               memory: "128Mi"
               cpu: "70m"
+
+
+# Memory request specifies the amount of RAM required by the container.
+# Here, '70Mi' means 70 Mebibytes (MiB) of memory.
+# 1 MiB = 1024 * 1024 bytes = 1,048,576 bytes.
+# 'memory': "70Mi",
+
+# CPU request specifies the amount of CPU required by the container.
+# Here, '50m' means 50 millicpu or 0.05 of a single CPU core.
+# Kubernetes measures CPU resources in millicpu, where:
+# 1 CPU core = 1000 millicpu.
+#'cpu': "50m"

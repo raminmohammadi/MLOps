@@ -1,3 +1,17 @@
+# This YAML file defines a Kubernetes Service resource.
+# 
+# apiVersion: Specifies the API version used for the Service resource. In this case, it is "v1".
+# kind: Indicates the type of Kubernetes resource, which is "Service".
+# metadata:
+#   namespace: Specifies the namespace in which the Service is created. Here, it is "mlops".
+#   name: Defines the name of the Service, which is "fast-api-service".
+# spec:
+#   selector: Matches the labels of the Pods that this Service targets. The label "app: fastapi-app" is used.
+#   ports:
+#     - name: A human-readable name for the port, here it is "http".
+#       port: The port number exposed by the Service, which is 80.
+#       targetPort: The port number on the target Pods to which traffic is forwarded, which is 8080.
+#   type: Specifies the type of Service. "LoadBalancer" is used to expose the Service externally via a cloud provider's load balancer.
 apiVersion: v1
 kind: Service
 metadata:

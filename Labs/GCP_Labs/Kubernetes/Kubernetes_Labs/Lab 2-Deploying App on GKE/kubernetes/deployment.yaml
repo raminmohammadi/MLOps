@@ -1,3 +1,25 @@
+# This YAML file defines a Kubernetes Deployment resource for deploying a FastAPI application.
+# 
+# kind: Deployment
+# - Specifies that this resource is a Deployment, which manages a set of replicated Pods.
+#
+# metadata:
+# - namespace: Specifies the namespace where the Deployment will be created (mlops in this case).
+# - name: The name of the Deployment (fastapi-app).
+#
+# spec:
+# - replicas: Defines the desired number of Pod replicas (2 in this case) to ensure high availability.
+# - selector: Specifies how to identify the Pods managed by this Deployment using matchLabels.
+#   - matchLabels: Matches Pods with the label "app: fastapi-app".
+# - template: Defines the Pod template used to create Pods.
+#   - metadata:
+#     - labels: Assigns the label "app: fastapi-app" to the Pods created by this Deployment.
+#   - spec:
+#     - containers: Defines the container(s) to run in each Pod.
+#       - name: The name of the container (fastapi-app-container).
+#       - image: The container image to use (heyitsrj/mlops-fastapi-app:v3).
+#       - imagePullPolicy: Ensures the image is always pulled from the registry (Always).
+#       - ports: Specifies the container port (8080) exposed by the application.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

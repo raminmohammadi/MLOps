@@ -1,9 +1,9 @@
 gcloud beta container \
---project "kubernetes-labs-mlops" clusters create "mlops-kubernetes" \
+--project "kubernetes-labs-mlops" clusters create "mlops-kubernetes-lab" \
 --region "us-east1" \
 --tier "standard" \
 --no-enable-basic-auth \
---cluster-version "1.30.5-gke.1443001" \
+--cluster-version "1.31.6-gke.1020000" \
 --release-channel "regular" --machine-type "e2-medium" \
 --image-type "COS_CONTAINERD" \
 --disk-type "pd-balanced" \

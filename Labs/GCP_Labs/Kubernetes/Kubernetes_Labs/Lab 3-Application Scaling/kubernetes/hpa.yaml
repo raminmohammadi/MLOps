@@ -1,3 +1,47 @@
+# This YAML file defines a HorizontalPodAutoscaler (HPA) for a Kubernetes deployment.
+# The HPA automatically adjusts the number of pod replicas for the specified deployment
+# based on observed CPU utilization metrics.
+
+# apiVersion: Specifies the API version for the HPA resource (autoscaling/v2).
+# kind: Defines the resource type as HorizontalPodAutoscaler.
+
+# metadata:
+#   name: The name of the HPA resource (fastapi-app-hpa).
+#   namespace: The namespace where the HPA is deployed (mlops).
+
+# spec:
+#   scaleTargetRef:
+#     apiVersion: The API version of the target resource (apps/v1).
+#     kind: The type of the target resource (Deployment).
+#     name: The name of the target deployment (fastapi-app).
+
+#   minReplicas: The minimum number of pod replicas to maintain (1).
+#   maxReplicas: The maximum number of pod replicas to scale up to (5).
+
+#   metrics:
+#     - type: The type of metric to monitor (Resource).
+#       resource:
+#         name: The resource to monitor (cpu).
+#         target:
+#           type: The type of target metric (Utilization).
+#           averageUtilization: The target average CPU utilization percentage (70).
+
+#   behavior:
+#     scaleDown:
+#       stabilizationWindowSeconds: The time window (in seconds) to wait before scaling down
+#         if the CPU utilization remains below the threshold (70%) for this duration (120 seconds).
+#       policies:
+#         - type: The type of scaling policy (Pods).
+#           value: The maximum number of pods to scale down at a time (1).
+#           periodSeconds: The time period (in seconds) for the scaling policy (60 seconds).
+
+#     scaleUp:
+#       stabilizationWindowSeconds: The time window (in seconds) to wait before scaling up
+#         if the CPU utilization exceeds the threshold (70%) for this duration (60 seconds).
+#       policies:
+#         - type: The type of scaling policy (Pods).
+#           value: The maximum number of pods to scale up at a time (2).
+#           periodSeconds: The time period (in seconds) for the scaling policy (60 seconds).
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

@@ -1,0 +1,30 @@
+# This NetworkPolicy resource defines ingress rules for the "backend-app" pods in the "mlops" namespace.
+# 
+# Key Details:
+# - The policy applies to pods with the label "app: backend-app".
+# - It allows ingress traffic only from pods with the label "app: frontend-app".
+# - The allowed traffic must be on TCP protocol and port 80.
+# - The policy ensures that only the specified frontend application can communicate with the backend application.
+# 
+# Usage:
+# - Use this policy to enforce secure communication between frontend and backend applications in your Kubernetes cluster.
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-access-policy
+  namespace: mlops
+spec:
+  podSelector:
+    matchLabels:
+      app: backend-app
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend-app
+      ports:
+        - protocol: TCP
+          port: 80

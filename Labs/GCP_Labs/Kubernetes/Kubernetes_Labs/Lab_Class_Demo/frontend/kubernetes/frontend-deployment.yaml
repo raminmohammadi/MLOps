@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
           - name: frontend-app-container
-            image: raminmohammadi87/networking-frontend-app:v2
+            image: raminmohammadi87/networking-frontend-app:v6
             imagePullPolicy: Always
             ports:
               - containerPort: 80
             resources:
               requests:
-                memory: "70Mi"
-                cpu: "50m"
+                memory: "40Mi"
+                cpu: "5m"
               limits:
-                memory: "128Mi"
-                cpu: "70m"
+                memory: "100Mi"
+                cpu: "20m"

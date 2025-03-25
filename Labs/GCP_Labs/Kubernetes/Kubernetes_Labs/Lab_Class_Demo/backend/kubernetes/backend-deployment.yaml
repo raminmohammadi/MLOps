@@ -1,0 +1,58 @@
+# This YAML file defines a Kubernetes Deployment resource for the backend application.
+#
+# apiVersion: Specifies the API version of the Deployment resource.
+# kind: Indicates that this is a Deployment resource.
+# metadata:
+#   namespace: The namespace in which the Deployment will be created (mlops).
+#   name: The name of the Deployment (backend-app).
+#
+# spec:
+#   replicas: Specifies the desired number of pod replicas (3).
+#   selector:
+#     matchLabels: Defines the label selector to identify the pods managed by this Deployment.
+#       app: Label key-value pair used to match pods (app: backend-app).
+#   template:
+#     metadata:
+#       labels: Labels assigned to the pods created by this Deployment (app: backend-app).
+#     spec:
+#       containers:
+#         - name: Name of the container (backend-app-container).
+#           image: Docker image to be used for the container (heyitsrj/networking-backend-app:v2).
+#           imagePullPolicy: Specifies when the image should be pulled (Always).
+#           ports:
+#             - containerPort: Port exposed by the container (8080).
+#           resources:
+#             requests:
+#               memory: Minimum amount of memory requested by the container ("70Mi").
+#               cpu: Minimum amount of CPU requested by the container ("50m").
+#             limits:
+#               memory: Maximum amount of memory the container can use ("128Mi").
+#               cpu: Maximum amount of CPU the container can use ("70m").
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mlops
+  name: backend-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+          - name: backend-app-container
+            image: raminmohammadi87/networking-backend-app:v6
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+            resources:
+              requests:
+                memory: "70Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "70m"
