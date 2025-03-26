@@ -52,7 +52,7 @@
     const number2 = document.getElementById('number2').value;
 
     try {
-        const response = await fetch(`http://34.148.75.180/add?a=${number1}&b=${number2}`);
+        const response = await fetch(`http://34.74.94.246/add?a=${number1}&b=${number2}`);
         
         if (!response.ok) {
             throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
