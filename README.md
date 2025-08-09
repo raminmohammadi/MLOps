@@ -1,6 +1,6 @@
 [![pages-build-deployment](https://github.com/raminmohammadi/MLOps/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/raminmohammadi/MLOps/actions/workflows/pages/pages-build-deployment)
 
-# IE 7305 - MLOps
+# DADS 7305 - MLOps
 
 ## Overview
 
