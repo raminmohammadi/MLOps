@@ -65,7 +65,7 @@ Your contributions will help improve the overall quality of the labs and benefit
 The reading materials of this repo was collected from Coursera under the Creative Commons License.
 
 ## License
-
+Please ask for permission for using this contents in your clasrrom.
 This repository is open-source and is distributed under the [Creative Commons License](LICENSE). Please review the license for more details on how you can use and share the content within this repository.
 
 ## 🌟 Star History
