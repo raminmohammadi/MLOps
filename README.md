@@ -65,8 +65,10 @@ Your contributions will help improve the overall quality of the labs and benefit
 The reading materials of this repo was collected from Coursera under the Creative Commons License.
 
 ## License
-Please ask for permission for using this contents in your clasrrom.
-This repository is open-source and is distributed under the [Creative Commons License](LICENSE). Please review the license for more details on how you can use and share the content within this repository.
+This repository is licensed under the MIT License. For more details, please refer to the LICENSE file.
+
+**NEU-Specific Restriction:**  
+While the MIT License applies generally, the use, reproduction, or distribution of this content for the same or similar courses **within Northeastern University (NEU)** is **strictly prohibited** without prior written permission.
 
 ## 🌟 Star History
 
