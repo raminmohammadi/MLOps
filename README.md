@@ -29,12 +29,21 @@ The MLOps course at Northeastern University is designed to provide students with
 - Implement CI/CD/CM/CT (Continuous Integration/Continuous Deployment/Continuous Monitoring/Continuous Training) for ML
 - Containerize and orchestrate ML workloads
 - Handle data drift and model retraining
+- **Apply LLMOps practices to large language models (LLMs), including evaluation, alignment, monitoring, deployment, and lifecycle management**
 
 This repository hosts the labs, code samples, and documentation related to these topics.
 
 ## Labs Content
 
-This repository offers a series of hands-on labs designed to enhance your understanding of MLOps concepts. Each lab focuses on a specific aspect of the machine learning lifecycle, providing practical experience with tools and methodologies essential for deploying and managing machine learning models in production environments.
+This repository offers a series of hands-on labs designed to enhance your understanding of MLOps and LLMOps concepts. Each lab focuses on a specific aspect of the machine learning lifecycle, providing practical experience with tools and methodologies essential for deploying and managing both traditional ML models and modern LLMs in production environments.  
+
+Students will gain hands-on experience with:
+
+- Containerization, orchestration, and CI/CD pipelines  
+- ML model monitoring, retraining, and handling data drift  
+- **LLMOps labs for evaluation, monitoring, alignment, and responsible AI practices**  
+- Deployment strategies for large language models at scale  
+
 Each lab is accompanied by detailed instructions and code examples to facilitate hands-on learning. It's recommended to follow the labs sequentially, as concepts build upon each other. For additional resources and support, refer to the [Reading Materials](./Labs/Reading%20Materials) section of this repository.
 
 ## Getting Started
