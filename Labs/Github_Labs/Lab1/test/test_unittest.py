@@ -1,17 +1,18 @@
 # test_unittest.py
-import unittest
-import sys
-import os
-
-# Add src/ to Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
 from area_calculator import (
     square_area, square_perimeter,
     rectangle_area, rectangle_perimeter,
     triangle_area, triangle_perimeter,
     parallelogram_area, parallelogram_perimeter
 )
+import unittest
+import sys
+import os
+
+# Add src/ to Python path
+sys.path.append(os.path.abspath(os.path.join(
+    os.path.dirname(__file__), "..", "src")))
+
 
 class TestShapes(unittest.TestCase):
 
@@ -51,6 +52,7 @@ class TestShapes(unittest.TestCase):
     def test_parallelogram_float(self):
         self.assertAlmostEqual(parallelogram_area(2.5, 3.0), 7.5)
         self.assertAlmostEqual(parallelogram_perimeter(2.5, 3.0), 11.0)
+
 
 if __name__ == "__main__":
     unittest.main()
