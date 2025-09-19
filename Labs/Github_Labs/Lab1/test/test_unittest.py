@@ -1,42 +1,56 @@
+# test_unittest.py
+import unittest
 import sys
 import os
-import unittest
 
-# Get the path to the project's root directory
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.append(project_root)
+# Add src/ to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
-from src import calculator
+from area_calculator import (
+    square_area, square_perimeter,
+    rectangle_area, rectangle_perimeter,
+    triangle_area, triangle_perimeter,
+    parallelogram_area, parallelogram_perimeter
+)
 
+class TestShapes(unittest.TestCase):
 
-class TestCalculator(unittest.TestCase):
+    # Square
+    def test_square_basic(self):
+        self.assertAlmostEqual(square_area(4), 16)
+        self.assertAlmostEqual(square_perimeter(4), 16)
 
-    def test_fun1(self):
-        self.assertEqual(calculator.fun1(2, 3), 5)
-        self.assertEqual(calculator.fun1(5, 0), 5)
-        
-        self.assertEqual(calculator.fun1(-1, 1), 0)
-        self.assertEqual(calculator.fun1(-1, -1), -2)
+    def test_square_edge(self):
+        self.assertAlmostEqual(square_area(0), 0)
+        self.assertAlmostEqual(square_perimeter(0), 0)
+        self.assertAlmostEqual(square_area(2.5), 6.25)
 
-    def test_fun2(self):
-        self.assertEqual(calculator.fun2(2, 3), -1)
-        self.assertEqual(calculator.fun2(5, 0), 5)
-        self.assertEqual(calculator.fun2(-1, 1), -2)
-        self.assertEqual(calculator.fun2(-1, -1), 0)
+    # Rectangle
+    def test_rectangle_basic(self):
+        self.assertAlmostEqual(rectangle_area(5, 3), 15)
+        self.assertAlmostEqual(rectangle_perimeter(5, 3), 16)
 
-    def test_fun3(self):
-        self.assertEqual(calculator.fun3(2, 3), 6)
-        self.assertEqual(calculator.fun3(5, 0), 0)
-        self.assertEqual(calculator.fun3(-1, 1), -1)
-        self.assertEqual(calculator.fun3(-1, -1), 1)
+    def test_rectangle_float(self):
+        self.assertAlmostEqual(rectangle_area(2.5, 4.0), 10.0)
+        self.assertAlmostEqual(rectangle_perimeter(2.5, 4.0), 13.0)
 
-    def test_fun4(self):
-        self.assertEqual(calculator.fun4(2, 3, 5), 10)
-        self.assertEqual(calculator.fun4(5, 0, -1), 4)
-        self.assertEqual(calculator.fun4(-1, -1, -1), -3)
-        self.assertEqual(calculator.fun4(-1, -1, 100), 98)
+    # Triangle
+    def test_triangle_basic(self):
+        self.assertAlmostEqual(triangle_area(6, 4), 12.0)
+        self.assertAlmostEqual(triangle_perimeter(3, 4, 5), 12)
 
+    def test_triangle_degenerate(self):
+        self.assertAlmostEqual(triangle_area(0, 5), 0.0)
+        self.assertAlmostEqual(triangle_perimeter(0, 0, 0), 0)
 
+    # Parallelogram
+    def test_parallelogram_basic(self):
+        self.assertAlmostEqual(parallelogram_area(6, 4), 24)
+        self.assertAlmostEqual(parallelogram_perimeter(6, 4), 20)
 
-if __name__ == '__main__':
+    def test_parallelogram_float(self):
+        self.assertAlmostEqual(parallelogram_area(2.5, 3.0), 7.5)
+        self.assertAlmostEqual(parallelogram_perimeter(2.5, 3.0), 11.0)
+
+if __name__ == "__main__":
     unittest.main()
