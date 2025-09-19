@@ -18,7 +18,7 @@ To create a virtual environment, follow these steps:
     ```
 3. Activate the virtual environment
     ```
-    lab01\Scripts\activate
+    lab_01_Sushmitha\Scripts\activate
     ```
 After activation, you will see the virtual environment's name in your command prompt or terminal, indicating that you are working within the virtual environment.
 
