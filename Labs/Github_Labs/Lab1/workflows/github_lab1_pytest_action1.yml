@@ -1,0 +1,57 @@
+name: Testing with Pytest
+run-name: Pytest
+
+on:
+  push:
+    branches:
+      - main
+      - "releases/**"
+    branches-ignore:
+      - dev
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pytest_action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        working-directory: Lab1
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pytest
+          fi
+
+      - name: Run pytest and generate XML report
+        working-directory: Lab1
+        run: pytest -q --junitxml=pytest-report.xml
+        continue-on-error: false
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: Lab1/pytest-report.xml
+
+      - name: Notify on success
+        if: success()
+        run: echo "✅ Pytest passed successfully"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "❌ Pytest failed"
