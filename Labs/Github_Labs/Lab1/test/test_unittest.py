@@ -1,5 +1,5 @@
 # test_unittest.py
-from area_calculator import (
+from src.area_calculator import (
     square_area, square_perimeter,
     rectangle_area, rectangle_perimeter,
     triangle_area, triangle_perimeter,
@@ -10,8 +10,8 @@ import sys
 import os
 
 # Add src/ to Python path
-sys.path.append(os.path.abspath(os.path.join(
-    os.path.dirname(__file__), "..", "src")))
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "src")))
 
 
 class TestShapes(unittest.TestCase):
