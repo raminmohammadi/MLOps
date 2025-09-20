@@ -8,6 +8,6 @@ def predict_data(X):
     Returns:
         y_pred (numpy.ndarray): Predicted class labels.
     """
-    model = joblib.load("../model/iris_model.pkl")
+    model = joblib.load("../model/penguin_model.pkl")
     y_pred = model.predict(X)
     return y_pred
