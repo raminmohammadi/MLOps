@@ -1,35 +1,45 @@
 from fastapi import FastAPI, status, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from predict import predict_data
 
+app = FastAPI(title="Diabetes Prediction API")
 
-app = FastAPI()
+class DiabetesData(BaseModel):
+    Pregnancies: int 
+    Glucose: float  
+    BloodPressure: float 
+    SkinThickness: float 
+    Insulin: float  
+    BMI: float 
+    DiabetesPedigreeFunction: float 
+    Age: int 
+    
 
-class IrisData(BaseModel):
-    petal_length: float
-    sepal_length: float
-    petal_width: float
-    sepal_width: float
-
-class IrisResponse(BaseModel):
-    response:int
+class PredictionResponse(BaseModel):
+    response: int
 
 @app.get("/", status_code=status.HTTP_200_OK)
 async def health_ping():
     return {"status": "healthy"}
 
-@app.post("/predict", response_model=IrisResponse)
-async def predict_iris(iris_features: IrisData):
+@app.post("/predict", response_model=PredictionResponse)
+async def predict_diabetes(data: DiabetesData):
     try:
-        features = [[iris_features.sepal_length, iris_features.sepal_width,
-                    iris_features.petal_length, iris_features.petal_width]]
-
+        features = [
+            data.Pregnancies,
+            data.Glucose,
+            data.BloodPressure,
+            data.SkinThickness,
+            data.Insulin,
+            data.BMI,
+            data.DiabetesPedigreeFunction,
+            data.Age
+        ]
         prediction = predict_data(features)
-        return IrisResponse(response=int(prediction[0]))
-    
+        return PredictionResponse(response=int(prediction[0]))
+    except FileNotFoundError as e:
+        # Model not trained yet
+        raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
 
-
-    
