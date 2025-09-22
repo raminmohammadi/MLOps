@@ -62,7 +62,8 @@ Note:
    
 You can also test out the results of your endpoints by interacting with them. Click on the dropdown button of your endpoint -> Try it out -> Fill the Request body -> Click on Execute button.
 
-![API response](assets/api_response.png)
+![API response](assets/get_response.png)
+![API response](assets/predict.png)
 
 - You can also use other tools like [Postman](https://www.postman.com/) for API testing.
 
@@ -87,31 +88,35 @@ You can also test out the results of your endpoints by interacting with them. Cl
 
 ### Data Models in FastAPI
 
-##### 1. IrisData class
+##### 1. DiabetesData class
 
 ```python
-class IrisData(BaseModel):
-    petal_length: float
-    sepal_length:float
-    petal_width:float
-    sepal_width:float
+class DiabetesData(BaseModel):
+    Pregnancies: int 
+    Glucose: float  
+    BloodPressure: float 
+    SkinThickness: float 
+    Insulin: float  
+    BMI: float 
+    DiabetesPedigreeFunction: float 
+    Age: int
 ```
 
-The **IrisData** class is a [Pydantic model](https://docs.pydantic.dev/latest/concepts/models/) which defines the expected structure of the data for a request body. When you use it as a type annotation for a route operation parameter, FastAPI will perform the following actions:
+The **DiabetesInput** class is a [Pydantic model](https://docs.pydantic.dev/latest/concepts/models/) which defines the expected structure of the data for a request body. When you use it as a type annotation for a route operation parameter, FastAPI will perform the following actions:
 - **Request Body Reading:** FastAPI will read the request body as JSON.
 - **Data Conversion:** It will convert the corresponding types, if necessary.
 - **Data Validation:** It will validate the data. If the data is invalid, it will return a 422 Unprocessable Entity error response with details about what was incorrect.
 
-#### 2. IrisResponse class
+#### 2. PredictionResponse class
 
 ```python
-class IrisResponse(BaseModel):
-    response:int
+lass PredictionResponse(BaseModel):
+    response: int
 ```
 
-The **IrisResponse** class is another Pydantic model that defines the structure of the response data for an endpoint. When you specify **response_model=IrisResponse** in a route operation, it tells FastAPI to:
+The **PredictionResponse** class is another Pydantic model that defines the structure of the response data for an endpoint. When you specify **response_model=PredictionResponse** in a route operation, it tells FastAPI to:
 - **Serialize the Output**: Convert the output data to JSON format according to the IrisResponse model.
-- **Document the API**: Include the IrisResponse model in the generated API documentation, so API consumers know what to expect in the response.
+- **Document the API**: Include the PredictionResponse model in the generated API documentation, so API consumers know what to expect in the response.
 
 ---
 
@@ -119,7 +124,7 @@ The **IrisResponse** class is another Pydantic model that defines the structure 
 
 1. **Request Body Reading**: When a client sends a request to a FastAPI endpoint, the request can include a body with data. For routes that expect data (commonly POST, PUT, or PATCH requests), this data is often in JSON format. FastAPI automatically reads the request body by checking the Content-Type header, which should be set to application/json for JSON payloads.
 2. **Data Conversion**: Once the request body is read, FastAPI utilizes Pydantic models to parse the JSON data. Pydantic attempts to construct an instance of the specified model using the data from the request body. During this instantiation, Pydantic converts the JSON data into the proper Python data types as declared in the model.
-    - For instance, if the JSON object has a field like petal_length with a value of "5.1" (a string), and the model expects a float, Pydantic will transform the string into a float. If conversion isn't possible (say, the value was "five point one"), Pydantic will raise a validation error.
+    - For instance, if the JSON object has a field like Glucose with a value of "120.0" (a string), and the model expects a float, Pydantic will transform the string into a float. If conversion isn't possible , Pydantic will raise a validation error.
 3. **Data Validation**: Pydantic checks that all required fields are present and that the values are of the correct type, adhering to any constraints defined in the model (such as string length or number range). If the validation passes, the endpoint has a verified Python object to work with. If validation fails (due to missing fields, incorrect types, or constraint violations), FastAPI responds with a 422 Unprocessable Entity status. This response includes a JSON body detailing the validation errors, aiding clients in correcting their request data.
 4. **Error Handling**: Error handling in FastAPI can be effectively managed using the HTTPException class. HTTPException is used to explicitly signal an HTTP error status code and return additional details about the error. When an HTTPException is raised within a route, FastAPI will catch the exception and use its content to form the HTTP response.
 - **Instantiation**: The HTTPException class is instantiated with at least two arguments: status_code and detail. The status_code argument is an integer that represents the HTTP status code (e.g., 404 for Not Found, 400 for Bad Request). The detail argument is a string or any JSON-encodable object that describes the error.
