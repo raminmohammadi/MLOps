@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture   # NEW
 from kneed import KneeLocator
 import pickle
 import os
@@ -21,7 +22,6 @@ def load_data():
     
 
 def data_preprocessing(data):
-
     """
     Deserializes data, performs data preprocessing, and returns serialized clustered data.
 
@@ -70,7 +70,8 @@ def build_save_model(data, filename):
         pickle.dump(kmeans, f)
     return sse
 
-def load_model_elbow(filename,sse):
+
+def load_model_elbow(filename, sse):
     """
     Loads a saved KMeans clustering model and determines the number of clusters using the elbow method.
 
@@ -94,8 +95,66 @@ def load_model_elbow(filename,sse):
 
     # Optimal clusters
     print(f"Optimal no. of clusters: {kl.elbow}")
-
     # Make predictions on the test data
     predictions = loaded_model.predict(df)
-    
+
+    df["cluster"] = predictions
+    save_path = "/opt/airflow/working_data/predictions_kmeans.csv"
+    df.to_csv(save_path, index=False)
+
+    print(f"Optimal clusters: {kl.elbow}")
+    print(f"Predictions saved to {save_path}")
+
     return predictions[0]
+
+
+# ---------------- NEW GMM FUNCTIONS ---------------- #
+
+def build_save_gmm(data, filename):
+    """
+    Builds a Gaussian Mixture Model (GMM), saves it to a file, and returns the BIC score.
+
+    Args:
+        data (bytes): Serialized data for clustering.
+        filename (str): File name to save the GMM model.
+
+    Returns:
+        float: BIC score of the fitted GMM.
+    """
+    df = pickle.loads(data)
+    gmm = GaussianMixture(n_components=5, random_state=42)
+    gmm.fit(df)
+
+    output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model")
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, filename)
+
+    with open(output_path, 'wb') as f:
+        pickle.dump(gmm, f)
+
+    return gmm.bic(df)
+
+
+def load_model_gmm(filename):
+    """
+    Loads a saved GMM model, predicts clusters, and saves results to CSV.
+
+    Args:
+        filename (str): File name of the saved GMM model.
+
+    Returns:
+        str: Path where predictions are saved.
+    """
+    output_path = os.path.join(os.path.dirname(__file__), "../model", filename)
+    loaded_gmm = pickle.load(open(output_path, 'rb'))
+
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/test.csv"))
+    predictions = loaded_gmm.predict(df)
+
+    df["cluster_gmm"] = predictions
+    save_path = "/opt/airflow/working_data/predictions_gmm.csv"
+    df.to_csv(save_path, index=False)
+
+    print(f"GMM predictions saved to {save_path}")
+
+    return save_path
