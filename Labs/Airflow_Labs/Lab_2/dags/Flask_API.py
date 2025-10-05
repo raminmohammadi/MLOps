@@ -1,75 +1,113 @@
-from airflow.models.dagrun import DagRun
-from airflow.utils.state import State
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from datetime import datetime, timedelta
-from flask import Flask, jsonify, redirect, render_template
+# File: Flask_API.py
+from __future__ import annotations
+
+import os
 import time
+import pendulum
+import requests
+from airflow import DAG
+from airflow.providers.standard.operators.python import PythonOperator
+from flask import Flask, redirect, render_template
 
+# ---------- Config (Airflow 3: use REST with Basic Auth via FAB API backend) ----------
+WEBSERVER = os.getenv("AIRFLOW_WEBSERVER", "http://airflow-apiserver:8080")
+AF_USER   = os.getenv("AIRFLOW_USERNAME", os.getenv("_AIRFLOW_WWW_USER_USERNAME", "airflow"))
+AF_PASS   = os.getenv("AIRFLOW_PASSWORD", os.getenv("_AIRFLOW_WWW_USER_PASSWORD", "airflow"))
+TARGET_DAG_ID = os.getenv("TARGET_DAG_ID", "Airflow_Lab2")
 
-# Default arguments for DAG
+# ---------- Default args ----------
 default_args = {
-    # 'owner': 'airflow',
-    'start_date': datetime.now(),
-    'retries': 0 # NUmber of attempts in case of failure
+    "start_date": pendulum.datetime(2024, 1, 1, tz="UTC"),
+    "retries": 0,
 }
 
+# ---------- Flask app ----------
+app = Flask(__name__, template_folder="templates")
 
-# Lets create a Flask API to show success or failure of the main dag
-app = Flask(__name__)
+def get_latest_run_info():
+    """
+    Query Airflow stable REST API (/api/v2) using Basic Auth.
+    Requires Airflow to be configured with:
+      AIRFLOW__FAB__AUTH_BACKENDS=airflow.providers.fab.auth_manager.api.auth.backend.basic_auth
+    """
+    url = f"{WEBSERVER}/api/v2/dags/{TARGET_DAG_ID}/dagRuns?order_by=-logical_date&limit=1"
+    try:
+        r = requests.get(url, auth=(AF_USER, AF_PASS), timeout=5)
+    except Exception as e:
+        return False, {"note": f"Exception calling Airflow API: {e}"}
 
-# Root route to return a simple message
-@app.route('/')
+    # If auth/backend is not set correctly you'll get 401 here.
+    if r.status_code != 200:
+        # Surface a short note (kept small to avoid template overflow)
+        snippet = r.text[:200].replace("\n", " ")
+        return False, {"note": f"API status {r.status_code}: {snippet}"}
+
+    runs = r.json().get("dag_runs", [])
+    if not runs:
+        return False, {"note": "No DagRuns found yet."}
+
+    run = runs[0]
+    state = run.get("state")
+    info = {
+        "state": state,
+        "run_id": run.get("dag_run_id"),
+        "logical_date": run.get("logical_date"),
+        "start_date": run.get("start_date"),
+        "end_date": run.get("end_date"),
+        "note": "",
+    }
+    return state == "success", info
+
+
+@app.route("/")
 def index():
-    if check_dag_status():
-        return redirect('/success')
-    else:
-        return redirect('/failure')
+    ok, _ = get_latest_run_info()
+    return redirect("/success" if ok else "/failure")
 
+@app.route("/success")
+def success():
+    ok, info = get_latest_run_info()
+    return render_template("success.html", **info)
 
-# Function to check the status of the last DAG run
-def check_dag_status():
-    dag_id = 'Airflow_Lab2'
-    dag_runs = DagRun.find(dag_id=dag_id, state=State.SUCCESS)
-    if dag_runs:
-        return True
-    else:
-        return False
-
-# Flask routes for success and failure
-@app.route('/success')
-def success():# -> Any:
-    return render_template('success.html')
-
-@app.route('/failure')
+@app.route("/failure")
 def failure():
-    return render_template('failure.html')
+    ok, info = get_latest_run_info()
+    return render_template("failure.html", **info)
 
+@app.route("/health")
+def health():
+    return "ok", 200
 
-# Function to start Flask app
 def start_flask_app():
-    # Start the Flask app directly here
-    app.run(host='0.0.0.0', port=5555)
+    """
+    Run Flask dev server in-process; task intentionally blocks to keep API alive.
+    Disable reloader to avoid forking inside Airflow worker.
+    """
+    print("Starting Flask on 0.0.0.0:5555 ...", flush=True)
+    app.run(host="0.0.0.0", port=5555, use_reloader=False)
+    # If app.run ever returns, keep the task alive:
+    while True:
+        time.sleep(60)
 
-# Create the DAG instance
-flask_api_dag = DAG('Airflow_Lab2_Flask',
-                    default_args=default_args,
-                    description='DAG to manage Flask API lifecycle',
-                    schedule_interval=None,
-                    catchup=False,
-                    tags=['Flask_Api'])
-
-# Start the Flask API server task
-start_flask_API = PythonOperator(
-    task_id='start_Flask_API',
-    python_callable=start_flask_app,
-    dag=flask_api_dag
+# ---------- DAG ----------
+flask_api_dag = DAG(
+    dag_id="Airflow_Lab2_Flask",
+    default_args=default_args,
+    description="DAG to manage Flask API lifecycle",
+    schedule=None,                 # trigger-only
+    catchup=False,
+    is_paused_upon_creation=False,
+    tags=["Flask_Api"],
+    max_active_runs=1,
 )
 
+start_flask_API = PythonOperator(
+    task_id="start_Flask_API",
+    python_callable=start_flask_app,
+    dag=flask_api_dag,
+)
 
-# Set task dependencies
 start_flask_API
 
-# If this script is run directly, allow command-line interaction with the DAG
 if __name__ == "__main__":
-    start_flask_API.cli() #Automatic Startup
+    start_flask_API.cli()

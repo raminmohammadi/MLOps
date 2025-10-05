@@ -4,98 +4,85 @@ from sklearn.cluster import KMeans
 from kneed import KneeLocator
 import pickle
 import os
-
+import base64
 
 def load_data():
     """
     Loads data from a CSV file, serializes it, and returns the serialized data.
-
     Returns:
-        bytes: Serialized data.
+        str: Base64-encoded serialized data (JSON-safe).
     """
-
+    print("We are here")
     df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/file.csv"))
-    serialized_data = pickle.dumps(df)
-    
-    return serialized_data
-    
+    serialized_data = pickle.dumps(df)                    # bytes
+    return base64.b64encode(serialized_data).decode("ascii")  # JSON-safe string
 
-def data_preprocessing(data):
-
+def data_preprocessing(data_b64: str):
     """
-    Deserializes data, performs data preprocessing, and returns serialized clustered data.
-
-    Args:
-        data (bytes): Serialized data to be deserialized and processed.
-
-    Returns:
-        bytes: Serialized clustered data.
+    Deserializes base64-encoded pickled data, performs preprocessing,
+    and returns base64-encoded pickled clustered data.
     """
-    df = pickle.loads(data)
+    # decode -> bytes -> DataFrame
+    data_bytes = base64.b64decode(data_b64)
+    df = pickle.loads(data_bytes)
+
     df = df.dropna()
     clustering_data = df[["BALANCE", "PURCHASES", "CREDIT_LIMIT"]]
+
     min_max_scaler = MinMaxScaler()
     clustering_data_minmax = min_max_scaler.fit_transform(clustering_data)
+
+    # bytes -> base64 string for XCom
     clustering_serialized_data = pickle.dumps(clustering_data_minmax)
-    return clustering_serialized_data
+    return base64.b64encode(clustering_serialized_data).decode("ascii")
 
 
-def build_save_model(data, filename):
+def build_save_model(data_b64: str, filename: str):
     """
-    Builds a KMeans clustering model, saves it to a file, and returns SSE values.
-
-    Args:
-        data (bytes): Serialized data for clustering.
-        filename (str): Name of the file to save the clustering model.
-
-    Returns:
-        list: List of SSE (Sum of Squared Errors) values for different numbers of clusters.
+    Builds a KMeans model on the preprocessed data and saves it.
+    Returns the SSE list (JSON-serializable).
     """
-    df = pickle.loads(data)
-    kmeans_kwargs = {"init": "random","n_init": 10,"max_iter": 300,"random_state": 42,}
+    # decode -> bytes -> numpy array
+    data_bytes = base64.b64decode(data_b64)
+    df = pickle.loads(data_bytes)
+
+    kmeans_kwargs = {"init": "random", "n_init": 10, "max_iter": 300, "random_state": 42}
     sse = []
     for k in range(1, 50):
         kmeans = KMeans(n_clusters=k, **kmeans_kwargs)
         kmeans.fit(df)
         sse.append(kmeans.inertia_)
-    
+
+    # NOTE: This saves the last-fitted model (k=49), matching your original intent.
     output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model")
-    # Create the model directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
-    
     output_path = os.path.join(output_dir, filename)
-
-    # Save the trained model to a file
-    with open(output_path, 'wb') as f:
+    with open(output_path, "wb") as f:
         pickle.dump(kmeans, f)
-    return sse
 
-def load_model_elbow(filename,sse):
+    return sse  # list is JSON-safe
+
+
+def load_model_elbow(filename: str, sse: list):
     """
-    Loads a saved KMeans clustering model and determines the number of clusters using the elbow method.
-
-    Args:
-        filename (str): Name of the file containing the saved clustering model.
-        sse (list): List of SSE values for different numbers of clusters.
-
-    Returns:
-        str: A string indicating the predicted cluster and the number of clusters based on the elbow method.
+    Loads the saved model and uses the elbow method to report k.
+    Returns the first prediction (as a plain int) for test.csv.
     """
-    
+    # load the saved (last-fitted) model
     output_path = os.path.join(os.path.dirname(__file__), "../model", filename)
-    # Load the saved model from a file
-    loaded_model = pickle.load(open(output_path, 'rb'))
+    loaded_model = pickle.load(open(output_path, "rb"))
 
-    df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/test.csv"))
-    
-    kl = KneeLocator(
-        range(1, 50), sse, curve="convex", direction="decreasing"
-    )
-
-    # Optimal clusters
+    # elbow for information/logging
+    kl = KneeLocator(range(1, 50), sse, curve="convex", direction="decreasing")
     print(f"Optimal no. of clusters: {kl.elbow}")
 
-    # Make predictions on the test data
-    predictions = loaded_model.predict(df)
-    
-    return predictions[0]
+    # predict on raw test data (matches your original code)
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/test.csv"))
+    pred = loaded_model.predict(df)[0]
+
+    # ensure JSON-safe return
+    try:
+        return int(pred)
+    except Exception:
+        # if not numeric, still return a JSON-friendly version
+        return pred.item() if hasattr(pred, "item") else pred
