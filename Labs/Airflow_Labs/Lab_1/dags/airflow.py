@@ -3,6 +3,7 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from src.lab import load_data, data_preprocessing, build_save_model,load_model_elbow
+from src.lab2 import  load_cali_data, cali_data_preprocessing, build_save_cali_model
 
 from airflow import configuration as conf
 
@@ -57,11 +58,45 @@ load_model_task = PythonOperator(
     dag=dag,
 )
 
+# Creating another DAG for Airflow 2
+dag2 = DAG(
+    'Airflow_Lab2',
+    default_args=default_args,
+    description='Dag example for Created Workflow in Lab 1 of Airflow series',
+    schedule_interval=None,  # Set the schedule interval or use None for manual triggering
+    catchup=False,
+)
+# Define PythonOperators for each function
+
+# Task to load data, calls the 'load_data' Python function
+load_data_task2 = PythonOperator(
+    task_id='load_cali_data',
+    python_callable=load_cali_data,
+    dag=dag2,
+)
+# Task to perform data preprocessing, depends on 'load_data_task2'
+data_preprocessing_task2 = PythonOperator(
+    task_id='cali_data_preprocessing',
+    python_callable= cali_data_preprocessing,
+    op_args=[load_data_task2.output],
+    dag=dag2,
+)
+# Task to build and save a model, depends on 'data_preprocessing_task'
+build_save_model_task2 = PythonOperator(
+    task_id='build_save_model_task',
+    python_callable=build_save_cali_model,
+    op_args=[6, data_preprocessing_task2.output, "model.sav"],
+    provide_context=True,
+    dag=dag2,
+)
 
 
 # Set task dependencies
 load_data_task >> data_preprocessing_task >> build_save_model_task >> load_model_task
 
+load_data_task2 >> data_preprocessing_task2 >> build_save_model_task2
+
 # If this script is run directly, allow command-line interaction with the DAG
 if __name__ == "__main__":
     dag.cli()
+    dag2.cli()

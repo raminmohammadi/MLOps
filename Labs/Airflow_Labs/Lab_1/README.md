@@ -336,3 +336,27 @@ app-airflow-webserver-1 | 127.0.0.1 - - [17/Feb/2023:09:34:29 +0000] "GET /healt
 #### Step 6: Pipeline Outputs
 
 - Once the DAG completes its execution, check any output or artifacts produced by your functions and tasks. 
+
+
+# Additional Lab Changes
+## DAG 2 — Airflow_Lab2
+
+**Purpose:** Implements a similar ML workflow using the **California Housing dataset**.  
+
+Defined in `src/lab2.py`.
+
+### Functions Used
+| Function | Description |
+|-----------|--------------|
+| `load_cali_data()` | Loads and serializes the California Housing dataset from `sklearn.datasets`. |
+| `cali_data_preprocessing()` | Deserializes the data, samples 4,000 rows, selects key features, and scales them using `MinMaxScaler`. |
+| `build_save_cali_model()` | Trains a **K-Means clustering** model with a specified number of clusters (e.g., 6) and saves it. |
+
+### Task Sequence
+| Task ID | Description |
+|----------|-------------|
+| `load_cali_data` | Loads and serializes California Housing dataset. |
+| `cali_data_preprocessing` | Preprocesses and scales the dataset. |
+| `build_save_model_task` | Builds and saves the clustering model. |
+
+---

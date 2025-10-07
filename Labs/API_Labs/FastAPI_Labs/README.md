@@ -148,3 +148,26 @@ FastAPI will catch this exception and return a response with a 404 status code a
 }
 ```
 - For more information on how to handle errors in FASTAPI refer to this [documentation](https://fastapi.tiangolo.com/tutorial/handling-errors/).
+
+
+## Overview of Changes Commited
+
+The pipeline uses the **Palmer Penguins dataset** (via Seaborn) and predicts a penguin’s **species** (`Adelie`, `Chinstrap`, or `Gentoo`) based on four numeric features.
+
+### 🔍 Features
+| Feature | Description |
+|----------|-------------|
+| `bill_length_mm` | Length of the penguin’s bill (mm) |
+| `bill_depth_mm` | Depth of the penguin’s bill (mm) |
+| `flipper_length_mm` | Length of the penguin’s flipper (mm) |
+| `body_mass_g` | Body mass of the penguin (g) |
+
+---
+
+## ⚙️ Workflow
+
+### 1️⃣ **Data Loading & Splitting** (`data.py`)
+- Loads the **Penguins dataset** from `seaborn`.
+- Drops missing values.
+- Selects the numeric features and the `species` target.
+- Splits data into **train/test sets** (70/30) using `train_test_split`.
