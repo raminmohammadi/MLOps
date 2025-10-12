@@ -58,7 +58,7 @@ jobs:
         run: gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Configure Docker
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+        run: gcloud auth configure-docker ${{ variables.REGION }}-docker.pkg.dev
 
       - name: Train and save model
         env:
@@ -70,11 +70,11 @@ jobs:
 
       - name: Build and Push Docker image
         env:
-          IMAGE_NAME: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/model-image
+          IMAGE_NAME: ${{ variables.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/model-image
         run: |
-          docker build -t ${IMAGE_NAME}:${{ env.MODEL_VERSION }} .
-          docker push ${IMAGE_NAME}:${{ env.MODEL_VERSION }}
-          docker tag ${IMAGE_NAME}:${{ env.MODEL_VERSION }} ${IMAGE_NAME}:latest
+          docker build -t ${IMAGE_NAME}:${{ variables.MODEL_VERSION }} .
+          docker push ${IMAGE_NAME}:${{ variables.MODEL_VERSION }}
+          docker tag ${IMAGE_NAME}:${{ variables.MODEL_VERSION }} ${IMAGE_NAME}:latest
           docker push ${IMAGE_NAME}:latest
 
       - name: Deployment success message
