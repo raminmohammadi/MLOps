@@ -3,14 +3,13 @@ FROM python:3.9 AS model_training
 
 WORKDIR /app
 
-# Copy the source code for model training
+# Copy training script and requirements
 COPY src/model_training.py /app/
-
-# Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
-RUN pip install -r requirements.txt
 
-# Run the model training script
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Train and save the model (.pkl files)
 RUN python model_training.py
 
 # Stage 2: Serve Predictions
@@ -18,27 +17,19 @@ FROM python:3.9 AS serving
 
 WORKDIR /app
 
-# Copy the trained model from the previous stage
-COPY --from=model_training /app/my_model.keras /app/
+# Copy trained model and scaler from previous stage
+COPY --from=model_training /app/my_model.pkl /app/
+COPY --from=model_training /app/scaler.pkl /app/
+COPY --from=model_training /app/knn_model.pkl /app/  
 
-# Copy the source code for serving predictions
+# Copy Flask app and related folders
 COPY src/main.py /app/
-
-# Expose port 80
-EXPOSE 80
-
-# Define environmental variables
-ENV NAME World
-
-# Install any needed packages specified in requirements.txt for the serving stage
-COPY requirements.txt /app/
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
-
-# Copy the templates directory
 COPY src/templates /app/templates
-
-# Copy the statics directory
 COPY src/statics /app/statics
+COPY requirements.txt /app/
 
-# Run the Flask application for serving predictions
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 4000
+
 CMD ["python", "main.py"]

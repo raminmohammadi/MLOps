@@ -1,6 +1,6 @@
 # MLOps Coursework Labs
 
-## Lab 1 – API with FastAPI
+## Lab 1 – (API Lab) API with FastAPI
 
 In this lab, I built a **FastAPI application** to serve ML predictions on the Iris dataset.
 
@@ -30,7 +30,7 @@ In this lab, I built a **FastAPI application** to serve ML predictions on the Ir
 
 ---
 
-## Lab 2 – Orchestration with Airflow
+## Lab 2 – (Airflow Lab) Orchestration with Airflow
 
 In this lab, I built an **Apache Airflow DAG** to orchestrate a machine learning workflow for clustering.
 
@@ -58,5 +58,47 @@ In this lab, I built an **Apache Airflow DAG** to orchestrate a machine learning
 Here is a snapshot of the Airflow DAG pipeline:
 
 ![Airflow DAG Graph](airflow_lab.png)
+
+---
+
+## Lab 3 – (Docker Lab) Flask Deployment and Model Enhancement
+
+In this lab, I extended the **Dockerized Flask application** from previous work to serve multiple models and improve observability.
+
+### Changes Implemented
+
+- **Added a `/health` endpoint**
+
+  - Simple `GET /health` route returning `{"status": "ok"}` for container health checks.
+  - Used to confirm the app is running successfully inside Docker.
+
+- **Introduced a new model (K-Nearest Neighbors)**
+
+  - `model_training.py` now trains and saves both:
+    - Logistic Regression (`my_model.pkl`)
+    - KNN Classifier (`knn_model.pkl`)
+  - Both models share a common `StandardScaler` to ensure consistent preprocessing.
+
+- **Added a new prediction endpoint**
+
+  - `GET` / `POST /predict` → serves predictions using the Logistic Regression model.
+  - `GET` / `POST /predict_knn` → serves predictions using the new KNN model.
+  - Both endpoints can return JSON responses or render an HTML input form.
+
+- **Updated Docker setup**
+
+  - Multi-stage Dockerfile:
+    - Stage 1 trains the models.
+    - Stage 2 serves predictions through Flask.
+  - Model artifacts (`.pkl` files and `scaler.pkl`) are copied from the training stage into the serving image.
+  - CMD updated to run `main.py` automatically at container startup.
+
+### 🐳 How to Build and Run (Lab 3)
+
+**Build the image**
+
+```bash
+docker build -t app .
+```
 
 ---
