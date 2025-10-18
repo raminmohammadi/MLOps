@@ -1,6 +1,6 @@
 name: CI/CD Pipeline
 
-on:
+on: 
   push:
     branches: [ main]
   pull_request: 
@@ -10,7 +10,7 @@ on:
   workflow_dispatch: 
 
 env:
-  REGION: us
+  REGION: us-east1
   REPOSITORY_NAME: github-gcp-lab
 
 jobs:
@@ -70,11 +70,11 @@ jobs:
 
       - name: Build and Push Docker image
         env:
-          IMAGE_NAME: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/model-image
+          IMAGE_NAME: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/model-image
         run: |
-          docker build -t ${IMAGE_NAME}:${{ env.MODEL_VERSION }} .
-          docker push ${IMAGE_NAME}:${{ env.MODEL_VERSION }}
-          docker tag ${IMAGE_NAME}:${{ env.MODEL_VERSION }} ${IMAGE_NAME}:latest
+          docker build -t ${IMAGE_NAME}:${{ env.VERSION_FILE_NAME }} .
+          docker push ${IMAGE_NAME}:${{ env.VERSION_FILE_NAME }}
+          docker tag ${IMAGE_NAME}:${{ env.VERSION_FILE_NAME }} ${IMAGE_NAME}:latest
           docker push ${IMAGE_NAME}:latest
 
       - name: Deployment success message

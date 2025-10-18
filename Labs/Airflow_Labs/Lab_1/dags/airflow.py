@@ -1,6 +1,7 @@
 # Import necessary libraries and modules
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+# from airflow.operators.python import PythonOperator
+from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime, timedelta
 from src.lab import (
     load_data, data_preprocessing,
@@ -8,10 +9,10 @@ from src.lab import (
     build_save_gmm, load_model_gmm  # NEW IMPORTS
 )
 
-from airflow import configuration as conf
-
-# Enable pickle support for XCom, allowing data to be passed between tasks
-conf.set('core', 'enable_xcom_pickling', 'True')
+# NOTE:
+# In Airflow 3.x, enabling XCom pickling should be done via environment variable:
+# export AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
+# The old airflow.configuration API is deprecated.
 
 # Define default arguments for your DAG
 default_args = {
@@ -22,13 +23,13 @@ default_args = {
 }
 
 # Create a DAG instance named 'Airflow_Lab1' with the defined default arguments
-dag = DAG(
+with DAG(
     'Airflow_Lab1',
     default_args=default_args,
     description='Dag example for Lab 1 of Airflow series with KMeans and GMM',
     schedule_interval=None,  # Set the schedule interval or use None for manual triggering
     catchup=False,
-)
+) as dag:
 
 # ---------------- Existing KMeans path ---------------- #
 
