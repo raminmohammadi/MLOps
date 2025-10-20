@@ -166,7 +166,7 @@ The pipeline uses the **Palmer Penguins dataset** (via Seaborn) and predicts a p
 
 ## ⚙️ Workflow
 
-### 1️⃣ **Data Loading & Splitting** (`data.py`)
+###  **Data Loading & Splitting** (`data.py`)
 - Loads the **Penguins dataset** from `seaborn`.
 - Drops missing values.
 - Selects the numeric features and the `species` target.
