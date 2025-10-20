@@ -171,3 +171,26 @@ The pipeline uses the **Palmer Penguins dataset** (via Seaborn) and predicts a p
 - Drops missing values.
 - Selects the numeric features and the `species` target.
 - Splits data into **train/test sets** (70/30) using `train_test_split`.
+
+
+### Data Models in Updated FastAPI
+
+##### 1. IrisData class
+
+```python
+class PenguinData(BaseModel):
+    bill_length: float
+    bill_depth: float
+    flipper_length: float
+    body_mass: float
+```
+
+#### 2. IrisResponse class
+
+```python
+class PenguinResponse(BaseModel):
+    response:str
+```
+Update Documentation on Swagger for Penguin Data:
+
+![System diagram](Output-Screenshot.png)
