@@ -1,0 +1,15 @@
+2025-10-20 20:36:01,382 - main - INFO - FastAPI Penguin Prediction API Starting Up!
+2025-10-20 20:36:01,382 - main - INFO - ==================================================
+2025-10-20 20:36:04,644 - main - INFO - Incoming request : GET /
+2025-10-20 20:36:04,646 - main - INFO - Request completed: GET / - Status: 200 - Time:  0.001s
+2025-10-20 20:36:08,518 - main - INFO - Incoming request : GET /
+2025-10-20 20:36:08,519 - main - INFO - Request completed: GET / - Status: 200 - Time:  0.002s
+2025-10-20 20:36:10,100 - main - INFO - Incoming request : GET //docs
+2025-10-20 20:36:10,102 - main - INFO - Request completed: GET //docs - Status: 404 - Time:  0.001s
+2025-10-20 20:36:16,506 - main - INFO - Incoming request : GET /docs
+2025-10-20 20:36:16,507 - main - INFO - Request completed: GET /docs - Status: 200 - Time:  0.001s
+2025-10-20 20:36:16,578 - main - INFO - Incoming request : GET /openapi.json
+2025-10-20 20:36:16,588 - main - INFO - Request completed: GET /openapi.json - Status: 200 - Time:  0.010s
+2025-10-20 20:37:04,873 - main - INFO - Incoming request : POST /predict
+2025-10-20 20:37:05,677 - main - INFO - Request completed: POST /predict - Status: 200 - Time:  0.804s
+2025-10-20 20:37:19,823 - main - INFO - Fast API Application Shutting Down!

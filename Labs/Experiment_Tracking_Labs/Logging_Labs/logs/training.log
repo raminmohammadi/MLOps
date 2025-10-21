@@ -1,0 +1,16 @@
+2025-10-20 20:32:11,287 - __main__ - INFO - Starting Penguin Model Training Pipeline
+2025-10-20 20:32:11,288 - data - INFO - Loading penguin dataset...
+2025-10-20 20:32:11,291 - data - INFO - Dataset Loaded :  342 samples stored!
+2025-10-20 20:32:11,291 - data - INFO - Data Shape - X: (342, 4), y : (342,)
+2025-10-20 20:32:11,291 - __main__ - INFO - Encoding target labels.
+2025-10-20 20:32:11,291 - __main__ - INFO - Classes: ['Adelie', 'Chinstrap', 'Gentoo']
+2025-10-20 20:32:11,291 - data - INFO - Splitting Data into Train and Test sets...
+2025-10-20 20:32:11,292 - data - INFO - Train set size: 239, Test set size : 103
+2025-10-20 20:32:11,292 - __main__ - INFO - Training Random Forest Classifier...
+2025-10-20 20:32:11,293 - __main__ - INFO - Training data shape: (239, 4)
+2025-10-20 20:32:11,336 - __main__ - INFO - Model training completed succesfully!
+2025-10-20 20:32:11,336 - __main__ - INFO - Saving model to 'model/penguin_model.pkl'
+2025-10-20 20:32:11,354 - __main__ - INFO - Saved Model Successfully
+2025-10-20 20:32:11,354 - __main__ - INFO - Saving classes in artifcat
+2025-10-20 20:32:11,354 - __main__ - INFO - Artifact saved successfully!
+2025-10-20 20:32:11,354 - __main__ - INFO - Training Pipeline Completed Successfully!
