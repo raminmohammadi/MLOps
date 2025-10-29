@@ -102,3 +102,25 @@ docker build -t app .
 ```
 
 ---
+
+## Lab 4 – (Data Lab) LLM Data Pipeline
+
+In this lab, I modified the Lab1 to a new notebook **lab1_modified**.
+
+This version of the lab builds on the original LLM preprocessing pipeline and adds a few practical improvements to make it closer to real-world data preparation and training workflows.
+
+- Text Cleaning: Removed extra whitespace and normalized formatting.
+
+- Deduplication: Filtered out repeated lines to avoid model bias.
+
+- Train/Validation Split: Enables proper evaluation instead of training on a single dataset.
+
+- Token Length Diagnostics: Summarized raw token lengths before grouping to help select an appropriate block size.
+
+- Documentation: Added meaningful comments and docstrings throughout the code for clarity.
+
+- Training Loop: Ran a short training segment using GPT-2 to verify that the processed data can be used directly for model training.
+
+- Perplexity Evaluation: Computed validation perplexity to measure model quality on unseen text.
+
+---
