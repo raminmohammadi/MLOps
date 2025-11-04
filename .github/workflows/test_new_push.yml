@@ -17,6 +17,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Debug - List files
+      run: |
+        echo "=== Current directory ==="
+        pwd
+        echo "=== Files in current directory ==="
+        ls -la
+        echo "=== Check if Dockerfile exists ==="
+        test -f Dockerfile && echo "Dockerfile EXISTS" || echo "Dockerfile NOT FOUND"
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
