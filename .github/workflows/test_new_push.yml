@@ -3,6 +3,8 @@ name: Docker Build and Test
 on:
   push:
     branches: [ featurea ]
+    paths:
+      - 'Labs/Github_Labs/Lab5/**' 
 
 jobs:
   test:
