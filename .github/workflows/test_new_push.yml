@@ -1,0 +1,59 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches: [ featurea ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: docker build -t penguin-api:test .
+    
+    - name: Start container in background
+      run: |
+        docker run -d -p 8000:8000 --name test-container penguin-api:test
+        echo "Container started, waiting for it to be ready..."
+        sleep 30
+    
+    - name: Check container logs
+      run: |
+        echo "=== Container Logs ==="
+        docker logs test-container
+    
+    - name: Test health endpoint
+      run: |
+        echo "Testing health endpoint..."
+        curl -f http://localhost:8000/ || exit 1
+        echo "Health check passed!"
+    
+    - name: Test prediction endpoint
+      run: |
+        echo "Testing prediction endpoint..."
+        curl -X POST http://localhost:8000/predict \
+          -H "Content-Type: application/json" \
+          -d '{
+            "bill_length": 39.1,
+            "bill_depth": 18.7,
+            "flipper_length": 181.0,
+            "body_mass": 3750.0
+          }' || exit 1
+        echo "Prediction test passed!"
+    
+    - name: Stop and remove container
+      if: always()
+      run: |
+        docker stop test-container || true
+        docker rm test-container || true
+    
+    - name: Show container logs on failure
+      if: failure()
+      run: docker logs test-container || true
