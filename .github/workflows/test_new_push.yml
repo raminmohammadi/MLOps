@@ -10,6 +10,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     
+    defaults:
+      run:
+        working-directory: Labs/Github_Labs/Lab5
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -21,23 +25,27 @@ jobs:
       run: docker build -t penguin-api:test .
     
     - name: Start container in background
+      working-directory: .
       run: |
         docker run -d -p 8000:8000 --name test-container penguin-api:test
         echo "Container started, waiting for it to be ready..."
         sleep 30
     
     - name: Check container logs
+      working-directory: .
       run: |
         echo "=== Container Logs ==="
         docker logs test-container
     
     - name: Test health endpoint
+      working-directory: .
       run: |
         echo "Testing health endpoint..."
         curl -f http://localhost:8000/ || exit 1
         echo "Health check passed!"
     
     - name: Test prediction endpoint
+      working-directory: .
       run: |
         echo "Testing prediction endpoint..."
         curl -X POST http://localhost:8000/predict \
@@ -52,10 +60,12 @@ jobs:
     
     - name: Stop and remove container
       if: always()
+      working-directory: .
       run: |
         docker stop test-container || true
         docker rm test-container || true
     
     - name: Show container logs on failure
       if: failure()
+      working-directory: .
       run: docker logs test-container || true
