@@ -124,3 +124,34 @@ This version of the lab builds on the original LLM preprocessing pipeline and ad
 - Perplexity Evaluation: Computed validation perplexity to measure model quality on unseen text.
 
 ---
+
+## Lab 5 – (GCP Lab) Data Storage & Warehouse – GCS Buckets
+
+In this lab, I worked with Google Cloud Storage (GCS) to manage datasets in a cloud environment and explore key storage features such as versioning and lifecycle rules.
+
+Changes Implemented
+
+- Created and configured a new GCS bucket
+
+- Set up a dedicated bucket for lab work, connected it to the correct GCP project, and authenticated the local system to interact with GCS from the terminal.
+
+- Added two datasets to the bucket
+
+- A small sample dataset (dataset.csv)
+
+- A larger dataset (dataset_large.csv) with additional rows and columns
+  Both files were uploaded to a data/ directory within the bucket for organization.
+
+Screenshot – Uploaded Datasets:
+![GCS Datasets](Labs/GCP_Labs/Data_Storage_Warehouse_Labs/Lab1/Buckets/Data2.png)
+
+Enabled Object Versioning
+Versioning was turned on for the bucket to maintain a complete history of changes to stored objects. This ensures older versions can be retrieved even after files are overwritten or updated.
+
+Applied Lifecycle Management Policy
+Added a lifecycle rule through a lifecycle.json configuration that automatically deletes objects older than 30 days. This helps manage storage costs and keeps the bucket clean over time.
+
+Screenshot – Lifecycle Rule:
+![GCS Lifecycle](Labs/GCP_Labs/Data_Storage_Warehouse_Labs/Lab1/Buckets/Lifecycle.png)
+
+---
