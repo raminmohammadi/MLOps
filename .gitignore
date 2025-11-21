@@ -183,3 +183,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .DS_Store
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+crash.log
+
