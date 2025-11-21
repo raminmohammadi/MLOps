@@ -155,3 +155,64 @@ Screenshot – Lifecycle Rule:
 ![GCS Lifecycle](Labs/GCP_Labs/Data_Storage_Warehouse_Labs/Lab1/Buckets/Lifecycle.png)
 
 ---
+
+## Lab 6 – Terraform / GCP Lab
+
+In this lab, we set up **Terraform on Windows**, configured the **Google Cloud provider**, and deployed resources on GCP using the instructions provided.
+
+We authenticated using a service account key and exported:
+
+```
+GOOGLE_APPLICATION_CREDENTIALS="C:\Users\yashi\MLOps\Labs\Terraform_Labs\GCP\your-key-file.json"
+```
+
+After installation and initialization (`terraform init`), we successfully applied Terraform to create our resources.
+
+### **Screenshots**
+
+**Terraform Apply Output**
+
+![Setup](Labs\Terraform_Labs\GCP\Lab1_Beginner\apply_resource.png)
+
+**Terraform Bucket Created in GCP**
+
+![Setup2](Labs\Terraform_Labs\GCP\Lab1_Beginner\added_terraform_bucket.png)
+
+---
+
+## Changes Made in `main.tf`
+
+We expanded the base configuration to include:
+
+### 1. A Compute Engine VM
+
+- Machine type: `f1-micro`
+- OS image: Debian 11
+- Added labels (`environment`, `owner`)
+- Added network tags for firewall use
+- Added a startup script to write a file on boot
+
+### 2. A Firewall Rule
+
+- Allows SSH (`tcp:22`)
+- Applies to VMs with tag `"ssh-allowed"`
+- Network: default
+
+### 3. A Storage Bucket
+
+- Unique bucket name
+- `force_destroy = true`
+- Added labels
+
+### 4. Terraform Outputs
+
+- Public IP of the VM
+- Bucket name
+
+These changes show how Terraform manages multiple GCP resources and relationships between them.
+
+### Updated `main.tf` Output Screenshot
+
+![Updated Setup](Labs\Terraform_Labs\GCP\Lab1_Beginner\new_resource.png)
+
+---
