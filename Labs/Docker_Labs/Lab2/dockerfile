@@ -1,44 +1,29 @@
 # Stage 1: Build and Train the Model
-FROM python:3.9 AS model_training
+FROM python:3.10 AS model_training
 
 WORKDIR /app
 
-# Copy the source code for model training
 COPY src/model_training.py /app/
-
-# Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
-RUN pip install -r requirements.txt
 
-# Run the model training script
+RUN pip install -r requirements.txt
 RUN python model_training.py
 
+
 # Stage 2: Serve Predictions
-FROM python:3.9 AS serving
+FROM python:3.10 AS serving
 
 WORKDIR /app
 
-# Copy the trained model from the previous stage
 COPY --from=model_training /app/my_model.keras /app/
-
-# Copy the source code for serving predictions
 COPY src/main.py /app/
-
-# Expose port 80
-EXPOSE 80
-
-# Define environmental variables
-ENV NAME World
-
-# Install any needed packages specified in requirements.txt for the serving stage
 COPY requirements.txt /app/
+
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Copy the templates directory
 COPY src/templates /app/templates
-
-# Copy the statics directory
 COPY src/statics /app/statics
 
-# Run the Flask application for serving predictions
+EXPOSE 80
+
 CMD ["python", "main.py"]

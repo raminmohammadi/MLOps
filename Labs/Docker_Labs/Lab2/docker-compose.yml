@@ -1,0 +1,26 @@
+services:
+  model_training:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: model_training
+    container_name: model_training
+    volumes:
+      - ./model_output:/model_output
+    command: ["python", "model_training.py"]
+
+  serving:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: serving
+    container_name: model_serving
+    depends_on:
+      - model_training
+    volumes:
+      - ./model_output:/model_output     # <-- FIXED
+    ports:
+      - "80:80"
+    environment:
+      NAME: "World"
+    command: ["python", "main.py"]
