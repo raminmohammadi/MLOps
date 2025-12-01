@@ -1,92 +1,164 @@
-# Intermediate Lab: Advanced Querying and Visualization in BigQuery
 
+BIGQUERY ADVANCED QUERYING & LOOKER STUDIO VISUALIZATION LAB
 
-You can watch the toturial video at [Video](https://youtu.be/pAg5D4K3nkU)
+1. INTRODUCTION
+---------------
+In this lab, I performed an end-to-end data analytics workflow using
+Google BigQuery and Looker Studio. I uploaded a dataset, explored its
+schema, wrote advanced SQL queries, saved the results as new tables,
+created visualizations in BigQuery, and built an interactive dashboard
+in Looker Studio. This document summarizes the full process.
 
-## Objective
+------------------------------------------------------------
 
-In this lab, you will learn how to:
-- Write complex SQL queries to analyze data using BigQuery.
-- Utilize BigQuery's built-in visualization tools for insights.
-- Export and share your query results for further analysis or reporting.
+2. DATASET INFORMATION
+----------------------
+Project: clean-equinox-472523-c4
+Dataset: ecommerce_dw
+Primary Table: orders_ext
 
-## Prerequisites
+The dataset contains e-commerce order-level data with fields including:
 
-Before you begin, ensure that you:
-- Have a dataset loaded into BigQuery (from previous labs).
-- Are familiar with basic SQL querying and data visualization concepts.
+- order_id
+- order_date
+- customer_id
+- state
+- channel
+- category
+- quantity
+- unit_price_usd
+- line_amount_usd
 
----
+------------------------------------------------------------
 
-## Steps
+3. WORKFLOW OVERVIEW
+--------------------
+The steps I completed in this lab are:
 
-### Step 1: Perform Data Analysis Using Intermediate SQL Queries
+1. Uploaded the dataset into BigQuery
+2. Explored and validated the table schema
+3. Wrote three SQL queries for analysis
+4. Saved the query results as CSV, Sheets, and BigQuery tables
+5. Built visualizations in BigQuery
+6. Connected BigQuery tables to Looker Studio
+7. Created a dashboard with multiple charts
 
-- Access your existing BigQuery dataset and table. (If you do not know how to create a bigquery table, refer to lab1)
-- Write complex SQL queries to perform data analysis:
-  - Use aggregate functions like `SUM`, `AVG`, `COUNT` to generate insights.
-  - Apply `GROUP BY` and `ORDER BY` to structure your data effectively.
+------------------------------------------------------------
 
-**Sample Query**:
-```sql
-SELECT 
-    Species,
-    AVG(SepalLengthCm) AS avg_sepal_length,
-    AVG(SepalWidthCm) AS avg_sepal_width,
-    AVG(PetalLengthCm) AS avg_petal_length,
-    AVG(PetalWidthCm) AS avg_petal_width
-FROM 
-    `mlopslabsstorage001.iris.iris`
-GROUP BY 
-    Species
-ORDER BY 
-    avg_sepal_length DESC;
-```
+4. SQL ANALYSIS
+---------------
 
-Experiment with different functions and combinations of SQL clauses to gain insights from your data.
+4.1 Query 1 — Total Sales by Category
+-------------------------------------
+SQL:
+SELECT
+  category,
+  SUM(line_amount_usd) AS total_sales_usd
+FROM `clean-equinox-472523-c4.ecommerce_dw.orders_ext`
+GROUP BY category
+ORDER BY total_sales_usd DESC;
 
----
+Purpose:
+Identifies the highest revenue-generating categories.
 
-### Step 2: Visualize Data Using BigQuery UI
+4.2 Query 2 — Revenue by Channel (Using HAVING)
+------------------------------------------------
+SQL:
+SELECT
+  channel,
+  SUM(line_amount_usd) AS total_revenue
+FROM `clean-equinox-472523-c4.ecommerce_dw.orders_ext`
+GROUP BY channel
+HAVING SUM(line_amount_usd) > 5000
+ORDER BY total_revenue DESC;
 
-After running your queries, visualize the results directly within BigQuery:
-- In the BigQuery console, run your query.
-- Click on **Explore Data** and choose a visualization type that best represents your data (e.g., bar chart, pie chart, line chart).
-- Customize your chart with appropriate axis labels, colors, and other formatting options.
+Purpose:
+Filters channels that exceed a minimum revenue threshold.
 
-> **Task**: Create at least two different visualizations from your query results, such as:
-> - A **bar chart** comparing the average Sepal Length of different species.
-> - A **scatter plot** showing the relationship between average Petal Length and Sepal Width across species.
+4.3 Query 3 — Price Segmentation Using CASE
+-------------------------------------------
+SQL:
+SELECT
+  category,
+  CASE
+    WHEN unit_price_usd < 20 THEN 'Budget'
+    WHEN unit_price_usd BETWEEN 20 AND 100 THEN 'Standard'
+    ELSE 'Premium'
+  END AS price_segment,
+  COUNT(order_id) AS num_orders,
+  SUM(line_amount_usd) AS segment_sales
+FROM `clean-equinox-472523-c4.ecommerce_dw.orders_ext`
+GROUP BY category, price_segment
+ORDER BY category, price_segment;
 
----
+Purpose:
+Classifies each category into Budget, Standard, or Premium price segments
+and summarizes performance.
 
-### Step 3: Export and Share Query Results
+------------------------------------------------------------
 
-Once you've completed your analysis, export the query results for sharing with others or for further analysis:
-- **Export to Google Sheets**: Run the query, click on the **Save Results** button, and select **Google Sheets**. The data will be exported directly to a new Google Sheets file.
-- **Download as CSV**: Alternatively, download the query results as a CSV file for use in other tools like Excel or Google Data Studio.
+5. BIGQUERY VISUALIZATIONS
+--------------------------
+In BigQuery, I used the Visualization tab to create:
 
-#### Steps to Export to Google Sheets:
+- Bar chart: Total sales by category
+- Scatter plot: Unit price vs. quantity
+- Table summaries: Category-level comparisons
 
-1. Run your query.
-2. Click the **Save Results** button at the bottom of the BigQuery interface.
-3. Choose **Google Sheets** from the dropdown.
-4. Your data will be exported directly to Google Sheets, ready for sharing or further processing.
+These visualizations helped validate the query results.
 
----
+------------------------------------------------------------
 
-## Looker Studio Visualization Sample
+6. SAVING QUERY RESULTS
+-----------------------
+I saved my BigQuery results in multiple ways:
 
-To enhance your data visualization skills further, import your dataset into **Looker Studio** and create professional visualizations. Here's a guide on setting up a few common charts using the Iris dataset:
+- CSV files (local)
+- Google Sheets (cloud)
+- New BigQuery tables, including:
+  * cat_price_seg
+  * sales_bucket
+  * sales_channel_by_revenue
 
-1. **Import Dataset**: In Looker Studio, connect to your BigQuery dataset (Iris dataset in this case).
-2. **Create Visualizations**:
-   - **Bar Chart**: Visualize the average sepal lengths for each species. 
-   - **Scatter Plot**: Compare the relationship between sepal width and petal width.
-3. **Customize the Dashboard**: Adjust colors, add filters, and modify the layout for a comprehensive dashboard.
+These tables were used directly in Looker Studio.
 
----
+------------------------------------------------------------
 
-## Conclusion
+7. LOOKER STUDIO DASHBOARD
+--------------------------
+Data sources added:
 
-This lab guides you through more advanced querying techniques in BigQuery, using both SQL and built-in visualization tools to analyze and visualize the Iris dataset. You also learned how to export and share data for further use, building critical skills in data analysis and presentation.
+- orders_ext
+- cat_price_seg
+- sales_bucket
+- sales_channel_by_revenue
+
+Visualizations included:
+
+- Table: Quantity by category
+- Bar chart: Quantity by category
+- Donut chart: Category share by avg unit price
+- Bar charts: Sales by category and channel
+- Segmentation charts: Budget, Standard, Premium
+
+The dashboard was formatted with consistent colors, headings,
+and layout.
+
+------------------------------------------------------------
+
+8. KEY INSIGHTS
+---------------
+- Some categories significantly outperform others in sales.
+- Web is the strongest revenue channel.
+- Most products fall in the Standard price segment.
+- Premium items contribute meaningfully to revenue.
+- Unit price and quantity show identifiable patterns.
+
+------------------------------------------------------------
+
+9. CONCLUSION
+-------------
+This lab helped me build practical skills in cloud-based data analysis.
+I worked with BigQuery for SQL processing, performed segmentation and
+aggregation, saved transformed data, and created a complete Looker Studio
+dashboard. This workflow closely resembles real-world analytical tasks.
