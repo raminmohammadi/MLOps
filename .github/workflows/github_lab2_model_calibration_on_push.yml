@@ -41,7 +41,7 @@ jobs:
         timestamp=$(cat timestamp.txt) # Use the timestamp in your training script
         python Labs/Github_Labs/Lab2/src/train_model.py --timestamp "$timestamp"
 
-        - name: Evaluate Model and Log Metrics
+    - name: Evaluate Model and Log Metrics
       run: |
         timestamp=$(cat timestamp.txt)
         python Labs/Github_Labs/Lab2/src/evaluate_model.py --timestamp "$timestamp"
