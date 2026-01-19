@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python # Set up a specific Python version for the runner
         uses: actions/setup-python@v5 # Use the setup-python action, version 5
         with:
-          python-version: '3.10' # Specify the Python version to set up
+          python-version: '3.11' # Specify the Python version to set up
 
       - name: Get cache dir # Get the directory where pip caches files
         id: pip-cache-dir # Assign an ID to reference this step's outputs
