@@ -43,7 +43,7 @@ def save_model_to_gcs(model, bucket_name, blob_name):
 
 def main():
     # Use environment variables for flexibility
-    bucket_name = os.getenv("GCS_BUCKET_NAME", "github-action-lab")
+    bucket_name = os.getenv("GCS_BUCKET_NAME", "github-action-lab2")
     
     # Execution steps
     X, y = download_data()
