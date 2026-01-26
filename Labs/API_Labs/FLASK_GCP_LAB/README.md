@@ -13,7 +13,8 @@ gcloud auth login
 ```
 
 Also make sure you have enabled the folllowing API's
-1. Artifact Registry
+1. Artifact Registry - 
+    1.1 Create a repo named gcr.io
 2. Cloud build
 
 In your GCP command line run:
@@ -29,7 +30,8 @@ Cloud Build takes the directory you are currently in (or the path you specify) a
 gcloud builds submit --tag gcr.io/[YOUR_PROJ_ID]/iris-app
 ```  
 
-Deploying container to Cloud Run service
+
+Deploying container to Cloud Run service - You will need to first enable cloudRun if this is the first time you are using it.
 
 ```
 gcloud run deploy iris-app --image gcr.io/[YOUR_PROJ_ID]/iris-app --platform managed --port 8501 --allow-unauthenticated   
