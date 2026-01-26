@@ -12,10 +12,6 @@ model = tf.keras.models.load_model('my_model.keras')  # Replace 'my_model.keras'
 class_labels = ['Setosa', 'Versicolor', 'Virginica']
 
 
-"""Modern web apps use a technique named routing. This helps the user remember the URLs. 
-For instance, instead of having /booking.php they see /booking/. Instead of /account.asp?id=1234/ 
-they’d see /account/1234/."""
-
 @app.route('/')
 def home():
     return "Welcome to the Iris Classifier API!"

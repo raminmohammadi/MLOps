@@ -1,26 +1,40 @@
 services:
-  model_training:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: model_training
-    container_name: model_training
+  # Service 1: Train the model
+  model-training:
+    image: python:3.10-slim
+    container_name: ml_trainer
+    working_dir: /app
     volumes:
-      - ./model_output:/model_output
-    command: ["python", "model_training.py"]
+      - ./src:/app/src
+      - ./requirements.txt:/app/requirements.txt
+      - model_exchange:/exchange   # Shared volume mount
+    # Run training -> Copy result to shared folder
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             python src/model_training.py &&
+             cp my_model.keras /exchange/my_model.keras"
 
+  # Service 2: Serve the model
   serving:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: serving
-    container_name: model_serving
-    depends_on:
-      - model_training
-    volumes:
-      - ./model_output:/model_output     # <-- FIXED
+    image: python:3.10-slim
+    container_name: ml_serving
+    working_dir: /app
     ports:
       - "80:80"
-    environment:
-      NAME: "World"
-    command: ["python", "main.py"]
+    volumes:
+      - ./src:/app/src
+      - ./requirements.txt:/app/requirements.txt
+      - ./src/templates:/app/templates
+      - ./src/statics:/app/statics
+      - model_exchange:/exchange   # Shared volume mount
+    depends_on:
+      model-training:
+        condition: service_completed_successfully
+    # Copy result FROM shared folder -> Run server
+    command: >
+      sh -c "pip install --trusted-host pypi.python.org -r requirements.txt &&
+             cp /exchange/my_model.keras ./my_model.keras &&
+             python src/main.py"
+
+volumes:
+  model_exchange:

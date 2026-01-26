@@ -1,5 +1,5 @@
-docker build -t dockerfile:v1 .
+docker build -t lab1:v1 .
 
-docker save dockerfile:v1 > my_image.tar
+docker save lab1:v1 > my_image.tar
 
-docker run dockerfile:v1
+docker run lab1:v1
