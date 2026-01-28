@@ -1,3 +1,5 @@
+# trigger run
+
 name: Testing Github Lab1 with Pytest
 on:
   push:
