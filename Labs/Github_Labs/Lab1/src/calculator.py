@@ -44,17 +44,17 @@ def fun3(x, y):
         raise ValueError("Both inputs must be numbers.")
     return x * y
 
-def fun4(x,y,z):
+def fun4(x,k,z):
     """
     Adds three numbers together.
     Args:
         x (int/float): First number.
-        y (int/float): Second number.
+        k (int/float): Second number.
         z (int/float): Third number.
     Returns:
         int/float: Sum of x, y and z.
     """
-    total_sum = x + y + z
+    total_sum = x + k + z
     return total_sum
 
 
