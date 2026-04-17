@@ -125,7 +125,11 @@ Cloud
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
 
     # Additional python package
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas }
+    # 1. edit the Dockerfile with the packages of your interest
+    # 2. Replace image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:3.1.0} with
+    image: my-airflow:3.1.0
+    # 3. build your image
+    docker build --no-cache -t my-airflow:3.1.0
 
     # Output dir
     - ${AIRFLOW_PROJ_DIR:-.}/working_data:/opt/airflow/working_data
