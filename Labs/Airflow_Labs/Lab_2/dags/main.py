@@ -45,7 +45,7 @@ owner_task = BashOperator(
 
 # send_email = EmailOperator(
 #     task_id="send_email",
-#     to="rey.mhmmd@gmail.com",
+#     to="YOUR EMAIL ADDRESS",
 #     subject="Notification from Airflow",
 #     html_content="<p>This is a notification email sent from Airflow.</p>",
 #     dag=dag,

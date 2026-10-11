@@ -4,10 +4,15 @@ import os
 import time
 import base64
 import pendulum
+import logging
 import requests
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 from flask import Flask, redirect, render_template
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)  # Set the lowest threshold for the logge
 
 # ---------- Config ----------
 # Ensure WEBSERVER points to 'airflow-apiserver' as defined in your compose
@@ -23,8 +28,33 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 # ---------- Flask app ----------
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
+# Cached token to avoid requesting a new token on every HTTP request
+_CACHED_TOKEN = None
+_TOKEN_EXPIRY = 0
+
+def get_auth_token():
+    global _CACHED_TOKEN, _TOKEN_EXPIRY
+    # Reuse valid token if available
+    if _CACHED_TOKEN and time.time() < _TOKEN_EXPIRY - 60:
+        return _CACHED_TOKEN
+
+    token_url = f"{WEBSERVER}/auth/token"
+    resp = requests.post(
+        token_url,
+        json={"username": AF_USER, "password": AF_PASS},
+        timeout=10,
+    )
+    if resp.status_code in (200, 201):
+        data = resp.json()
+        _CACHED_TOKEN = data.get("access_token")
+        # Token valid for 24h by default; refresh after 1 hour safely
+        _TOKEN_EXPIRY = time.time() + 3600
+        return _CACHED_TOKEN
+    
+    logger.error(f"Failed to authenticate with Airflow: {resp.status_code} {resp.text}")
+    return None
+
 def get_latest_run_info():
-    # Airflow 3 prefers ordering by 'run_after' for the most recent activity    
     url = f"{WEBSERVER}/api/v2/dags/{TARGET_DAG_ID}/dagRuns?order_by=-run_after&limit=1"
 
     info = {
@@ -36,13 +66,19 @@ def get_latest_run_info():
         "note": ""
     }
 
-    auth_bytes = f"{AF_USER}:{AF_PASS}".encode("ascii")
-    base64_auth = base64.b64encode(auth_bytes).decode("ascii")
-    headers = {"Accept": "application/json", "Authorization": f"Basic {base64_auth}"}
+    token = get_auth_token()
+    if not token:
+        info["note"] = "Authentication failed (could not get token)"
+        return False, info
+
+    headers = {
+        "Accept": "application/json",
+        "Authorization": f"Bearer {token}",
+    }
 
     try:
         r = requests.get(url, headers=headers, timeout=10)
-        
+        logger.info(f"response was : {r}")
         if r.status_code != 200:
             info["note"] = f"API Error {r.status_code}"
             return False, info
@@ -57,7 +93,7 @@ def get_latest_run_info():
         run = runs[0]
         state = run.get("state", "unknown")
 
-        print(state)
+        logger.info(f"state was {state}")
 
         info.update({
             "state": state,
@@ -67,8 +103,6 @@ def get_latest_run_info():
             "end_date": run.get("end_date", "N/A"),
         })
         
-        # LOGIC CHANGE: If it's running, we don't want to say "Failure"
-        # We return False to stay on failure/loading page, but update the note
         if state == "queued" or state == "running":
             info["note"] = "Model pipeline is still in progress..."
             return False, info

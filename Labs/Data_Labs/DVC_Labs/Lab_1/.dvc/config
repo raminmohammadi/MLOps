@@ -1,7 +1,5 @@
 [core]
-    no_scm = True
-    analytics = false
     remote = myremote
 ['remote "myremote"']
-    url = gs://dvc-bucket-25
-    credentialpath = /home/ramin/Documents/MLOps/Labs/Data_Labs/DVC_Labs/Lab_1/git-action-gcp-3e47dbac54ff.json
+    url = gs://dvc-bucket-fall-25
+    credentialpath = /home/ramin/Documents/MLOps/Labs/Data_Labs/DVC_Labs/Lab_1/dvc-lab-fall-25-4b6d9e73e256.json
